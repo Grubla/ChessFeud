@@ -18,15 +18,10 @@ public class MainActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_main);
         
-        bPlay = (Button) findViewById(R.id.button_play);
         bMyProfile = (Button) findViewById(R.id.button_myprofile);
         bSettings = (Button) findViewById(R.id.button_settings);
-        bAbout = (Button) findViewById(R.id.button_about);
-        
-        bPlay.setOnClickListener(this);
         bMyProfile.setOnClickListener(this);
         bSettings.setOnClickListener(this);
-        bAbout.setOnClickListener(this);
         
     }
 
@@ -40,17 +35,11 @@ public class MainActivity extends Activity implements OnClickListener{
     	int id = v.getId();
     	
     	switch(id){
-    	case R.id.button_play:
-    		startActivity(new Intent(this, PlayActivity.class));
-    		break;
     	case R.id.button_myprofile:
     		startActivity(new Intent(this, ProfileActivity.class));
     		break;
     	case R.id.button_settings:
     		startActivity(new Intent(this, SettingsActivity.class));
-    		break;
-    	case R.id.button_about:
-    		startActivity(new Intent(this, AboutActivity.class));
     		break;
     	default:
     		Log.d("Default", "Should not get here!");
