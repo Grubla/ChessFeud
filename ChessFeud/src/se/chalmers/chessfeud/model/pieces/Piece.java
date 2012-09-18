@@ -1,4 +1,6 @@
-package se.chalmers.chessfeud.model;
+package se.chalmers.chessfeud.model.pieces;
+
+import se.chalmers.chessfeud.model.Position;
 
 public abstract class Piece {
 	private int team;
