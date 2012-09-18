@@ -1,4 +1,4 @@
-package se.chalmers.chessfeud.model;
+package se.chalmers.chessfeud.model.utils;
 
 public class Position {
 	private int x, y;

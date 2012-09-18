@@ -1,6 +1,6 @@
 package se.chalmers.chessfeud.model.pieces;
 
-import se.chalmers.chessfeud.model.Position;
+import se.chalmers.chessfeud.model.utils.Position;
 
 /**
  * The piece Bishop
