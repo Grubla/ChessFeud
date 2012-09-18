@@ -16,9 +16,4 @@ public class ChessBoard {
 		return board[p.getX()][p.getY()];
 	}
 	
-	public boolean isMoveLegal(Piece piece, Position pos){
-		return false;
-	}
-	
-	
 }
