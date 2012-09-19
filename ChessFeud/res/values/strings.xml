@@ -4,10 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name ="play">PLAY</string>
-    <string name ="settings">SG</string>
-    <string name ="my_profile">MP</string>
-    <string name ="about">About</string>
     <string name ="play_activity">PlayActivity</string>
     <string name ="settings_activity">SettingsActivity</string>
     <string name ="profile_activity">ProfileActivity</string>
