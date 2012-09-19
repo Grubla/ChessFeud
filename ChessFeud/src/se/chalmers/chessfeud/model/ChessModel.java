@@ -5,12 +5,12 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public class ChessModel {
 	private ChessBoard chessBoard;
-	private int turn;
+	private int activePlayer;
 	private Position selected;
 	
 	public ChessModel(){
 		chessBoard = new ChessBoard();
-		turn = 0;
+		activePlayer = 0;
 		selected = null;
 	}
 	
@@ -19,7 +19,7 @@ public class ChessModel {
 	}
 	
 	public int acitvePlayer(){
-		return turn;
+		return activePlayer;
 	}
 	
 	public Piece getPieceAt(Position p){
@@ -32,7 +32,7 @@ public class ChessModel {
 	}
 	
 	private void changeTurn(){
-		turn = (turn+1)%2;
+		activePlayer = (activePlayer+1)%2;
 	}
 
 	private boolean tryMove(Position oldPos, Position newPos){
