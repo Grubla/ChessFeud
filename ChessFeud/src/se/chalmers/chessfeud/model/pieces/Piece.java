@@ -1,5 +1,7 @@
 package se.chalmers.chessfeud.model.pieces;
 
+import java.util.List;
+
 import se.chalmers.chessfeud.model.utils.Position;
 
 public abstract class Piece {
@@ -11,22 +13,14 @@ public abstract class Piece {
 		this.pos = p;
 	}
 
-	public abstract Position[] canMove();
-	
-	public boolean move(Position position){
-		Position[] validPositions = canMove();
-		for(Position p : validPositions)
-			if(p.equals(position))
-				return true;
-		return false;
-	}
+	public abstract List<List<Position>> canMove();
 	
 	public int getTeam(){
 		return this.team;
 	}
 	
 	public Position getPosition(){
-		return pos;
+		return new Position(pos);
 	}
 	
 	protected void setNewPos(Position p){
