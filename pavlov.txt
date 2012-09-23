@@ -1,5 +1,0 @@
-hello world
-test
-if(isAdmin(pavlov)){
-	test2 = "success";
-}
