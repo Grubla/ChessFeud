@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud.model;
 
+import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 
@@ -62,6 +63,19 @@ public class ChessBoard {
 	 */
 	public int height(){
 		return board[0].length;
+	}
+	
+	/**
+	 * Moves a piece from oldPos to newPos
+	 * @param oldPos, the current position of the piece
+	 * @param newPos, the new position of the piece
+	 * @return, the former piece at newPos
+	 */
+	public Piece movePiece(Position oldPos, Position newPos){
+		Piece piece = getPieceAt(newPos);
+		board[newPos.getX()][newPos.getY()] = getPieceAt(oldPos);
+		board[oldPos.getX()][oldPos.getY()] = new NoPiece(-1, new Position(1,1));
+		return piece;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class ChessModel {
 	private int activePlayer;
 	private Position selected;
 	private List<Position> possibleMoves;
+	private List<Piece> takenPieces;
+	
 	/**
 	 * Creates an instance of chess with a new starting board. 
 	 */
@@ -27,6 +30,7 @@ public class ChessModel {
 		activePlayer = 0;
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
+		takenPieces = new ArrayList<Piece>();
 	}
 	
 	/**
@@ -36,7 +40,10 @@ public class ChessModel {
 	public void click(Position p){
 		if(selected != null){ //Some piece is selected
 			if(possibleMoves.contains(p)){ //A valid move has been clicked
-				//Save the newPos piece
+				if(true){ //Change to ID > 0 <------------------------------------------------------------------------------- !!!!
+					takenPieces.add(chessBoard.getPieceAt(p));
+				}
+				
 				//Move the piece
 				//Check for check draw etc
 				//Next turn or gameOver
@@ -136,6 +143,13 @@ public class ChessModel {
 	 */
 	public Piece getPieceAt(Position p){
 		return null;
+	}
+	/**
+	 * Returns a list with all the taken pieces
+	 * @return
+	 */
+	public List<Piece> getTakenPieces(){
+		return takenPieces;
 	}
 	
 	/* Sets the current position as the selected one */
