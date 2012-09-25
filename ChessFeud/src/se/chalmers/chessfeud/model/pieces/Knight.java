@@ -3,6 +3,7 @@ package se.chalmers.chessfeud.model.pieces;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
 
 /**
@@ -15,15 +16,15 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public class Knight extends Piece{
 
-	protected Knight(int team, Position p) {
-		super(team, p);
+	protected Knight(int team) {
+		super(team, C.PIECE_KING);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public List<List<Position>> canMove() {
+	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
-		List<Position> moveList = moveDirection(this.getPosition().getX(), this.getPosition().getY());
+		List<Position> moveList = moveDirection(p.getX(), p.getY());
 		posList.add(moveList);
 		return posList;
 	}

@@ -3,6 +3,7 @@ package se.chalmers.chessfeud.model.pieces;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
 
 
@@ -18,17 +19,18 @@ public class Pawn extends Piece{
 	private boolean hasMoved = false;
 	private int team;
 	
-	protected Pawn(int team, Position p) {
-		super(team, p);
+	
+	protected Pawn(int team) {
+		super(team, C.PIECE_PAWN);
 		this.team = team;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public List<List<Position>> canMove() {
+	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
 		List<Position> moveList = new ArrayList<Position>();
-		moveList = moveDirection(this.getPosition().getX(), this.getPosition().getY(), this.team);
+		moveList = moveDirection(p.getX(), p.getY(), this.team);
 		posList.add(moveList);
 		return posList;
 	}

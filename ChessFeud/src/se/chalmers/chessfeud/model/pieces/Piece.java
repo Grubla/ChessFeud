@@ -6,24 +6,21 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public abstract class Piece {
 	private int team;
-	private Position pos;
+	private int id;
 	
-	protected Piece(int team, Position p){
+	protected Piece(int team, int id){
 		this.team = team;
-		this.pos = p;
+		this.id = id;
+		
 	}
 
-	public abstract List<List<Position>> canMove();
+	public abstract List<List<Position>> theoreticalMoves(Position p);
 	
 	public int getTeam(){
 		return this.team;
 	}
 	
-	public Position getPosition(){
-		return new Position(pos);
-	}
-	
-	protected void setNewPos(Position p){
-		this.pos = p;
+	public int getId(){
+		return this.id;
 	}
 }
