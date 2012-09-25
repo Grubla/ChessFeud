@@ -68,8 +68,22 @@ public class Rules {
 						if(getPossibleMoves(cb, new Position(x, y)).size() > 0)
 							return false;
 					}
+			return true;
 		}
-		return true;
+		return false;
+	}
+	
+	public boolean isCheckMate(ChessBoard cb, int nextTurn){
+		if(isCheck(cb)){
+			for(int x = 0; x < cb.width(); x++)
+				for(int y = 0; y < cb.height(); y++)
+					if(cb.getPieceAt(x, y) != null && cb.getPieceAt(x, y).getTeam() == nextTurn){
+						if(getPossibleMoves(cb, new Position(x, y)).size() > 0)
+							return false;
+					}
+			return true;
+		}
+		return false;
 	}
 	
 	public static List<Position> getPossibleMoves(ChessBoard cb, Position selected){
