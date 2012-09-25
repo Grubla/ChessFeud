@@ -15,7 +15,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 //Även kallad löpare
 public class Bishop extends Piece{
 
-	protected Bishop(int team) {
+	public Bishop(int team) {
 		super(team,C.PIECE_BISHOP);
 		// TODO Auto-generated constructor stub
 	}

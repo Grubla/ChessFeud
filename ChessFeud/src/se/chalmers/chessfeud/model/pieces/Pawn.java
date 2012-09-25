@@ -20,7 +20,7 @@ public class Pawn extends Piece{
 	private int team;
 	
 	
-	protected Pawn(int team) {
+	public Pawn(int team) {
 		super(team, C.PIECE_PAWN);
 		this.team = team;
 		// TODO Auto-generated constructor stub

@@ -15,7 +15,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 //Även kallad torn
 public class Rook extends Piece{
 
-	protected Rook(int team) {
+	public Rook(int team) {
 		super(team,C.PIECE_ROOK);
 		// TODO Auto-generated constructor stub
 	}

@@ -15,7 +15,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 //Även kallad Dam
 public class Queen extends Piece{
 
-	protected Queen(int team) {
+	public Queen(int team) {
 		super(team, C.PIECE_QUEEN);
 		// TODO Auto-generated constructor stub
 	}

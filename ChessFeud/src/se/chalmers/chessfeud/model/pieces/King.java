@@ -16,7 +16,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 //Även kallad Kung
 public class King extends Piece{
 
-	protected King(int team) {
+	public King(int team) {
 		super(team, C.PIECE_KING);
 		// TODO Auto-generated constructor stub
 	}
