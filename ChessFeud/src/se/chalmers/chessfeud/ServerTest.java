@@ -1,8 +1,12 @@
+package se.chalmers.chessfeud;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -35,7 +39,15 @@ public class ServerTest extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		HttpResponse response = client.execute(httpPost);
+		try {
+			HttpResponse response = client.execute(httpPost);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }
