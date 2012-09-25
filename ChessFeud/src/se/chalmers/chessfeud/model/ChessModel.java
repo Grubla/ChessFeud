@@ -75,7 +75,8 @@ public class ChessModel {
 		for(List<Position> l : tempMoves){
 			boolean canMove = true;
 			for(Position p : l){
-				if(canMove && notCheck(pos)){
+				ChessBoard tmpBoard = new ChessBoard(chessBoard, selected, p);
+				if(canMove && Rules.isCheck(tmpBoard, selected)){
 					if(isEmpty(pos))
 						possibleMoves.add(pos);
 					else{
@@ -91,41 +92,6 @@ public class ChessModel {
 	/* Returns true if the pieces at the given positions are on the same team */
 	private boolean sameTeam(Position pos, Position p) {
 		return chessBoard.getPieceAt(pos).getTeam() == chessBoard.getPieceAt(p).getTeam();
-	}
-
-	/* Returns true if there is no piece at the given position */
-	private boolean isEmpty(Position pos) {
-		return chessBoard.getPieceAt(pos) == null;
-	}
-
-	/* Returns true if the selected position -> pos results in a state that is not check */
-	private boolean notCheck(Position pos){
-		ChessBoard tmpBoard = new ChessBoard(chessBoard, selected, pos);
-		for(int x = 0; x < tmpBoard.width(); x++)
-			for(int y = 0; y < tmpBoard.height(); y++){
-				Piece piece = tmpBoard.getPieceAt(x, y);
-				if(piece.getTeam() == activePlayer && piece instanceof King){
-					for(int dx = -1; dx <= 1; dx++)
-						for(int dy = -1; dy <= 1; dy++){
-							if(0 <= x && x < 8 && 0 <= y && y < 8 && isEmpty(new Position(x+dx, y+dy))){
-								int dir = 2;
-								while(0 <= x && x < 8 && 0 <= y && y < 8 && isEmpty(new Position(x+dx*dir, y+dy*dir)) && !pos.equals(new Position(x,y))){
-									dir++;
-								}
-								if(0 <= x && x < 8 && 0 <= y && y < 8 && !pos.equals(new Position(x,y))){
-									Piece pi = tmpBoard.getPieceAt(x+dx*dir, y+dy*dir);
-									if(Math.abs(dx*dy) == 0 && (pi instanceof Queen || pi instanceof Rook))
-										return false;
-									if(Math.abs(dx*dy) == 1 && (pi instanceof Queen || pi instanceof Bishop))
-										return false;
-								}
-								
-							}
-								
-						}
-				}
-			}
-		return true;
 	}
 	
 	/**

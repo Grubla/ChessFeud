@@ -74,8 +74,13 @@ public class ChessBoard {
 	public Piece movePiece(Position oldPos, Position newPos){
 		Piece piece = getPieceAt(newPos);
 		board[newPos.getX()][newPos.getY()] = getPieceAt(oldPos);
-		board[oldPos.getX()][oldPos.getY()] = new NoPiece(-1, new Position(1,1));
+		board[oldPos.getX()][oldPos.getY()] = null;
 		return piece;
+	}
+	
+	/* Returns true if there is no piece at the given position */
+	public boolean isEmpty(Position pos) {
+		return getPieceAt(pos) == null;
 	}
 	
 }
