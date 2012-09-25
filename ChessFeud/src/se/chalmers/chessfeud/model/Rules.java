@@ -1,5 +1,8 @@
 package se.chalmers.chessfeud.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import se.chalmers.chessfeud.model.pieces.Bishop;
 import se.chalmers.chessfeud.model.pieces.King;
 import se.chalmers.chessfeud.model.pieces.Knight;
@@ -43,10 +46,8 @@ public class Rules {
 										return true;
 									if(Math.abs(dx*dy) == 1 && (pi instanceof Queen || pi instanceof Bishop))
 										return true;
-								}
-								
+								}							
 							}
-								
 						}
 					for(int i = 0; i < HORSE_X.length; i++){
 						int dx = HORSE_X[i];
@@ -57,6 +58,40 @@ public class Rules {
 				}
 			}
 		return false;
+	}
+	
+	public boolean isDraw(ChessBoard cb, int nextTurn){
+		if(!isCheck(cb)){
+			for(int x = 0; x < cb.width(); x++)
+				for(int y = 0; y < cb.height(); y++)
+					if(cb.getPieceAt(x, y) != null && cb.getPieceAt(x, y).getTeam() == nextTurn){
+						if(getPossibleMoves(cb, new Position(x, y)).size() > 0)
+							return false;
+					}
+		}
+		return true;
+	}
+	
+	public static List<Position> getPossibleMoves(ChessBoard cb, Position selected){
+		List<Position> pm = new LinkedList<Position>();
+		Piece piece = cb.getPieceAt(selected);
+		List<List<Position>> tempMoves = piece.theoreticalMoves(selected);
+		for(List<Position> l : tempMoves){
+			boolean canMove = true;
+			for(Position p : l){
+				ChessBoard tmpBoard = new ChessBoard(cb, selected, p);
+				if(canMove && Rules.isCheck(tmpBoard)){
+					if(cb.isEmpty(p))
+						pm.add(p);
+					else{
+						if(cb.getPieceAt(selected).getTeam() == cb.getPieceAt(p).getTeam())
+							pm.add(p);
+						canMove = false;
+					}
+				}
+			}
+		}
+		return pm;
 	}
 	
 	private static boolean inBounds(int x, int y){

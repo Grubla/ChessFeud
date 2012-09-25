@@ -68,25 +68,10 @@ public class ChessModel {
 	 * Returns the possible moves (according to ALL rules) for the chosen piece.
 	 * @param pos, the position of the chosen piece
 	 */
-	private void getPossibleMoves(Position pos){
+	private void getPossibleMoves(){
 		possibleMoves.clear();
-		Piece piece = chessBoard.getPieceAt(pos);
-		List<List<Position>> tempMoves = piece.canMove();
-		for(List<Position> l : tempMoves){
-			boolean canMove = true;
-			for(Position p : l){
-				ChessBoard tmpBoard = new ChessBoard(chessBoard, selected, p);
-				if(canMove && Rules.isCheck(tmpBoard, selected)){
-					if(isEmpty(pos))
-						possibleMoves.add(pos);
-					else{
-						if(sameTeam(pos, p))
-							possibleMoves.add(pos);
-						canMove = false;
-					}
-				}
-			}
-		}
+		possibleMoves = Rules.getPossibleMoves(chessBoard, selected);
+		
 		
 	}
 	/* Returns true if the pieces at the given positions are on the same team */
@@ -121,7 +106,7 @@ public class ChessModel {
 	/* Sets the current position as the selected one */
 	private void setSelected(Position p){
 		selected = p;
-		getPossibleMoves(selected);
+		getPossibleMoves();
 	}
 	
 	/* Deselcts the current selected piece */
