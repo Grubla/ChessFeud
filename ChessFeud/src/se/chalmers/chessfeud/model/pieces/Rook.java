@@ -27,7 +27,7 @@ public class Rook extends Piece{
 				if((x != 0 && y != 0) && (x == 0 || y == 0)){
 					List<Position> moveList = moveDirection(x, y);
 					if(moveList.size()!=0)
-						posList.add(moveDirection(x, y));
+						posList.add(moveList);
 				}
 			}
 		}

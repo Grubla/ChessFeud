@@ -16,36 +16,51 @@ import se.chalmers.chessfeud.model.utils.Position;
 public class Pawn extends Piece{
 	
 	private boolean hasMoved = false;
+	private int team;
 	
 	protected Pawn(int team, Position p) {
 		super(team, p);
+		this.team = team;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public List<List<Position>> canMove() {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
-		
-		int y = 1;
-		List<Position> moveList;
-		for(int x = -1; x < 2; x++){
-			if(this.getPosition().getX() == 7){
-				while(y < 3){
-					moveList = moveDirection(x, y);
-					y++;
-				}
-			} else {
-				moveList = moveDirection(x, y);	
-			}
-		posList.add(moveList);	
-		}
+		List<Position> moveList = new ArrayList<Position>();
+		moveList = moveDirection(this.getPosition().getX(), this.getPosition().getY(), this.team);
+		posList.add(moveList);
 		return posList;
+	}
+
+
+	private List<Position> moveDirection(int px, int py, int team) {
+		List<Position> moveList = new ArrayList<Position>();
+		int[] x = {-1, 0, 1, 0};
+		int[] whiteY = {1, 1, 1, 2};
+		int[] blackY = {-1, -1, -1, -2};
+		List<Integer> xIntList = new ArrayList<Integer>();
+		List<Integer> yIntList = new ArrayList<Integer>();
+		for(int i = 0; i < x.length; i++){
+			xIntList.add(x[i]);
+			if(team == 0){
+				yIntList.add(whiteY[i]);
+			} else {
+				yIntList.add(blackY[i]);
+			}
+		}
+		if(hasMoved == false){
+			hasMoved = true;
+		} else{
+			xIntList.remove(xIntList.size() - 1);
+			yIntList.remove(yIntList.size() - 1);
+		}
+		
+		for(int i=0; i<x.length; i++){
+			moveList.add(new Position(px + xIntList.get(i), py + yIntList.get(i)));
+		}	
+		return moveList;
 		
 	}
-
-	private List<Position> moveDirection(int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
+
