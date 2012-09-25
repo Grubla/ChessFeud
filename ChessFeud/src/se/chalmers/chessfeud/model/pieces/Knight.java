@@ -28,10 +28,16 @@ public class Knight extends Piece{
 		return posList;
 	}
 
-	private List<Position> moveDirection(int x, int y) {
+	private List<Position> moveDirection(int px, int py) {
 		List<Position> moveList = new ArrayList<Position>();
-		for(int)
+		int[] x = {-2, -1, 1, 2, 2, 1, -1, -2};
+		int[] y = {1, 2, 2, 1, -1, -2, -2, -1};
+				
+		for(int i=0; i<x.length; i++){
+			moveList.add(new Position(px + x[i], py + y[i]));
+		}	
 		return moveList;
+		
 	}
 
 }
