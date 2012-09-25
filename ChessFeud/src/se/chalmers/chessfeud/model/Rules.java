@@ -29,8 +29,8 @@ public class Rules {
 	}
 	
 	public static boolean isCheck(ChessBoard cb){
-		for(int x = 0; x < cb.width(); x++)
-			for(int y = 0; y < cb.height(); y++){
+		for(int x = 0; x < cb.getWidth(); x++)
+			for(int y = 0; y < cb.getHeight(); y++){
 				Piece kingPiece = cb.getPieceAt(x, y);
 				if(kingPiece instanceof King){
 					for(int dx = -1; dx <= 1; dx++)
@@ -62,8 +62,8 @@ public class Rules {
 	
 	public boolean isDraw(ChessBoard cb, int nextTurn){
 		if(!isCheck(cb)){
-			for(int x = 0; x < cb.width(); x++)
-				for(int y = 0; y < cb.height(); y++)
+			for(int x = 0; x < cb.getWidth(); x++)
+				for(int y = 0; y < cb.getHeight(); y++)
 					if(cb.getPieceAt(x, y) != null && cb.getPieceAt(x, y).getTeam() == nextTurn){
 						if(getPossibleMoves(cb, new Position(x, y)).size() > 0)
 							return false;
@@ -75,8 +75,8 @@ public class Rules {
 	
 	public boolean isCheckMate(ChessBoard cb, int nextTurn){
 		if(isCheck(cb)){
-			for(int x = 0; x < cb.width(); x++)
-				for(int y = 0; y < cb.height(); y++)
+			for(int x = 0; x < cb.getWidth(); x++)
+				for(int y = 0; y < cb.getHeight(); y++)
 					if(cb.getPieceAt(x, y) != null && cb.getPieceAt(x, y).getTeam() == nextTurn){
 						if(getPossibleMoves(cb, new Position(x, y)).size() > 0)
 							return false;

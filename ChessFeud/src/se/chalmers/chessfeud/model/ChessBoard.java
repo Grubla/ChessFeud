@@ -1,6 +1,5 @@
 package se.chalmers.chessfeud.model;
 
-import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 
@@ -55,13 +54,13 @@ public class ChessBoard {
 	/**
 	 * Returns the width of the chessboard
 	 */
-	public int width(){
+	public int getWidth(){
 		return board.length;
 	}
 	/**
 	 * Returns the height of the chessboard
 	 */
-	public int height(){
+	public int getHeight(){
 		return board[0].length;
 	}
 	

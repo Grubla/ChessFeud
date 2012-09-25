@@ -21,16 +21,6 @@ public class Position {
 		return this.y;
 	}
 	
-	public void setNewPos(int x, int y){
-		this.x = x;
-		this.y = y;
-	}
-	
-	public void setNewPos(Position p){
-		this.x = p.getX();
-		this.y = p.getY();
-	}
-	
 	@Override
 	public boolean equals(Object o){
 		if(o instanceof Position){
