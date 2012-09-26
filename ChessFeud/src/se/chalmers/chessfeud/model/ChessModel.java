@@ -40,11 +40,23 @@ public class ChessModel {
 	public void click(Position p){
 		if(selected != null){ //Some piece is selected
 			if(possibleMoves.contains(p)){ //A valid move has been clicked
-				if(true){ //Change to ID > 0 <------------------------------------------------------------------------------- !!!!
-					takenPieces.add(chessBoard.getPieceAt(p));
+				Piece pi = chessBoard.movePiece(selected, p);
+				if(pi != null)
+					takenPieces.add(pi);
+				changeTurn();
+				if(Rules.isCheck(chessBoard, activePlayer))
+					if(Rules.isCheckMate(chessBoard, activePlayer)){
+						//Check mate
+					}else{
+						//CHeck
+					}
+				else if(Rules.isDraw(chessBoard, activePlayer)){
+						//Draw
+				}else{
+					//Next Turn
 				}
-				
-				//Move the piece
+						
+					
 				//Check for check draw etc
 				//Next turn or gameOver
 			}else{ //Clicked on a place the piece cannot go

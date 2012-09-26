@@ -3,9 +3,11 @@ package se.chalmers.chessfeud.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.Bishop;
 import se.chalmers.chessfeud.model.pieces.King;
 import se.chalmers.chessfeud.model.pieces.Knight;
+import se.chalmers.chessfeud.model.pieces.Pawn;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.pieces.Queen;
 import se.chalmers.chessfeud.model.pieces.Rook;
@@ -28,11 +30,11 @@ public class Rules {
 		return false;
 	}
 	
-	public static boolean isCheck(ChessBoard cb){
+	public static boolean isCheck(ChessBoard cb, int team){
 		for(int x = 0; x < cb.getWidth(); x++)
 			for(int y = 0; y < cb.getHeight(); y++){
 				Piece kingPiece = cb.getPieceAt(x, y);
-				if(kingPiece instanceof King){
+				if(kingPiece.getId() ==  C.PIECE_KING && kingPiece.getTeam() == team){
 					for(int dx = -1; dx <= 1; dx++)
 						for(int dy = -1; dy <= 1; dy++){
 							if(inBounds(x+dx,y+dy) && cb.isEmpty(new Position(x+dx, y+dy)) && !kingPiece.equals(new Position(x,y))){
@@ -42,9 +44,9 @@ public class Rules {
 								}
 								if(inBounds(x+dx,y+dy)){
 									Piece pi = cb.getPieceAt(x+dx*dir, y+dy*dir);
-									if(Math.abs(dx*dy) == 0 && (pi instanceof Queen || pi instanceof Rook))
+									if(Math.abs(dx*dy) == 0 && (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_ROOK))
 										return true;
-									if(Math.abs(dx*dy) == 1 && (pi instanceof Queen || pi instanceof Bishop))
+									if(Math.abs(dx*dy) == 1 && (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_BISHOP))
 										return true;
 								}							
 							}
@@ -52,16 +54,22 @@ public class Rules {
 					for(int i = 0; i < HORSE_X.length; i++){
 						int dx = HORSE_X[i];
 						int dy = HORSE_Y[i];
-						if(inBounds(x+dx,y+dy) && cb.getPieceAt(x+dx,y+dy) instanceof Knight)
+						if(inBounds(x+dx,y+dy) && cb.getPieceAt(x+dx,y+dy).getId() == C.PIECE_KNIGHT)
 							return true;
 					}
+					//Check for pawns aswell
+					int forward = team == C.TEAM_WHITE ? 1 : -1;
+					if(inBounds(x+1,y+forward) && cb.getPieceAt(x+1, y+forward).getId() == C.PIECE_PAWN)
+						return true;
+					if(inBounds(x-1,y+forward) && cb.getPieceAt(x-1, y+forward).getId() == C.PIECE_PAWN)
+						return true;
 				}
 			}
 		return false;
 	}
 	
-	public boolean isDraw(ChessBoard cb, int nextTurn){
-		if(!isCheck(cb)){
+	public static boolean isDraw(ChessBoard cb, int nextTurn){
+		if(!isCheck(cb, nextTurn)){
 			for(int x = 0; x < cb.getWidth(); x++)
 				for(int y = 0; y < cb.getHeight(); y++)
 					if(cb.getPieceAt(x, y) != null && cb.getPieceAt(x, y).getTeam() == nextTurn){
@@ -73,8 +81,8 @@ public class Rules {
 		return false;
 	}
 	
-	public boolean isCheckMate(ChessBoard cb, int nextTurn){
-		if(isCheck(cb)){
+	public static boolean isCheckMate(ChessBoard cb, int nextTurn){
+		if(isCheck(cb, nextTurn)){
 			for(int x = 0; x < cb.getWidth(); x++)
 				for(int y = 0; y < cb.getHeight(); y++)
 					if(cb.getPieceAt(x, y) != null && cb.getPieceAt(x, y).getTeam() == nextTurn){
@@ -90,20 +98,36 @@ public class Rules {
 		List<Position> pm = new LinkedList<Position>();
 		Piece piece = cb.getPieceAt(selected);
 		List<List<Position>> tempMoves = piece.theoreticalMoves(selected);
-		for(List<Position> l : tempMoves){
-			boolean canMove = true;
-			for(Position p : l){
-				ChessBoard tmpBoard = new ChessBoard(cb, selected, p);
-				if(canMove && Rules.isCheck(tmpBoard)){
-					if(cb.isEmpty(p))
-						pm.add(p);
-					else{
-						if(cb.getPieceAt(selected).getTeam() == cb.getPieceAt(p).getTeam())
+		if(!(piece.getId() == C.PIECE_PAWN)){
+			for(List<Position> l : tempMoves){
+				boolean canMove = true;
+				for(Position p : l){
+					ChessBoard tmpBoard = new ChessBoard(cb, selected, p);
+					if(canMove && Rules.isCheck(tmpBoard,cb.getPieceAt(selected).getTeam())){
+						if(cb.isEmpty(p))
 							pm.add(p);
-						canMove = false;
+						else{
+							if(cb.getPieceAt(selected).getTeam() == cb.getPieceAt(p).getTeam())
+								pm.add(p);
+							canMove = false;
+						}
 					}
 				}
 			}
+		}else{ // ID == PAWN
+			int dy = piece.getTeam() == C.TEAM_WHITE ? -1 : 1;
+			int startY = piece.getTeam() == C.TEAM_WHITE ? 6 : 1;
+			if(inBounds(selected.getX(), selected.getY()+dy) && cb.getPieceAt(selected.getX(), selected.getY()+dy) == null){
+				pm.add(new Position(selected.getX(), selected.getY()+dy));
+				if(inBounds(selected.getX(), selected.getY()+2*dy) && cb.getPieceAt(selected.getX(), selected.getY()+2*dy) == null && selected.getY() == startY){
+					pm.add(new Position(selected.getX(), selected.getY()+2*dy));
+				}
+			}
+			//Check if there is pieces to take diagonally forward
+			if(inBounds(selected.getX()-1, selected.getY()+dy) && cb.getPieceAt(selected.getX()-1, selected.getY()+dy).getTeam() != piece.getTeam())
+				pm.add(new Position(selected.getX()-1, selected.getY()+dy));
+			if(inBounds(selected.getX()+1, selected.getY()+dy) && cb.getPieceAt(selected.getX()+1, selected.getY()+dy).getTeam() != piece.getTeam())
+				pm.add(new Position(selected.getX()+1, selected.getY()+dy));
 		}
 		return pm;
 	}
