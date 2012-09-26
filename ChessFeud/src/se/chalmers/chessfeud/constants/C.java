@@ -9,4 +9,7 @@ public class C {
 	public static final int PIECE_QUEEN = 4;
 	public static final int PIECE_KING = 5;
 	
+	public static final int SQUARE_WHITE = 0xFFFFCE9E;
+	public static final int SQUARE_BLACK = 0xFFD18B47;
+	
 }
