@@ -13,5 +13,4 @@ public class C {
 	public static final int SQUARE_BLACK = 0xFFD18B47;
 	public static final int TEAM_WHITE = 0;
 	public static final int TEAM_BLACK = 1;
-
 }
