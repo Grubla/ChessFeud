@@ -26,16 +26,31 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/xml");
+		
 		final ServletOutputStream out = response.getOutputStream();
-		try {
-			final String userName = (String) request.getParameter("userName");
-			out.println("<login><status>SUCSESS</status></login>");
-		} catch(Exception e) {
-			out.println("<login><status>ERROR</login></status>");
-		}
-		out.flush();
-		out.close();
+
+
+
+			
+			try {
+				String userName = request.getParameter("userName");
+		        String password = request.getParameter("password");
+				boolean authenticated = login(userName, password);
+				if (authenticated) {
+					out.println("<login><status>SUCSESS</status></login>");
+				} else {
+					out.println("<login><status>FAIL</status></login>");
+				}
+				} catch(Exception e) {
+				out.println("<login><status>ERROR</login></status>");
+				
+				} 
+
+			out.flush();
+			out.close();
 	}
+		
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -44,6 +59,15 @@ public class TestServlet extends HttpServlet {
 
 		this.doGet(request, response);
 
+	}
+	
+	protected boolean login(String userName, String password) {
+		if (userName.equals("twister") && password.equals("awesomeness")) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 
 }
