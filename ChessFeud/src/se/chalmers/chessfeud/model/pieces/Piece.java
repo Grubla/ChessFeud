@@ -16,10 +16,18 @@ public abstract class Piece {
 
 	public abstract List<List<Position>> theoreticalMoves(Position p);
 	
+	/**
+	 * Makes it able to get the Pieces team.
+	 * @return the current team as an int. 0 for White, 1 for Black.
+	 */
 	public int getTeam(){
 		return this.team;
 	}
 	
+	/**
+	 * Makes it able to get the Pieces id
+	 * @return the current team from the Piece
+	 */
 	public int getId(){
 		return this.id;
 	}

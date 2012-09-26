@@ -8,7 +8,9 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
 
 /**
- * 
+ * The Piece King.
+ * Reprecents the King on the chessborad. Handles the logic for the
+ * Kings movement.
  * @author Arvid
  *
  */
@@ -20,7 +22,15 @@ public class King extends Piece{
 		super(team, C.PIECE_KING);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	/**
+	 * Returns a list of all the theoretical moves the King can do.
+	 * Even the moves that are out of bounds. That will be checked in
+	 * the rules class.
+	 * The list shall contain every position one square away from the king.
+	 *   @param p the piece current position.
+	 * @return posList A list that contains Lists of possible positions in the different directions.
+	 */
 	@Override
 	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();

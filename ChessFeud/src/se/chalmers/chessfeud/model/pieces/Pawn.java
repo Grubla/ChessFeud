@@ -8,7 +8,9 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 
 /**
- * The piece pawn
+ * The piece Knight.
+ * Reprecents the Pawns on the chessborad. Handles the logic for the
+ * Pawns movement.
  * @author Arvid
  *
  */
@@ -25,7 +27,12 @@ public class Pawn extends Piece{
 		this.team = team;
 		// TODO Auto-generated constructor stub
 	}
-
+	/**
+	 * A method that finds out all moves the piece can do
+	 * from the current position if the board was empty.
+	 * @param p the Pawns current Position
+	 * @return posList A list that contains Lists with all moves in all direction
+	 */
 	@Override
 	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
@@ -35,7 +42,16 @@ public class Pawn extends Piece{
 		return posList;
 	}
 
-
+	/*
+	 * Takes the current position, and depending on which team the pawn is
+	 * on returns all the possible moves the piece can do, including the diagonal moves.
+	 * If the pawn hasn't moved yet, the list will also contain the first double move which a pawn can make
+	 * on its first turn.
+	 * @param px the pawns x-Position value
+	 * @param py the pawns y-Position value
+	 * @param team an integer that shows which team the pawn is on, 0 = white, 1 = black
+	 * @return moveList the list of possible moves in all directions.
+	 */
 	private List<Position> moveDirection(int px, int py, int team) {
 		List<Position> moveList = new ArrayList<Position>();
 		int[] x = {-1, 0, 1, 0};
