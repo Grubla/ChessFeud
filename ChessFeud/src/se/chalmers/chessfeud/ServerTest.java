@@ -30,7 +30,7 @@ public class ServerTest extends Activity {
 		httpPost = new HttpPost("129.16.179.79:8080/ChessFeudServer/TestServlet/*");
 		List pairs = new ArrayList();
 		String username = "twister";
-		String pass = "12345";
+		String pass = "awesomeness";
 		pairs.add(new BasicNameValuePair("username", username));
 		pairs.add(new BasicNameValuePair("password", pass));
 		try {
