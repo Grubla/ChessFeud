@@ -18,7 +18,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 public class Rook extends Piece{
 
 	public Rook(int team) {
-		super(team,C.PIECE_ROOK);
+		super(team, C.PIECE_ROOK);
 		// TODO Auto-generated constructor stub
 	}
 	

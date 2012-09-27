@@ -19,7 +19,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 public class Knight extends Piece{
 
 	public Knight(int team) {
-		super(team, C.PIECE_KING);
+		super(team, C.PIECE_KNIGHT);
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -18,7 +18,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 public class Bishop extends Piece{
 
 	public Bishop(int team) {
-		super(team,C.PIECE_BISHOP);
+		super(team, C.PIECE_BISHOP);
 		// TODO Auto-generated constructor stub
 	}
 	/**
