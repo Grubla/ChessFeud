@@ -2,6 +2,7 @@ package se.chalmers.chessfeud.view;
 
 import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 import android.content.Context;
@@ -75,18 +76,18 @@ public class GameView extends View implements OnTouchListener{
 				}
 
 				Piece p = gm.getPieceAt(new Position(j, i));
+				p.toString();
 				// Paint piece at position is there is any
-				if (p != null) {
+				if (!(p instanceof NoPiece)) {
 					String uri = getPieceFileName(p.getTeam(), p.getId());
-					uri = "drawable/pieces_" + uri
-							+ ".png";
+					uri = "drawable/pieces_" + uri;
 					int imageResource = getResources().getIdentifier(uri, null,
 							context.getPackageName());
 					Drawable image = getResources().getDrawable(imageResource);
 					Bitmap bm = BitmapFactory.decodeResource(getResources(),
 							imageResource);
-					Bitmap.createScaledBitmap(bm, chessSquareWidth / 8,
-							chessSquareHeight / 8, false);
+					bm = Bitmap.createScaledBitmap(bm, chessSquareWidth,
+							chessSquareHeight, false);
 					canvas.drawBitmap(bm, j * chessSquareWidth, i
 							* chessSquareHeight, null);
 				}
@@ -118,27 +119,27 @@ public class GameView extends View implements OnTouchListener{
 		s += "_";
 
 		switch (id) {
-		case 0:
+		case C.PIECE_PAWN:
 			s += "pawn";
 			break;
 
-		case 1:
+		case C.PIECE_ROOK:
 			s += "rook";
 			break;
 
-		case 2:
+		case C.PIECE_BISHOP:
 			s += "bishop";
 			break;
 
-		case 3:
+		case C.PIECE_KNIGHT:
 			s += "knight";
 			break;
 
-		case 4:
+		case C.PIECE_QUEEN:
 			s += "queen";
 			break;
 
-		case 5:
+		case C.PIECE_KING:
 			s += "king";
 			break;
 
@@ -150,11 +151,13 @@ public class GameView extends View implements OnTouchListener{
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
-		if(pA.length > i)
-			gm.click(pA[i]);
+		int x = (int)event.getX()/chessSquareWidth;
+		int y = (int)event.getY()/chessSquareHeight;
+		gm.click(new Position(x,y));
 		i++;
 		if(gm.getTakenPieces() != null)
 			Log.d("Amount:", ""+gm.getTakenPieces().size());
+		this.invalidate();
 		return false;
 	}
 

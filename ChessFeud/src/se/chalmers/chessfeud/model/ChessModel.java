@@ -104,7 +104,7 @@ public class ChessModel {
 	 * @return a Piece object
 	 */
 	public Piece getPieceAt(Position p){
-		return null;
+		return chessBoard.getPieceAt(p.getX(), p.getY());
 	}
 	/**
 	 * Returns a list with all the taken pieces
