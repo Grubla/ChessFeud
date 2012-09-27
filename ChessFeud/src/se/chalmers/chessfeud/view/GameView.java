@@ -1,18 +1,17 @@
 package se.chalmers.chessfeud.view;
 
 import se.chalmers.chessfeud.constants.C;
-import android.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.View.OnTouchListener;
 
 /**
  * Paints out the board with squares and pieces.
@@ -20,10 +19,22 @@ import android.widget.ImageView;
  * @author pavlov
  * 
  */
-public class GameView extends View {
+public class GameView extends View implements OnTouchListener{
 	private Context context;
 	GameModel gm = new GameModel();
 
+	// For testing purposes only
+	private int i = 0;
+	private Position[] pA = {new Position(4, 6), new Position(4, 4), new Position(4,1), new Position(4,3), 
+			new Position(6,7), new Position(5,5), new Position(5,0), new Position(4,1), new Position(5,5), 
+			new Position(4,3), new Position(3,1), new Position(3,3), new Position(4,4), new Position(3,3), 
+			new Position(1,0), new Position(0,2), new Position(4,3), new Position(2,4), new Position(0,2), 
+			new Position(1,4), new Position(3,7), new Position(4,6), new Position(1,4), new Position(2,6),
+			new Position(4,7), new Position(3,7), new Position(2,0), new Position(3,1), new Position(4,6), 
+			new Position(7,3), new Position(2,6), new Position(4,5), new Position(5,6), new Position(4,5),
+			new Position(0,1), new Position(0,3), new Position(2,4), new Position(4,3), new Position(1,1), 
+			new Position(1,2), new Position(7,3), new Position(5,1) };
+	
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
@@ -129,6 +140,13 @@ public class GameView extends View {
 			break;
 		}
 		return s;
+	}
+
+	public boolean onTouch(View v, MotionEvent event) {
+		if(pA.length > i)
+			gm.click(pA[i]);
+		i++;
+		return false;
 	}
 
 }
