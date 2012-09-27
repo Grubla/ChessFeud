@@ -21,7 +21,7 @@ import android.view.View.OnTouchListener;
  */
 public class GameView extends View implements OnTouchListener{
 	private Context context;
-	GameModel gm = new GameModel();
+	ChessModel gm = new ChessModel();
 
 	// For testing purposes only
 	private int i = 0;
