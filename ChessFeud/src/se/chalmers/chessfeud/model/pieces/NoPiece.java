@@ -1,0 +1,19 @@
+package se.chalmers.chessfeud.model.pieces;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import se.chalmers.chessfeud.model.utils.Position;
+
+public class NoPiece extends Piece{
+	
+	public NoPiece() {
+		super(-1, -1);
+	}
+	
+	@Override
+	public List<List<Position>> theoreticalMoves(Position p) {
+		return new ArrayList<List<Position>>();
+	}
+
+}
