@@ -3,7 +3,9 @@ package se.chalmers.chessfeudserver;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -18,8 +20,10 @@ public class DbHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	
-	private Connection dbcon; 
+	private Connection dbConnection; 
 	
+	private ResultSet rs;
+	private Statement s;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -28,18 +32,27 @@ public class DbHandler extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    
+    /**
+     * Loads the jdbc driver.
+     */
     public void init(ServletConfig config) throws ServletException
     {
-        String loginUser = "twister";
-        String loginPasswd = "awesomeness";
-        String loginUrl = "jdbc:mysql://localhost/cfdb";
-
-        // Load the PostgreSQL driver
+        String loginUser = "root";
+        String loginPw = "awesomeness";
+        String loginURL = "jdbc:mysql://localhost/cfdb";
+        
+        
         try 
         {
               Class.forName("com.mysql.jdbc.Driver");
-              dbcon = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+              dbConnection = DriverManager.getConnection(loginURL, loginUser, loginPw);
+              
+              s = dbConnection.createStatement();
+              
+              rs = s.executeQuery("select * from auth");
+              
+              writeResultSet(rs);
+              
         }
         catch (ClassNotFoundException ex)
         {
@@ -50,6 +63,8 @@ public class DbHandler extends HttpServlet {
         {
                System.err.println("SQLException: " + ex.getMessage());
         }
+        
+        
     }
 
 	/**
@@ -66,8 +81,13 @@ public class DbHandler extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 	
-	private String getGames(String userName) {
-		
-	}
+	private void writeResultSet(ResultSet resultSet) throws SQLException {
+	    while (resultSet.next()) {
+
+	    	System.out.println(resultSet.getString(1));
+	    	System.out.println(resultSet.getString(2));
+	    	System.out.println(resultSet.getString(3));
+	    }
+	  }
 
 }
