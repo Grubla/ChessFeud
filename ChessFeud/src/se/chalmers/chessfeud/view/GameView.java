@@ -103,14 +103,14 @@ public class GameView extends View implements OnTouchListener{
 	 */
 	private String getPieceFileName(int team, int id) {
 		String s = "";
-		if (id == 0) {
+		if (team == 0) {
 			s = "" + "white";
 		} else {
 			s = "" + "black";
 		}
 		s += "_";
 
-		switch (team) {
+		switch (id) {
 		case 0:
 			s += "pawn";
 			break;
