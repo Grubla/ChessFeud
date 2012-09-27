@@ -15,5 +15,10 @@ public class NoPiece extends Piece{
 	public List<List<Position>> theoreticalMoves(Position p) {
 		return new ArrayList<List<Position>>();
 	}
+	
+	@Override
+	public String toString(){
+		return "Piece: NoPiece, Team: -1";
+	}
 
 }

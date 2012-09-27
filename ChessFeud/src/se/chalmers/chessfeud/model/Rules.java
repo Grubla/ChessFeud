@@ -58,16 +58,16 @@ public class Rules {
 				if(kingPiece.getId() ==  C.PIECE_KING && kingPiece.getTeam() == team){
 					for(int dx = -1; dx <= 1; dx++)
 						for(int dy = -1; dy <= 1; dy++){
-							if(inBounds(x+dx,y+dy) && cb.isEmpty(new Position(x+dx, y+dy)) && !kingPiece.equals(new Position(x,y))){
-								int dir = 2;
+							if(inBounds(x+dx,y+dy) && cb.isEmpty(new Position(x+dx, y+dy)) && !(dx == 0 && dy == 0)){
+								int dir = 1;
 								while(inBounds(x+dx*dir,y+dy*dir) && cb.isEmpty(new Position(x+dx*dir, y+dy*dir))){
 									dir++;
 								}
-								if(inBounds(x+dx,y+dy)){
+								if(inBounds(x+dx*dir,y+dy*dir)){
 									Piece pi = cb.getPieceAt(x+dx*dir, y+dy*dir);
-									if(Math.abs(dx*dy) == 0 && (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_ROOK))
+									if(Math.abs(dx*dy) == 0 && (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_ROOK) && pi.getTeam() != team)
 										return true;
-									if(Math.abs(dx*dy) == 1 && (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_BISHOP))
+									if(Math.abs(dx*dy) == 1 && (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_BISHOP) && pi.getTeam() != team)
 										return true;
 								}							
 							}
@@ -75,14 +75,14 @@ public class Rules {
 					for(int i = 0; i < HORSE_X.length; i++){
 						int dx = HORSE_X[i];
 						int dy = HORSE_Y[i];
-						if(inBounds(x+dx,y+dy) && cb.getPieceAt(x+dx,y+dy).getId() == C.PIECE_KNIGHT)
+						if(inBounds(x+dx,y+dy) && cb.getPieceAt(x+dx,y+dy).getId() == C.PIECE_KNIGHT && cb.getPieceAt(x+dx,y+dy).getTeam() != team)
 							return true;
 					}
 					//Check for pawns aswell
 					int forward = team == C.TEAM_WHITE ? 1 : -1;
-					if(inBounds(x+1,y+forward) && cb.getPieceAt(x+1, y+forward).getId() == C.PIECE_PAWN)
+					if(inBounds(x+1,y+forward) && cb.getPieceAt(x+1, y+forward).getId() == C.PIECE_PAWN && cb.getPieceAt(x+1, y+forward).getTeam() != team)
 						return true;
-					if(inBounds(x-1,y+forward) && cb.getPieceAt(x-1, y+forward).getId() == C.PIECE_PAWN)
+					if(inBounds(x-1,y+forward) && cb.getPieceAt(x-1, y+forward).getId() == C.PIECE_PAWN && cb.getPieceAt(x+1, y+forward).getTeam() != team)
 						return true;
 				}
 			}
@@ -124,11 +124,11 @@ public class Rules {
 				boolean canMove = true;
 				for(Position p : l){
 					ChessBoard tmpBoard = new ChessBoard(cb, selected, p);
-					if(canMove && Rules.isCheck(tmpBoard,cb.getPieceAt(selected).getTeam())){
-						if(cb.isEmpty(p))
+					if(canMove && !Rules.isCheck(tmpBoard,cb.getPieceAt(selected).getTeam())){
+						if(cb.isEmpty(p)){
 							pm.add(p);
-						else{
-							if(cb.getPieceAt(selected).getTeam() == cb.getPieceAt(p).getTeam())
+						}else{
+							if(cb.getPieceAt(selected).getTeam() != cb.getPieceAt(p).getTeam())
 								pm.add(p);
 							canMove = false;
 						}
@@ -149,9 +149,9 @@ public class Rules {
 				pm.add(new Position(selected.getX()-1, selected.getY()+dy));
 			if(inBounds(selected.getX()+1, selected.getY()+dy) && cb.getPieceAt(selected.getX()+1, selected.getY()+dy).getTeam() != piece.getTeam())
 				pm.add(new Position(selected.getX()+1, selected.getY()+dy));
-			for(Position p : pm)
-				Log.d("PawnMovement:", p.toString());
 		}
+		for(Position p : pm)
+			Log.d("CanMoveTo:", p.toString());
 		return pm;
 	}
 	

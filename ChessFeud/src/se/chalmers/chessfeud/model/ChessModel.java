@@ -36,7 +36,6 @@ public class ChessModel {
 	 * @param p, the position clicked
 	 */
 	public void click(Position p){
-		Log.d("click", "Made it");
 		Log.d("Pos:", p.toString());
 		if(selected != null){ //Some piece is selected
 			if(possibleMoves.contains(p)){ //A valid move has been clicked
@@ -71,7 +70,6 @@ public class ChessModel {
 				}
 			}
 		}else{
-			Log.d("setSelected", ""+(chessBoard.getPieceAt(p) != null)+" "+(chessBoard.getPieceAt(p).getTeam() == activePlayer));
 			if(chessBoard.getPieceAt(p) != null && chessBoard.getPieceAt(p).getTeam() == activePlayer){ //Clicked on a new valid piece
 				setSelected(p);
 			}
@@ -81,15 +79,15 @@ public class ChessModel {
 	 * Returns the possible moves (according to ALL rules) for the chosen piece.
 	 * @param pos, the position of the chosen piece
 	 */
-	private void getPossibleMoves(){
+	private void setPossibleMoves(){
 		possibleMoves.clear();
 		possibleMoves = Rules.getPossibleMoves(chessBoard, selected);
-		
-		
 	}
-	/* Returns true if the pieces at the given positions are on the same team */
-	private boolean sameTeam(Position pos, Position p) {
-		return chessBoard.getPieceAt(pos).getTeam() == chessBoard.getPieceAt(p).getTeam();
+	/**
+	 * Returns the possible moves in a list och positions.
+	 */
+	public List<Position> getPossibleMoves(){
+		return possibleMoves;
 	}
 	
 	/**
@@ -119,12 +117,20 @@ public class ChessModel {
 	/* Sets the current position as the selected one */
 	private void setSelected(Position p){
 		selected = p;
-		getPossibleMoves();
+		setPossibleMoves();
 	}
 	
 	/* Deselcts the current selected piece */
 	private void deselectPiece(){
 		selected = null;
+	}
+	
+	/**
+	 * Return the selected position or null if not any selected
+	 * @return
+	 */
+	public Position getSelectedPosition(){
+		return selected;
 	}
 	
 	/* Changes the turn (the actve player) */

@@ -14,7 +14,7 @@ import se.chalmers.chessfeud.model.utils.Position;
  *
  */
 
-//Även kallad Springare eller Häst
+//ï¿½ven kallad Springare eller Hï¿½st
 
 public class Knight extends Piece{
 
@@ -36,31 +36,15 @@ public class Knight extends Piece{
 	@Override
 	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
-		List<Position> moveList = moveDirection(p.getX(), p.getY());
-		posList.add(moveList);
-		return posList;
-	}
-
-	/*
-	 * Returns a List with all the theoretical moves the Knight
-	 * can do, even those that are out of bounds. The list will be checked in the
-	 * rules class so no strange things happens.
-	 *
-	 * @param px the piece current x-position value.
-	 * @param py the piece current y-position value
-	 * @return a List of possible moves.
-	 */
-	private List<Position> moveDirection(int px, int py) {
-		List<Position> moveList = new ArrayList<Position>();
 		int[] x = {-2, -1, 1, 2, 2, 1, -1, -2};
 		int[] y = {1, 2, 2, 1, -1, -2, -2, -1};
-				
 		for(int i=0; i<x.length; i++){
-			if(0 <= px + x[i] && px + x[i] <=7 && 0 <= py + y[i] && py + y[i] <= 7)
-				moveList.add(new Position(px + x[i], py + y[i]));
-		}	
-		return moveList;
-		
+			List<Position> moveList = new ArrayList<Position>();
+			moveList.add(new Position(p.getX() + x[i], p.getY() + y[i]));
+			if(0 <= p.getX() + x[i] && p.getX() + x[i] <=7 && 0 <= p.getY() + y[i] && p.getY() + y[i] <= 7)
+				posList.add(moveList);
+		}
+		return posList;
 	}
 	
 	@Override
