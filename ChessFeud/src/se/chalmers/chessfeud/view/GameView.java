@@ -78,7 +78,7 @@ public class GameView extends View implements OnTouchListener{
 				// Paint piece at position is there is any
 				if (p != null) {
 					String uri = getPieceFileName(p.getTeam(), p.getId());
-					uri = "drawable/pieces/" + uri
+					uri = "drawable/pieces_" + uri
 							+ ".png";
 					int imageResource = getResources().getIdentifier(uri, null,
 							context.getPackageName());
