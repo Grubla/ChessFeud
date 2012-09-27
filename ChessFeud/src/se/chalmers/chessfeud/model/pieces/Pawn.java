@@ -74,7 +74,7 @@ public class Pawn extends Piece{
 			yIntList.remove(yIntList.size() - 1);
 		}
 		
-		for(int i=0; i<x.length; i++){
+		for(int i=0; i<xIntList.size(); i++){
 			moveList.add(new Position(px + xIntList.get(i), py + yIntList.get(i)));
 		}	
 		return moveList;
