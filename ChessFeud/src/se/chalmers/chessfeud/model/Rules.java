@@ -13,6 +13,7 @@ import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.pieces.Queen;
 import se.chalmers.chessfeud.model.pieces.Rook;
 import se.chalmers.chessfeud.model.utils.Position;
+import android.util.Log;
 
 public class Rules {
 	
@@ -59,7 +60,7 @@ public class Rules {
 						for(int dy = -1; dy <= 1; dy++){
 							if(inBounds(x+dx,y+dy) && cb.isEmpty(new Position(x+dx, y+dy)) && !kingPiece.equals(new Position(x,y))){
 								int dir = 2;
-								while(inBounds(x+dx,y+dy) && cb.isEmpty(new Position(x+dx*dir, y+dy*dir))){
+								while(inBounds(x+dx*dir,y+dy*dir) && cb.isEmpty(new Position(x+dx*dir, y+dy*dir))){
 									dir++;
 								}
 								if(inBounds(x+dx,y+dy)){
@@ -118,7 +119,7 @@ public class Rules {
 		List<Position> pm = new LinkedList<Position>();
 		Piece piece = cb.getPieceAt(selected);
 		List<List<Position>> tempMoves = piece.theoreticalMoves(selected);
-		if(!(piece.getId() == C.PIECE_PAWN)){
+		if(piece.getId() != C.PIECE_PAWN){
 			for(List<Position> l : tempMoves){
 				boolean canMove = true;
 				for(Position p : l){
@@ -137,9 +138,9 @@ public class Rules {
 		}else{ // ID == PAWN
 			int dy = piece.getTeam() == C.TEAM_WHITE ? -1 : 1;
 			int startY = piece.getTeam() == C.TEAM_WHITE ? 6 : 1;
-			if(inBounds(selected.getX(), selected.getY()+dy) && cb.getPieceAt(selected.getX(), selected.getY()+dy) == null){
+			if(inBounds(selected.getX(), selected.getY()+dy) && cb.isEmpty(new Position(selected.getX(), selected.getY()+dy))){
 				pm.add(new Position(selected.getX(), selected.getY()+dy));
-				if(inBounds(selected.getX(), selected.getY()+2*dy) && cb.getPieceAt(selected.getX(), selected.getY()+2*dy) == null && selected.getY() == startY){
+				if(inBounds(selected.getX(), selected.getY()+2*dy) && cb.isEmpty(new Position(selected.getX(), selected.getY()+2*dy)) && selected.getY() == startY){
 					pm.add(new Position(selected.getX(), selected.getY()+2*dy));
 				}
 			}
@@ -148,6 +149,8 @@ public class Rules {
 				pm.add(new Position(selected.getX()-1, selected.getY()+dy));
 			if(inBounds(selected.getX()+1, selected.getY()+dy) && cb.getPieceAt(selected.getX()+1, selected.getY()+dy).getTeam() != piece.getTeam())
 				pm.add(new Position(selected.getX()+1, selected.getY()+dy));
+			for(Position p : pm)
+				Log.d("PawnMovement:", p.toString());
 		}
 		return pm;
 	}

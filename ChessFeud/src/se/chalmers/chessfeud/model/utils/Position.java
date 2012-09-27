@@ -21,6 +21,10 @@ public class Position {
 		return this.y;
 	}
 	
+	public String toString(){
+		return "x: " + this.x + " y: " + this.y;
+	}
+	
 	@Override
 	public boolean equals(Object o){
 		if(o instanceof Position){

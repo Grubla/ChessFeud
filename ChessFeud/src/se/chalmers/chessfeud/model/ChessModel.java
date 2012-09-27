@@ -37,8 +37,7 @@ public class ChessModel {
 	 */
 	public void click(Position p){
 		Log.d("click", "Made it");
-		Log.d("Pos:", ""+p.getX()+","+p.getY());
-		Log.d("selected", ""+selected);
+		Log.d("Pos:", p.toString());
 		if(selected != null){ //Some piece is selected
 			if(possibleMoves.contains(p)){ //A valid move has been clicked
 				Piece pi = chessBoard.movePiece(selected, p);

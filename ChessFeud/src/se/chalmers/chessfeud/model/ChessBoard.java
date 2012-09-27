@@ -3,6 +3,7 @@ package se.chalmers.chessfeud.model;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
+import android.util.Log;
 
 /**
  * A class for representing a chessboard.
@@ -75,6 +76,8 @@ public class ChessBoard {
 		Piece piece = getPieceAt(newPos);
 		board[newPos.getX()][newPos.getY()] = getPieceAt(oldPos);
 		board[oldPos.getX()][oldPos.getY()] = new NoPiece();
+		Log.d("Piece ret:", piece.toString());
+		Log.d("New pos:",board[newPos.getX()][newPos.getY()].toString());
 		return piece;
 	}
 	
