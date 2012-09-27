@@ -80,5 +80,10 @@ public class Pawn extends Piece{
 		return moveList;
 		
 	}
+	
+	@Override
+	public String toString(){
+		return "Piece: Pawn " + "Team: " + getTeam();
+	}
 }
 

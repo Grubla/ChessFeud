@@ -65,5 +65,10 @@ public class Queen extends Piece{
 		}
 		return moveList;
 	}
+	
+	@Override
+	public String toString(){
+		return "Piece: Queen " + "Team: " + getTeam();
+	}
 
 }

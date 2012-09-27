@@ -66,5 +66,10 @@ public class Rook extends Piece{
 		}
 		return moveList;
 	}
+	
+	@Override
+	public String toString(){
+		return "Piece: Rook " + "Team: " + getTeam();
+	}
 
 }

@@ -56,10 +56,16 @@ public class Knight extends Piece{
 		int[] y = {1, 2, 2, 1, -1, -2, -2, -1};
 				
 		for(int i=0; i<x.length; i++){
-			moveList.add(new Position(px + x[i], py + y[i]));
+			if(0 <= px + x[i] && px + x[i] <=7 && 0 <= py + y[i] && py + y[i] <= 7)
+				moveList.add(new Position(px + x[i], py + y[i]));
 		}	
 		return moveList;
 		
+	}
+	
+	@Override
+	public String toString(){
+		return "Piece: Knight " + "Team: " + getTeam();
 	}
 
 }

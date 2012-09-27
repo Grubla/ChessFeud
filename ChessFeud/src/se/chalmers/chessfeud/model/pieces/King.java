@@ -45,4 +45,9 @@ public class King extends Piece{
 		}
 		return posList;
 	}
+	
+	@Override
+	public String toString(){
+		return "Piece: King " + "Team: " + getTeam();
+	}
 }
