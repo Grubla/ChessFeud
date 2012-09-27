@@ -88,6 +88,6 @@ public class DbHandler extends HttpServlet {
 	    	System.out.println(resultSet.getString(2));
 	    	System.out.println(resultSet.getString(3));
 	    }
-	  }
+	}
 
 }
