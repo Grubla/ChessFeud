@@ -9,24 +9,36 @@
 	<!-- Menu Bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp" android:layout_marginBottom="20dp" android:layout_marginTop="5dp" android:background="@drawable/bg_border" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:orientation="horizontal">
+        android:layout_height="60dp" 
+        android:layout_marginBottom="20dp" 
+        android:layout_marginTop="5dp" 
+        android:background="@drawable/bg_menu_border" 
+        xmlns:android="http://schemas.android.com/apk/res/android" 
+        xmlns:tools="http://schemas.android.com/tools" 
+        android:orientation="horizontal">
 
         <!-- Profile & Stats -->
         <Button
             android:id="@+id/button_myprofile"
             android:layout_width="55dp"
-            android:layout_height="55dp" android:layout_marginLeft="5dp" android:drawableTop="@drawable/icon_stats"/>
+            android:layout_height="55dp" 
+            android:layout_marginLeft="5dp" 
+            android:drawableTop="@drawable/icon_menu_stats"/>
 		<!-- ChessFeud Logo -->
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="139dp"
-            android:layout_height="50dp" android:layout_weight="1" android:src="@drawable/chess_logo_web_red"/>
+            android:layout_height="50dp" 
+            android:layout_weight="1" 
+            android:src="@drawable/logo_chessfeud"/>
 
         <!-- Settings -->
         <Button
             android:id="@+id/button_settings"
             android:layout_width="55dp"
-            android:layout_height="55dp" android:layout_marginRight="5dp" android:drawableTop="@drawable/icon_settings"/>
+            android:layout_height="55dp" 
+            android:layout_marginRight="5dp" 
+            android:drawableTop="@drawable/icon_menu_settings"/>
     </LinearLayout>
     
     <!-- Game List -->
