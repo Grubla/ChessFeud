@@ -127,8 +127,31 @@ public class DbHandler extends HttpServlet {
 		rs = s.executeQuery("select * from statistics where username='"+userName+"'");
 		return(rs.getString(2)+"/"+rs.getString(3));
 	}
+	/**
+	 * Adds a user to the database.
+	 * @param email
+	 * @param userName
+	 * @param password
+	 * @throws SQLException
+	 */
+	private void addUser(String email, String userName, String password) throws SQLException {
+		s.executeQuery("insert into auth(email, username, password) values('"+email+"','"+userName+"','"+password+"')");
+	}
 	
+	private void incWins(String userName) throws SQLException {
+		rs = s.executeQuery("select * from statistics where username='"+userName+"'");
+		String[] wld = rs.getString(1).split("/");
+		int w = Integer.parseInt(wld[0])+1;
+		s.executeQuery("update statistics set )
+	}
 	
+	private void incLosses(String userName) {
+		
+	}
+	
+	private void incDraws(String userName) {
+		
+	}
 	
 	
 	
