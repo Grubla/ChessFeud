@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -89,5 +91,47 @@ public class DbHandler extends HttpServlet {
 	    	System.out.println(resultSet.getString(3));
 	    }
 	}
+	
+	private boolean authenticate(String userName, String password) throws SQLException {
+		
+		rs = s.executeQuery("select password from auth where userName='"+userName+"'");
+		rs.first();
+		if(rs.getString(0).equals(password)) {
+			return true;
+		} 
+		
+		return false;
+		
+	}
+	/**
+	 * Checks for games in the database where the user is participating and adds them to an arraylist to return.
+	 * @param userName
+	 * @return
+	 * @throws SQLException
+	 */
+	private List<String> getGamesInProgress(String userName) throws SQLException {
+		List<String> games = new ArrayList<String>();
+		rs = s.executeQuery("select * from game where user1='"+userName+"' or user2='"+userName+"'");
+		while(rs.next()) {
+			games.add(rs.getString(1)+"/"+rs.getString(2)+"/"+rs.getString(3)+"/"+rs.getString(4));
+		}
+		return games;
+	}
+	/**
+	 * Returns wins losses and draws as well as number of moves done all with a / between each other.
+	 * @param userName
+	 * @return
+	 * @throws SQLException
+	 */
+	private String getStatistics(String userName) throws SQLException {
+		rs = s.executeQuery("select * from statistics where username='"+userName+"'");
+		return(rs.getString(2)+"/"+rs.getString(3));
+	}
+	
+	
+	
+	
+	
+	
 
 }
