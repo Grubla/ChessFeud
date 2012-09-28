@@ -36,7 +36,7 @@ public class Queen extends Piece{
 		List<List<Position>> posList = new ArrayList<List<Position>>();
 		for(int x = -1; x < 2; x++){
 			for(int y = -1; y < 2; y++){
-				if(x != 0 && y != 0){
+				if(!(x == 0 && y == 0)){
 					List<Position> moveList = moveDirection(x, y, p);
 					if(moveList.size()!=0)
 						posList.add(moveList);
