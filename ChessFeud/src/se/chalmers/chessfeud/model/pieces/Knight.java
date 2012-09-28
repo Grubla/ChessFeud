@@ -41,7 +41,7 @@ public class Knight extends Piece{
 		for(int i=0; i<x.length; i++){
 			List<Position> moveList = new ArrayList<Position>();
 			moveList.add(new Position(p.getX() + x[i], p.getY() + y[i]));
-			if(0 <= p.getX() + x[i] && p.getX() + x[i] <=7 && 0 <= p.getY() + y[i] && p.getY() + y[i] <= 7)
+			if(Position.inBounds(p.getX() + x[i], p.getY() + y[i]))
 				posList.add(moveList);
 		}
 		return posList;

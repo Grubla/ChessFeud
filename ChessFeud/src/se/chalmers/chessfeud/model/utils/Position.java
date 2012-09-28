@@ -25,6 +25,14 @@ public class Position {
 		return "x: " + this.x + " y: " + this.y;
 	}
 	
+	public boolean inBounds(){
+		return(0 <= this.getX() && this.getX() <= 7 && 0 <= this.getY() && this.getY() <= 7);
+	}
+	
+	public static boolean inBounds(int x, int y) {
+		return(0 <= x && x <= 7 && 0 <= y && y <= 7);
+	}
+	
 	@Override
 	public boolean equals(Object o){
 		if(o instanceof Position){

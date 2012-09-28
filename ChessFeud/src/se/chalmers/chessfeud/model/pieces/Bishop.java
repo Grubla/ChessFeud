@@ -56,7 +56,7 @@ public class Bishop extends Piece{
 		List<Position> moveList = new ArrayList<Position>();
 		int x = p.getX() + dx;
 		int y = p.getY() + dy;
-		while(0 <= x && x <= 7 && 0 <= y && y <= 7){
+		while(Position.inBounds(x, y)){
 			moveList.add(new Position(x, y));
 			x += dx;
 			y += dy;

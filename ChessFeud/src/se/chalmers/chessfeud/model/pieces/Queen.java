@@ -58,7 +58,7 @@ public class Queen extends Piece{
 		List<Position> moveList = new ArrayList<Position>();
 		int x = p.getX() + dx;
 		int y = p.getY() + dy;
-		while(0 <= x && x < 8 && 0 <= y && y < 8){
+		while(Position.inBounds(x, y)){
 			moveList.add(new Position(x, y));
 			x += dx;
 			y += dy;
