@@ -15,7 +15,7 @@ import se.chalmers.chessfeud.model.utils.Position;
  *
  */
 
-//Även kallad Kung
+//ï¿½ven kallad Kung
 public class King extends Piece{
 
 	public King(int team) {
@@ -36,7 +36,7 @@ public class King extends Piece{
 		List<List<Position>> posList = new ArrayList<List<Position>>();
 		for(int x = -1; x < 3; x++){
 			for(int y = -1; y < 3; y++){
-				if(!(x == 0 && y == 0) && (p.getX() + x <= 7 && p.getY() + y <= 7)){
+				if(!(x == 0 && y == 0) && p.getX() + x <= 7 && p.getY() + y <= 7 && 0 <= p.getX() + x && 0 <= p.getY() + y){
 					List<Position> tmp = new LinkedList<Position>();
 					tmp.add(new Position(p.getX() + x, p.getY() + y));
 					posList.add(tmp);

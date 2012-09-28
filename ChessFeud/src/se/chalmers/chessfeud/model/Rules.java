@@ -58,7 +58,7 @@ public class Rules {
 				if(kingPiece.getId() ==  C.PIECE_KING && kingPiece.getTeam() == team){
 					for(int dx = -1; dx <= 1; dx++)
 						for(int dy = -1; dy <= 1; dy++){
-							if(inBounds(x+dx,y+dy) && cb.isEmpty(new Position(x+dx, y+dy)) && !(dx == 0 && dy == 0)){
+							if(inBounds(x+dx,y+dy) && !(dx == 0 && dy == 0)){
 								int dir = 1;
 								while(inBounds(x+dx*dir,y+dy*dir) && cb.isEmpty(new Position(x+dx*dir, y+dy*dir))){
 									dir++;
@@ -68,6 +68,8 @@ public class Rules {
 									if(Math.abs(dx*dy) == 0 && (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_ROOK) && pi.getTeam() != team)
 										return true;
 									if(Math.abs(dx*dy) == 1 && (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_BISHOP) && pi.getTeam() != team)
+										return true;
+									if(dir == 1 && pi.getId() == C.PIECE_KING && pi.getTeam() != team)
 										return true;
 								}							
 							}
@@ -79,10 +81,10 @@ public class Rules {
 							return true;
 					}
 					//Check for pawns aswell
-					int forward = team == C.TEAM_WHITE ? 1 : -1;
+					int forward = team == C.TEAM_WHITE ? -1 : 1;
 					if(inBounds(x+1,y+forward) && cb.getPieceAt(x+1, y+forward).getId() == C.PIECE_PAWN && cb.getPieceAt(x+1, y+forward).getTeam() != team)
 						return true;
-					if(inBounds(x-1,y+forward) && cb.getPieceAt(x-1, y+forward).getId() == C.PIECE_PAWN && cb.getPieceAt(x+1, y+forward).getTeam() != team)
+					if(inBounds(x-1,y+forward) && cb.getPieceAt(x-1, y+forward).getId() == C.PIECE_PAWN && cb.getPieceAt(x-1, y+forward).getTeam() != team)
 						return true;
 				}
 			}
@@ -119,16 +121,17 @@ public class Rules {
 		List<Position> pm = new LinkedList<Position>();
 		Piece piece = cb.getPieceAt(selected);
 		List<List<Position>> tempMoves = piece.theoreticalMoves(selected);
+		int team = cb.getPieceAt(selected).getTeam();
 		if(piece.getId() != C.PIECE_PAWN){
 			for(List<Position> l : tempMoves){
 				boolean canMove = true;
 				for(Position p : l){
 					ChessBoard tmpBoard = new ChessBoard(cb, selected, p);
-					if(canMove && !Rules.isCheck(tmpBoard,cb.getPieceAt(selected).getTeam())){
+					if(canMove && !Rules.isCheck(tmpBoard,team)){
 						if(cb.isEmpty(p)){
 							pm.add(p);
 						}else{
-							if(cb.getPieceAt(selected).getTeam() != cb.getPieceAt(p).getTeam())
+							if(team != cb.getPieceAt(p).getTeam())
 								pm.add(p);
 							canMove = false;
 						}
@@ -138,17 +141,29 @@ public class Rules {
 		}else{ // ID == PAWN
 			int dy = piece.getTeam() == C.TEAM_WHITE ? -1 : 1;
 			int startY = piece.getTeam() == C.TEAM_WHITE ? 6 : 1;
-			if(inBounds(selected.getX(), selected.getY()+dy) && cb.isEmpty(new Position(selected.getX(), selected.getY()+dy))){
-				pm.add(new Position(selected.getX(), selected.getY()+dy));
-				if(inBounds(selected.getX(), selected.getY()+2*dy) && cb.isEmpty(new Position(selected.getX(), selected.getY()+2*dy)) && selected.getY() == startY){
-					pm.add(new Position(selected.getX(), selected.getY()+2*dy));
+			Position tryPos = new Position(selected.getX(), selected.getY()+dy);
+			ChessBoard tmpBoard = new ChessBoard(cb, selected, tryPos);
+			if(inBounds(tryPos) && cb.isEmpty(tryPos) && !isCheck(tmpBoard, team)){
+				pm.add(tryPos);
+				tryPos = new Position(selected.getX(), selected.getY()+2*dy);
+				tmpBoard = new ChessBoard(cb, selected, tryPos);
+				if(inBounds(tryPos) && cb.isEmpty(tryPos) && selected.getY() == startY && !isCheck(tmpBoard, team)){
+					pm.add(tryPos);
 				}
 			}
 			//Check if there is pieces to take diagonally forward
-			if(inBounds(selected.getX()-1, selected.getY()+dy) && cb.getPieceAt(selected.getX()-1, selected.getY()+dy).getTeam() != piece.getTeam())
-				pm.add(new Position(selected.getX()-1, selected.getY()+dy));
-			if(inBounds(selected.getX()+1, selected.getY()+dy) && cb.getPieceAt(selected.getX()+1, selected.getY()+dy).getTeam() != piece.getTeam())
-				pm.add(new Position(selected.getX()+1, selected.getY()+dy));
+			tryPos = new Position(selected.getX()-1, selected.getY()+dy);
+			if(inBounds(tryPos)){
+				tmpBoard = new ChessBoard(cb, selected, tryPos);
+				if(!cb.isEmpty(tryPos) && cb.getPieceAt(tryPos).getTeam() != piece.getTeam() && !isCheck(tmpBoard, team))
+					pm.add(tryPos);
+			}
+			tryPos = new Position(selected.getX()+1, selected.getY()+dy);
+			if(inBounds(tryPos)){
+				tmpBoard = new ChessBoard(cb, selected, tryPos);
+				if(!cb.isEmpty(tryPos) && cb.getPieceAt(tryPos).getTeam() != piece.getTeam() && !isCheck(tmpBoard, team))
+					pm.add(tryPos);
+			}
 		}
 		for(Position p : pm)
 			Log.d("CanMoveTo:", p.toString());
@@ -157,5 +172,9 @@ public class Rules {
 	
 	private static boolean inBounds(int x, int y){
 		return 0 <= x && x < 8 && 0 <= y && y < 8;
+	}
+	
+	private static boolean inBounds(Position p){
+		return 0 <= p.getX() && p.getX() < 8 && 0 <= p.getY() && p.getY() < 8;
 	}
 }
