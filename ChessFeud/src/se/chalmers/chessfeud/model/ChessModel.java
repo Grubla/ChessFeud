@@ -124,6 +124,7 @@ public class ChessModel {
 	/* Deselcts the current selected piece */
 	private void deselectPiece(){
 		selected = null;
+		possibleMoves.clear();
 	}
 	
 	/**

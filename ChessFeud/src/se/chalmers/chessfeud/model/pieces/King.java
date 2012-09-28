@@ -34,8 +34,8 @@ public class King extends Piece{
 	@Override
 	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
-		for(int x = -1; x < 3; x++){
-			for(int y = -1; y < 3; y++){
+		for(int x = -1; x <= 1; x++){
+			for(int y = -1; y <= 1; y++){
 				if(!(x == 0 && y == 0) && p.getX() + x <= 7 && p.getY() + y <= 7 && 0 <= p.getX() + x && 0 <= p.getY() + y){
 					List<Position> tmp = new LinkedList<Position>();
 					tmp.add(new Position(p.getX() + x, p.getY() + y));
