@@ -40,6 +40,7 @@ public class ChessModel {
 		if(selected != null){ //Some piece is selected
 			if(possibleMoves.contains(p)){ //A valid move has been clicked
 				Piece pi = chessBoard.movePiece(selected, p);
+				deselectPiece();
 				if(!(pi instanceof NoPiece))
 					takenPieces.add(pi);
 				changeTurn();
