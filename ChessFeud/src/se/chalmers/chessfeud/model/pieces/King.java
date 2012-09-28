@@ -36,7 +36,7 @@ public class King extends Piece{
 		List<List<Position>> posList = new ArrayList<List<Position>>();
 		for(int x = -1; x < 3; x++){
 			for(int y = -1; y < 3; y++){
-				if((x != 0 && y != 0) && (p.getX() + x < 8 && p.getY() + y < 8)){
+				if(!(x == 0 && y == 0) && (p.getX() + x <= 7 && p.getY() + y <= 7)){
 					List<Position> tmp = new LinkedList<Position>();
 					tmp.add(new Position(p.getX() + x, p.getY() + y));
 					posList.add(tmp);
