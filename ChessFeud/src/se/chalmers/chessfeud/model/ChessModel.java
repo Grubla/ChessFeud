@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
@@ -19,6 +20,7 @@ public class ChessModel {
 	private Position selected;
 	private List<Position> possibleMoves;
 	private List<Piece> takenPieces;
+	private int state;
 	
 	/**
 	 * Creates an instance of chess with a new starting board. 
@@ -29,6 +31,7 @@ public class ChessModel {
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
+		state = C.STATE_NORMAL;
 	}
 	
 	/**
@@ -46,14 +49,15 @@ public class ChessModel {
 				changeTurn();
 				if(Rules.isCheck(chessBoard, activePlayer))
 					if(Rules.isCheckMate(chessBoard, activePlayer)){
-						//Check mate
+						setState(C.STATE_VICTORY_WHITE + activePlayer);
 					}else{
-						//CHeck
+						setState(C.STATE_CHECK);
 					}
 				else if(Rules.isDraw(chessBoard, activePlayer)){
-						//Draw
+						setState(C.STATE_DRAW);	
 				}else{
 					//Next Turn
+					//Really needed?
 				}
 						
 					
@@ -125,6 +129,20 @@ public class ChessModel {
 	private void deselectPiece(){
 		selected = null;
 		possibleMoves.clear();
+	}
+	
+	/**
+	 * Returns the status of the game, one of the following;
+	 * C.STATE_NORMAL, C.STATE_CHECK, C.STATE_CHECKMATE, C.STATE_DRAW
+	 * @return a status from the class C.
+	 */
+	public int getState(){
+		return this.state;
+	}
+	
+	/* Sets the state of the game */
+	private void setState(int newState){
+		this.state = newState;
 	}
 	
 	/**
