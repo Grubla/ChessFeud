@@ -81,7 +81,11 @@ public class ChessBoard {
 		return piece;
 	}
 	
-	/* Returns true if there is no piece at the given position */
+	/**
+	 * Check whether a position is empty or not
+	 * @param pos, the pos to be checked
+	 * @return true if their is no piece at the given pos
+	 */
 	public boolean isEmpty(Position pos) {
 		return getPieceAt(pos) instanceof NoPiece;
 	}

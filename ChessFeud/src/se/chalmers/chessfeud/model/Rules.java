@@ -14,11 +14,17 @@ import se.chalmers.chessfeud.model.pieces.Queen;
 import se.chalmers.chessfeud.model.pieces.Rook;
 import se.chalmers.chessfeud.model.utils.Position;
 import android.util.Log;
-
+/**
+ * A class for managing the Rules in a chessgame.
+ * @author grubla
+ *
+ */
 public class Rules {
 	
 	private static final int[] HORSE_X = {-2, -1, 1, 2, 2, 1, -1, -2};
 	private static final int[] HORSE_Y = {1, 2, 2, 1, -1, -2, -2, -1};
+	
+	/* The start board for a regular chessgame */
 	private static final Piece[][] START_BOARD = {
 		{new Rook(C.TEAM_BLACK), new Knight(C.TEAM_BLACK), new Bishop(C.TEAM_BLACK), 
 			new Queen(C.TEAM_BLACK), new King(C.TEAM_BLACK), new Bishop(C.TEAM_BLACK), 
@@ -38,7 +44,12 @@ public class Rules {
 				new Knight(C.TEAM_WHITE), new Rook(C.TEAM_WHITE)}
 	};
 	
-	 
+	 /**
+	  * Returns the piece at the given position when a game of chess is initiated.
+	  * @param x, 0 = a 1 = b etc..
+	  * @param y, 0 = 0 1 = 1 etc..
+	  * @return a new Piece-object, belonging to the positon.
+	  */
 	public static Piece startBoard(int x, int y){
 		return START_BOARD[y][x];
 	}
@@ -50,7 +61,12 @@ public class Rules {
 	public boolean gameOver(ChessBoard cb){
 		return false;
 	}
-	
+	/**
+	 * Returns true if the current board is in a check state.
+	 * @param cb, the board to be checked
+	 * @param team, the currentPlayer
+	 * @return whether it is check or not
+	 */
 	public static boolean isCheck(ChessBoard cb, int team){
 		for(int x = 0; x < cb.getWidth(); x++)
 			for(int y = 0; y < cb.getHeight(); y++){
@@ -90,7 +106,12 @@ public class Rules {
 			}
 		return false;
 	}
-	
+	/**
+	 * Returns true if the game is in a draw state.
+	 * @param cb, the board to be checked.
+	 * @param nextTurn, who is to move next time
+	 * @return true if the game is in a draw state.
+	 */
 	public static boolean isDraw(ChessBoard cb, int nextTurn){
 		if(!isCheck(cb, nextTurn)){
 			for(int x = 0; x < cb.getWidth(); x++)
@@ -103,7 +124,12 @@ public class Rules {
 		}
 		return false;
 	}
-	
+	/**
+	 * Returns true if the game is over and someone has won.
+	 * @param cb, the board to be checked.
+	 * @param nextTurn, the player to move next time
+	 * @return true if it is check mate.
+	 */
 	public static boolean isCheckMate(ChessBoard cb, int nextTurn){
 		if(isCheck(cb, nextTurn)){
 			for(int x = 0; x < cb.getWidth(); x++)
@@ -117,6 +143,12 @@ public class Rules {
 		return false;
 	}
 	
+	/**
+	 * Returns a list of possible moves for a certain piece.
+	 * @param cb, the board it is in.
+	 * @param selected, the selected position of the piece
+	 * @return a list of positions which it can go to.
+	 */
 	public static List<Position> getPossibleMoves(ChessBoard cb, Position selected){
 		List<Position> pm = new LinkedList<Position>();
 		Piece piece = cb.getPieceAt(selected);
@@ -170,10 +202,11 @@ public class Rules {
 		return pm;
 	}
 	
+	/* Returns true if the position is inbounds */
 	private static boolean inBounds(int x, int y){
 		return 0 <= x && x < 8 && 0 <= y && y < 8;
 	}
-	
+	/* Returns true if the position is inbounds*/
 	private static boolean inBounds(Position p){
 		return 0 <= p.getX() && p.getX() < 8 && 0 <= p.getY() && p.getY() < 8;
 	}
