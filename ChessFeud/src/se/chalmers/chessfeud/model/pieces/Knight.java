@@ -7,48 +7,49 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
 
 /**
- * The piece Knight.
- * Reprecents the Knight on the chessborad. Handles the logic for the
- * Knights movement.
+ * The piece Knight. Represents the Knight on the chessborad. Handles the logic
+ * for the Knights movement and what team the Knight is on.
+ * 
  * @author Arvid
- *
+ * 
+ *         Copyright © 2012 Arvid Karlsson
+ * 
  */
 
-//ï¿½ven kallad Springare eller Hï¿½st
-
-public class Knight extends Piece{
+public class Knight extends Piece {
 
 	public Knight(int team) {
 		super(team, C.PIECE_KNIGHT);
-		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * 
-	 * Returns a list of all the theoretical moves the Knight can do.
-	 * Even the moves that are out of bounds. That will be checked in
-	 * the rules class.
-	 * Gets a List of positions from the method moveDirection. That list gets
-	 * stacked in a new list that is returned.
-	 * @param p the piece current position.
-	 * @return posList A list that contains Lists of possible positions in the diffrent directions.
+	 * Returns a list of all the theoretical moves the Knight can do. The rules
+	 * class will check if there is a piece on the same team in one of these
+	 * positions. Gets a List of positions from the method moveDirection. That
+	 * list gets stacked in a new list that is returned.
+	 * 
+	 * @param p
+	 *            the piece current position.
+	 * @return posList A list that contains Lists of possible positions in the
+	 *         diffrent directions.
 	 */
 	@Override
 	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
-		int[] x = {-2, -1, 1, 2, 2, 1, -1, -2};
-		int[] y = {1, 2, 2, 1, -1, -2, -2, -1};
-		for(int i=0; i<x.length; i++){
+		int[] x = { -2, -1, 1, 2, 2, 1, -1, -2 };
+		int[] y = { 1, 2, 2, 1, -1, -2, -2, -1 };
+		for (int i = 0; i < x.length; i++) {
 			List<Position> moveList = new ArrayList<Position>();
 			moveList.add(new Position(p.getX() + x[i], p.getY() + y[i]));
-			if(Position.inBounds(p.getX() + x[i], p.getY() + y[i]))
+			if (Position.inBounds(p.getX() + x[i], p.getY() + y[i]))
 				posList.add(moveList);
 		}
 		return posList;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return "Piece: Knight " + "Team: " + getTeam();
 	}
 

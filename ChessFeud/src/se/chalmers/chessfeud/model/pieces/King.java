@@ -8,46 +8,49 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
 
 /**
- * The Piece King.
- * Reprecents the King on the chessborad. Handles the logic for the
- * Kings movement.
- * @author Arvid
- *
+ * The Piece King. Reprecents the King on the chessborad. Handles the logic for
+ * the Kings movement and what team the King is on.
+ * 
+ * @author Arvid modifiedby Henrik Alburg
+ * 
+ *         Copyright © 2012 Arvid Karlsson, Henrik Alburg
  */
 
-//ï¿½ven kallad Kung
-public class King extends Piece{
+public class King extends Piece {
 
 	public King(int team) {
 		super(team, C.PIECE_KING);
-		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
-	 * Returns a list of all the theoretical moves the King can do.
-	 * Even the moves that are out of bounds. That will be checked in
-	 * the rules class.
-	 * The list shall contain every position one square away from the king.
-	 *   @param p the piece current position.
-	 * @return posList A list that contains Lists of possible positions in the different directions.
+	 * Returns a list with a lsit of all the theoretical moves the King can do.
+	 * The moves that are out of bounds will not be included. The list shall
+	 * contain every position one square away from the king.
+	 * 
+	 * @param p
+	 *            the kings current position.
+	 * @return posList A list that contains Lists of possible positions in the
+	 *         different directions.
 	 */
 	@Override
 	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
-		for(int x = -1; x <= 1; x++){
-			for(int y = -1; y <= 1; y++){
-				if(!(x == 0 && y == 0) && p.getX() + x <= 7 && p.getY() + y <= 7 && 0 <= p.getX() + x && 0 <= p.getY() + y){
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				if (!(x == 0 && y == 0) && p.getX() + x <= 7
+						&& p.getY() + y <= 7 && 0 <= p.getX() + x
+						&& 0 <= p.getY() + y) {
 					List<Position> tmp = new LinkedList<Position>();
 					tmp.add(new Position(p.getX() + x, p.getY() + y));
 					posList.add(tmp);
-				}	
-			}	
+				}
+			}
 		}
 		return posList;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return "Piece: King " + "Team: " + getTeam();
 	}
 }

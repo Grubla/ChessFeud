@@ -1,45 +1,82 @@
 package se.chalmers.chessfeud.model.utils;
 
+/**
+ * A class to keep track of the position.
+ * 
+ * @author Arvid modifiedby Henrik Alburg
+ * 
+ * 
+ *         Copyright © 2012 Arvid Karlsson, Henrik Alburg
+ */
+
 public class Position {
 	private int x, y;
-	
-	public Position(int x, int y){
+
+	// Constructor
+	public Position(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-	
-	public Position(Position p){
+	} // End Constructor
+
+	// Constructor
+	public Position(Position p) {
 		this.x = p.x;
 		this.y = p.y;
-	}
-	
-	public int getX(){
+	} // End Constructor
+
+	/**
+	 * A function to get the x-value from a position.
+	 * 
+	 * @return the x-value in the position
+	 */
+
+	public int getX() {
 		return this.x;
 	}
-	
-	public int getY(){
+
+	/**
+	 * A function to get the y-value from a position.
+	 * 
+	 * @return the y-value in the position.
+	 */
+	public int getY() {
 		return this.y;
 	}
-	
-	public String toString(){
-		return "x: " + this.x + " y: " + this.y;
+
+	/**
+	 * A function to check if the position is inside of the board.
+	 * 
+	 * @return true if the position is inside the board, otherwise false.
+	 */
+	public boolean inBounds() {
+		return (0 <= this.getX() && this.getX() <= 7 && 0 <= this.getY() && this
+				.getY() <= 7);
 	}
-	
-	public boolean inBounds(){
-		return(0 <= this.getX() && this.getX() <= 7 && 0 <= this.getY() && this.getY() <= 7);
-	}
-	
+
+	/**
+	 * A function to check if two coordinates is inside of the board.
+	 * 
+	 * @param x
+	 *            the x-value of the position.
+	 * @param y
+	 *            the y-value of the position.
+	 * @return true if the position is inside the board, otherwise false.
+	 */
 	public static boolean inBounds(int x, int y) {
-		return(0 <= x && x <= 7 && 0 <= y && y <= 7);
+		return (0 <= x && x <= 7 && 0 <= y && y <= 7);
 	}
-	
+
 	@Override
-	public boolean equals(Object o){
-		if(o instanceof Position){
+	public boolean equals(Object o) {
+		if (o instanceof Position) {
 			Position p = (Position) o;
-			if(this.x == p.getX() && this.y == p.getY())
+			if (this.x == p.getX() && this.y == p.getY())
 				return true;
 		}
 		return false;
+	}
+
+	public String toString() {
+		return "x: " + this.x + " y: " + this.y;
 	}
 }
