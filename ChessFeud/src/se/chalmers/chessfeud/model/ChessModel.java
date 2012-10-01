@@ -13,6 +13,8 @@ import android.util.Log;
  * A class that implements the model of a chessgame
  * @author grubla
  *
+ * Copyright � 2012 Henrik Alburg, Arvid Karlsson
+ *
  */
 public class ChessModel {
 	private ChessBoard chessBoard;

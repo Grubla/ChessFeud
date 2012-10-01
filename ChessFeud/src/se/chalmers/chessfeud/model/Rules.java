@@ -18,6 +18,8 @@ import android.util.Log;
  * A class for managing the Rules in a chessgame.
  * @author grubla
  *
+ * Copyright � 2012 Henrik Alburg, Arvid Karlsson 
+ *
  */
 public class Rules {
 	

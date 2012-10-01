@@ -9,6 +9,8 @@ import android.util.Log;
  * A class for representing a chessboard.
  * @author grubla
  *
+ * Copyright � 2012 Henrik Alburg  
+ *
  */
 public class ChessBoard {
 	private Piece[][] board;
