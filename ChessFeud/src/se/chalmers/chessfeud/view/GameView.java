@@ -31,18 +31,6 @@ public class GameView extends View implements OnTouchListener{
 	private int chessSquareHeight;
 	private int chessSquareWidth;
 	ChessModel gm = new ChessModel();
-
-	// For testing purposes only
-	private int i = 0;
-	private Position[] pA = {new Position(4, 6), new Position(4, 4), new Position(4,1), new Position(4,3), 
-			new Position(6,7), new Position(5,5), new Position(5,0), new Position(4,1), new Position(5,5), 
-			new Position(4,3), new Position(3,1), new Position(3,3), new Position(4,4), new Position(3,3), 
-			new Position(1,0), new Position(0,2), new Position(4,3), new Position(2,4), new Position(0,2), 
-			new Position(1,4), new Position(3,7), new Position(4,6), new Position(1,4), new Position(2,6),
-			new Position(4,7), new Position(3,7), new Position(2,0), new Position(3,1), new Position(4,6), 
-			new Position(7,3), new Position(2,6), new Position(4,5), new Position(5,6), new Position(4,5),
-			new Position(0,1), new Position(0,3), new Position(2,4), new Position(4,3), new Position(1,1), 
-			new Position(1,2), new Position(7,3), new Position(5,1) };
 	
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -183,7 +171,6 @@ public class GameView extends View implements OnTouchListener{
 		int x = (int)event.getX()/chessSquareWidth;
 		int y = (int)event.getY()/chessSquareHeight;
 		gm.click(new Position(x,y));
-		i++;
 		if(gm.getTakenPieces() != null)
 			Log.d("Amount:", ""+gm.getTakenPieces().size());
 		this.invalidate();
