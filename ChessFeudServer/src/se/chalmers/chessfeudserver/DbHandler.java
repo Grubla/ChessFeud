@@ -36,7 +36,7 @@ public class DbHandler extends HttpServlet {
      */
     public DbHandler() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
     /**
      * Loads the jdbc driver.
@@ -46,6 +46,20 @@ public class DbHandler extends HttpServlet {
         String loginUser = "root";
         String loginPw = "awesomeness";
         String loginURL = "jdbc:mysql://localhost/cfdb";
+    	
+
+    	try {
+    		Class.forName("com.mysql.jdbc.Driver");
+        	dbConnection = DriverManager.getConnection(loginURL, loginUser, loginPw);
+			s = dbConnection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	tags = new HashMap();
         tags.put("login", 0);
         tags.put("newmove", 1);
         tags.put("getGames", 2);
@@ -57,28 +71,6 @@ public class DbHandler extends HttpServlet {
         tags.put("", 8);
         tags.put("", 9);
         
-        try 
-        {
-              Class.forName("com.mysql.jdbc.Driver");
-              dbConnection = DriverManager.getConnection(loginURL, loginUser, loginPw);
-              
-              s = dbConnection.createStatement();
-              
-              rs = s.executeQuery("select * from auth");
-              
-              writeResultSet(rs);
-              
-        }
-        catch (ClassNotFoundException ex)
-        {
-               System.err.println("ClassNotFoundException: " + ex.getMessage());
-               throw new ServletException("Class not found Error");
-        }
-        catch (SQLException ex)
-        {
-               System.err.println("SQLException: " + ex.getMessage());
-        }
-        
         
     }
 
@@ -86,28 +78,51 @@ public class DbHandler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.init();
 		response.setContentType("text");
 		final ServletOutputStream out = response.getOutputStream();			
-		switch(tags.get(request.getParameter("tag"))) {
-		case 0:
-			out.print(authenticate(request.getParameter("username"), request.getParameter("password")));
-			break;
-		case 1:
-			;
-			break;
-		case 2:
-			;
-			break;
-		case 3:
-			;
-			break;
-		}
+		
 		try {
-			String tag = request.getParameter("tag");
-			} catch(Exception e) {
+			switch((Integer)tags.get(request.getParameter("tag"))){
+			case 0:
+				out.print(authenticate(request.getParameter("username"), request.getParameter("password")));
+				break;
+			case 1:
+				;
+				break;
+			case 2:
+				List<String> games = getGamesInProgress(request.getParameter("username"));
+				StringBuilder sb = new StringBuilder();
+				for(String s : games) {
+					sb.append(s);
+					sb.append("/");
+				}
+				out.print(sb.toString());		
+				break;
+			case 3:
+				out.print(getStatistics(request.getParameter("username")));
+				break;
+			case 4:
+				addUser(request.getParameter("email"), request.getParameter("username"), request.getParameter("password"));
+				break;
+			case 5:
+				incWins(request.getParameter("username"));
+				break;
+			case 6:
+				incLosses(request.getParameter("username"));
+				break;
+			case 7:
+				incDraws(request.getParameter("username"));
+				break;
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
-			} 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 		out.flush();
 		out.close();
@@ -118,11 +133,7 @@ public class DbHandler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameter("tag").equals("login")) {
 			this.doGet(request, response);			
-		} else {
-			//TODO secure login
-		}
 		
 	}
 	
@@ -178,7 +189,7 @@ public class DbHandler extends HttpServlet {
 	 * @throws SQLException
 	 */
 	private void addUser(String email, String userName, String password) throws SQLException {
-		s.executeQuery("insert into auth(email, username, password) values('"+email+"','"+userName+"','"+password+"')");
+		s.executeUpdate("insert into auth(email, username, password) values('"+email+"','"+userName+"','"+password+"')");
 	}
 	
 	private void incWins(String userName) throws SQLException {

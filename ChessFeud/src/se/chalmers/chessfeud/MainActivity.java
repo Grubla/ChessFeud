@@ -32,6 +32,7 @@ public class MainActivity extends Activity implements OnClickListener{
         
         iLogo = (ImageView) findViewById(R.id.imageView1);
         iLogo.setOnClickListener(this);
+
         
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
@@ -53,8 +54,8 @@ public class MainActivity extends Activity implements OnClickListener{
 
 				try {
 					HttpResponse response = client.execute(httpPost);
-					HttpEntity entity = response.getEntity();
-					is = entity.getContent();
+					//HttpEntity entity = response.getEntity();
+					//is = entity.getContent();
 
 				} catch (ClientProtocolException e) {
 					// TODO Auto-generated catch block
@@ -64,19 +65,19 @@ public class MainActivity extends Activity implements OnClickListener{
 					e.printStackTrace();
 				}
 				
-				try {
-			        BufferedReader reader =
-			            new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-			        StringBuilder sb = new StringBuilder();
-			        String line = null;
-			        while ((line = reader.readLine()) != null) {
-			            sb.append(line + "\n");
-			        }
-			        is.close();
-			        TextView t = (TextView)findViewById(R.id.textView1);
-			        t.setText(sb.toString());
-			    } catch (Exception e) {
-			    }
+//				try {
+//			        BufferedReader reader =
+//			            new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+//			        StringBuilder sb = new StringBuilder();
+//			        String line = null;
+//			        while ((line = reader.readLine()) != null) {
+//			            sb.append(line + "\n");
+//			        }
+//			        is.close();
+//			        TextView t = (TextView)findViewById(R.id.textView1);
+//			        t.setText(sb.toString());
+//			    } catch (Exception e) {
+//			    }
 				
 			}
 		});

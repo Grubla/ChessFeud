@@ -40,8 +40,11 @@ public class ServerTest extends Activity {
 		List pairs = new ArrayList();
 		String username = "twister";
 		String pass = "awesomeness";
+		String email = "1336@grubla.n00b";
+		pairs.add(new BasicNameValuePair("tag", "addUser"));
 		pairs.add(new BasicNameValuePair("username", username));
 		pairs.add(new BasicNameValuePair("password", pass));
+		pairs.add(new BasicNameValuePair("email", email));
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
