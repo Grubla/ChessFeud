@@ -35,7 +35,7 @@ public class TestServlet extends HttpServlet {
 					out.println("<login><status>FAIL</status></login>");
 				}
 				} catch(Exception e) {
-				out.println("<login><status>ERROR</status></login>");
+				e.printStackTrace();
 				
 				} 
 
@@ -55,6 +55,9 @@ public class TestServlet extends HttpServlet {
 	}
 	
 	public boolean login(String userName, String password) {
+		if(userName == null || password == null) {
+			return false;
+		}
 		if (userName.equals("twister") && password.equals("awesomeness")) {
 			return true;
 		} else {

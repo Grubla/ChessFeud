@@ -142,7 +142,8 @@ public class DbHandler extends HttpServlet {
 		rs = s.executeQuery("select * from statistics where username='"+userName+"'");
 		String[] wld = rs.getString(1).split("/");
 		int w = Integer.parseInt(wld[0])+1;
-		s.executeQuery("update statistics set )
+		//s.executeQuery("update statistics set )
+		// TODO
 	}
 	
 	private void incLosses(String userName) {
