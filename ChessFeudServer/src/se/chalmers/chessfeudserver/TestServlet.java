@@ -23,13 +23,13 @@ public class TestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/xml");
+		response.setContentType("text");
 		final ServletOutputStream out = response.getOutputStream();			
 			try {
 				String userName = request.getParameter("username");
 		        String password = request.getParameter("password");
 				boolean authenticated = login(userName, password);
-				out.print(authenticated);
+				out.print("proness");
 				} catch(Exception e) {
 				e.printStackTrace();
 				
@@ -55,7 +55,9 @@ public class TestServlet extends HttpServlet {
 			return false;
 		}
 		if (userName.equals("twister") && password.equals("awesomeness")) {
+			System.out.println("hej");
 			return true;
+
 		} else {
 			return false;
 		}

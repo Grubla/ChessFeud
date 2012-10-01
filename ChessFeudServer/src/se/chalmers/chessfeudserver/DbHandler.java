@@ -7,16 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation for handlning request from the andriod-app.
+ * Servlet implementation for handling request from the andriod-app.
  */
 public class DbHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,8 +26,10 @@ public class DbHandler extends HttpServlet {
 	
 	private Connection dbConnection; 
 	
+	
 	private ResultSet rs;
 	private Statement s;
+	private HashMap tags;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -42,7 +46,16 @@ public class DbHandler extends HttpServlet {
         String loginUser = "root";
         String loginPw = "awesomeness";
         String loginURL = "jdbc:mysql://localhost/cfdb";
-        
+        tags.put("login", 0);
+        tags.put("newmove", 1);
+        tags.put("getGames", 2);
+        tags.put("getStats", 3);
+        tags.put("addUser", 4);
+        tags.put("incWins", 5);
+        tags.put("incLosses", 6);
+        tags.put("incDraws", 7);
+        tags.put("", 8);
+        tags.put("", 9);
         
         try 
         {
@@ -73,14 +86,44 @@ public class DbHandler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		response.setContentType("text");
+		final ServletOutputStream out = response.getOutputStream();			
+		switch(tags.get(request.getParameter("tag"))) {
+		case 0:
+			out.print(authenticate(request.getParameter("username"), request.getParameter("password")));
+			break;
+		case 1:
+			;
+			break;
+		case 2:
+			;
+			break;
+		case 3:
+			;
+			break;
+		}
+		try {
+			String tag = request.getParameter("tag");
+			} catch(Exception e) {
+			e.printStackTrace();
+			
+			} 
+
+		out.flush();
+		out.close();
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(!request.getParameter("tag").equals("login")) {
+			this.doGet(request, response);			
+		} else {
+			//TODO secure login
+		}
+		
 	}
 	
 	private void writeResultSet(ResultSet resultSet) throws SQLException {
