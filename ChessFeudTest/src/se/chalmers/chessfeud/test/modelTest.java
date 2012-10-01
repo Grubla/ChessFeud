@@ -7,7 +7,6 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.utils.Position;
 import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.LargeTest;
 
 public class modelTest extends AndroidTestCase {
 
@@ -21,7 +20,6 @@ public class modelTest extends AndroidTestCase {
 
 	}
 
-	@LargeTest
 	public void testGame(){
 		/* This is an actual chess game i set up to test different parts of the game. */
 		Position[] pos = {new Position(4, 6), new Position(4, 4), new Position(4,1), new Position(4,3), 
