@@ -9,6 +9,9 @@
     <string name ="profile_activity">ProfileActivity</string>
     <string name ="about_activity">AboutActivity</string>
     <string name ="new_game">New Game +</string>
+    <string name ="list_started">Started Games</string>
+    <string name ="list_finished">Finished Games</string>
+    <string name ="image_description_logotype">ChessFeud Logotype</string>
     
     <style name="ButtonText">
 	    <item name="android:layout_width">fill_parent</item>

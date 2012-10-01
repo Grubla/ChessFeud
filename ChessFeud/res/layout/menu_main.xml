@@ -26,9 +26,10 @@
 		<!-- ChessFeud Logo -->
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="139dp"
+            android:layout_width="0dip"
             android:layout_height="50dp" 
             android:layout_weight="1" 
+            android:contentDescription="@string/image_description_logotype" 
             android:src="@drawable/logo_chessfeud"/>
 
         <!-- Settings -->
@@ -44,44 +45,52 @@
     <Button 
         android:id="@+id/button5" 
         style="@style/ButtonText" 
-        android:layout_marginBottom="5dp" 
-        android:layout_marginLeft="5dp" 
-        android:layout_marginRight="5dp" 
-        android:layout_marginTop="10dp" 
-        android:text="@string/new_game" 
-        android:background="@drawable/btn_orange"/>
+        android:layout_marginBottom="10dp" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:layout_marginTop="10dp" android:text="@string/new_game" android:background="@drawable/btn_orange"/>
     
     <!-- Game List -->
-    <ScrollView 
-        android:id="@+id/scrollViewGames" 
+    <LinearLayout 
         android:layout_width="match_parent" 
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" 
+        android:orientation="vertical">
         
-        <!-- Holding together elements -->
-        <LinearLayout 
+        <!-- Title for Started Games -->
+        <TextView 
+            android:id="@+id/text_ongoingGames" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:background="#CCCCCC" 
+            android:paddingBottom="3dp" 
+            android:paddingLeft="5dp" 
+            android:paddingTop="3dp" 
+            android:text="@string/list_started" 
+            android:textSize="30dp"/>
+        <!-- List for Started Games -->
+        <ListView 
+            android:id="@+id/list_ongoingGames" 
             android:layout_width="match_parent" 
-            android:layout_height="match_parent" 
-            android:orientation="vertical">
-            
-            <!-- Title for Ongoing Games -->
-            <TextView android:id="@+id/text_ongoingGames" android:layout_width="fill_parent" android:layout_height="wrap_content" android:background="#CCCCCC" android:paddingBottom="3dp" android:paddingLeft="5dp" android:paddingTop="3dp" android:text="Ongoing Games" android:textSize="30dp"/>
-            
-            <!-- List ofr Ongoing Games -->
-            <ListView android:id="@+id/list_ongoingGames" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="5dp"></ListView>
-            <TextView 
-                android:id="@+id/text_finishedGames" 
-                android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:background="#CCCCCC" android:paddingBottom="3dp" android:paddingLeft="5dp" android:paddingTop="3dp" android:text="Finished Games" android:textSize="30dp"/>
-            <ListView 
-                android:id="@+id/list_finishedGames" 
-                android:layout_width="match_parent" 
-                android:layout_height="wrap_content" 
-                android:layout_marginLeft="5dp">
-            </ListView>
-            
-            
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="5dp">
+        </ListView>
         
-        </LinearLayout>
-        
-    </ScrollView>
+        <!-- Title for Finished Games -->
+        <TextView 
+            android:id="@+id/text_finishedGames" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="20dp" 
+            android:background="#CCCCCC" 
+            android:paddingBottom="3dp" 
+            android:paddingLeft="5dp" 
+            android:paddingTop="3dp" 
+            android:text="@string/list_finished" 
+            android:textSize="30dp"/>
+        <!-- List for Finished Games -->
+        <ListView 
+            android:id="@+id/list_finishedGames" 
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="5dp">
+        </ListView>
+    </LinearLayout>
 
 </LinearLayout>
