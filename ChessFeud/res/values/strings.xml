@@ -8,5 +8,22 @@
     <string name ="settings_activity">SettingsActivity</string>
     <string name ="profile_activity">ProfileActivity</string>
     <string name ="about_activity">AboutActivity</string>
+    <string name ="new_game">New Game +</string>
+    <string name ="list_started">Started Games</string>
+    <string name ="list_finished">Finished Games</string>
+    <string name ="image_description_logotype">ChessFeud Logotype</string>
+    
+    <style name="ButtonText">
+	    <item name="android:layout_width">fill_parent</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:textColor">#ffffff</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textSize">30dp</item>
+	    <item name="android:textStyle">bold</item>
+	    <item name="android:shadowColor">#000000</item>
+	    <item name="android:shadowDx">1</item>
+	    <item name="android:shadowDy">1</item>
+	    <item name="android:shadowRadius">2</item>
+	</style>
 
 </resources>
