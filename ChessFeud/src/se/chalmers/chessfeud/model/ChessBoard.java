@@ -39,6 +39,23 @@ public class ChessBoard {
 		board[oldPos.getX()][oldPos.getY()] = new NoPiece();
 	}
 	/**
+	 * Creates a chess board from the given string.
+	 * The string should be on the following format:
+	 * Every letter symbolises a position and the order of chars is the pieces
+	 * starting position. The char's int is the position where the top left tower stands on 1
+	 * and the black pawns from 9-16 and the white pawns on 49-56.
+	 * This is the string for the starting board: <------------------------------------>
+	 * @param s
+	 */
+	public ChessBoard(String s){
+		board = new Piece[8][8];
+		for(int i = 0; i < s.length(); i++){
+			int x = ((int)s.charAt(i))%8;
+			int y = ((int)s.charAt(i))/8;
+			
+		}
+	}
+	/**
 	 * Returns the piece at the given position
 	 * @param p, the given position 0 <= x, y < 8
 	 * @return a piece object

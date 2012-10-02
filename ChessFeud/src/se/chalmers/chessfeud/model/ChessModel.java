@@ -37,6 +37,23 @@ public class ChessModel {
 	}
 	
 	/**
+	 * Creates a chessmodel in the same way a chessmodel is exported with the exportModel() method.
+	 * @param s
+	 */
+	public ChessModel(String s){
+		chessBoard = new ChessBoard(s);
+		//activePlayer = 0; from string
+		selected = null;
+		possibleMoves = new LinkedList<Position>();
+		takenPieces = new ArrayList<Piece>();
+		//state = C.STATE_NORMAL; getState
+	}
+	
+	public String exportModel(){
+		return "hej";
+	}
+	
+	/**
 	 * Represents a click on the board, the first click being choosing a piece and the second where it should go
 	 * @param p, the position clicked
 	 */
