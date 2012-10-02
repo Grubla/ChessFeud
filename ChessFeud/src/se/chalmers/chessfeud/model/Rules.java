@@ -169,6 +169,9 @@ public class Rules {
 								pm.add(p);
 							canMove = false;
 						}
+					}else{
+						if(!cb.isEmpty(p))
+							canMove = false;
 					}
 				}
 			}
