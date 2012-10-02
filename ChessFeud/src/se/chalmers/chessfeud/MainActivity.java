@@ -34,6 +34,9 @@ public class MainActivity extends Activity implements OnClickListener{
         iLogo = (ImageView) findViewById(R.id.imageView1);
         iLogo.setOnClickListener(this);
         
+        finishedGames = (ListView) findViewById(R.id.list_finishedGames);
+        startedGames = (ListView) findViewById(R.id.list_ongoingGames);
+        
         bMyProfile.setOnClickListener(this);
         bSettings.setOnClickListener(this);
         
