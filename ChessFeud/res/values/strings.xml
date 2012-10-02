@@ -13,6 +13,29 @@
     <string name ="list_finished">Finished Games</string>
     <string name ="image_description_logotype">ChessFeud Logotype</string>
     
+    <string name="dscr_list_opponent_avatar">Opponent's Avatar</string>
+    <string name="dscr_list_team_white">White Team</string>
+    <string name="dscr_list_team_black">Black Team</string>
+    <string name="dscr_list_turn_bg">Number of Turns Background</string>
+    <string name="dscr_list_white_piece_0">White Pawns</string>
+    <string name="dscr_list_white_piece_1">White Rook</string>
+    <string name="dscr_list_white_piece_2">White Rook</string>
+    <string name="dscr_list_white_piece_3">White Bishop</string>
+    <string name="dscr_list_white_piece_4">White Bishop</string>
+    <string name="dscr_list_white_piece_5">White Knight</string>
+    <string name="dscr_list_white_piece_6">White Knight</string>
+    <string name="dscr_list_white_piece_7">White Queen</string>
+    <string name="dscr_list_white_piece_8">White King</string>
+    <string name="dscr_list_black_piece_0">Black Pawns</string>
+    <string name="dscr_list_black_piece_1">Black Rook</string>
+    <string name="dscr_list_black_piece_2">Black Rook</string>
+    <string name="dscr_list_black_piece_3">Black Bishop</string>
+    <string name="dscr_list_black_piece_4">Black Bishop</string>
+    <string name="dscr_list_black_piece_5">Black Knight</string>
+    <string name="dscr_list_black_piece_6">Black Knight</string>
+    <string name="dscr_list_black_piece_7">Black Queen</string>
+    <string name="dscr_list_black_piece_8">Black King</string>
+    
     <style name="ButtonText">
 	    <item name="android:layout_width">fill_parent</item>
 	    <item name="android:layout_height">wrap_content</item>
