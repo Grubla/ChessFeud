@@ -68,7 +68,7 @@ public class DbHandler extends HttpServlet {
         tags.put("incWins", 5);
         tags.put("incLosses", 6);
         tags.put("incDraws", 7);
-        tags.put("", 8);
+        tags.put("newGame", 8);
         tags.put("", 9);
         
         
@@ -114,6 +114,8 @@ public class DbHandler extends HttpServlet {
 			case 7:
 				incDraws(request.getParameter("username"));
 				break;
+			case 8:
+				newGame(request.getParameter("user1"), request.getParameter("user2"), request.getParameter("gameBoard"));
 			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
@@ -167,7 +169,7 @@ public class DbHandler extends HttpServlet {
 		List<String> games = new ArrayList<String>();
 		rs = s.executeQuery("select * from game where user1='"+userName+"' or user2='"+userName+"'");
 		while(rs.next()) {
-			games.add(rs.getString(1)+"/"+rs.getString(2)+"/"+rs.getString(3)+"/"+rs.getString(4));
+			games.add(rs.getString(1)+"/"+rs.getString(2)+"/"+rs.getString(3)+"/"+rs.getString(4)+"/"+rs.getString(5));
 		}
 		return games;
 	}
@@ -191,21 +193,48 @@ public class DbHandler extends HttpServlet {
 	private void addUser(String email, String userName, String password) throws SQLException {
 		s.executeUpdate("insert into auth(email, username, password) values('"+email+"','"+userName+"','"+password+"')");
 	}
-	
+	/**
+	 * Increments wins in the database for the username specified.
+	 * @param userName
+	 * @throws SQLException
+	 */
 	private void incWins(String userName) throws SQLException {
-		rs = s.executeQuery("select * from statistics where username='"+userName+"'");
+		rs = s.executeQuery("select wld from statistics where username='"+userName+"'");
 		String[] wld = rs.getString(1).split("/");
-		int w = Integer.parseInt(wld[0])+1;
-		//s.executeQuery("update statistics set )
-		// TODO
+		int w = Integer.parseInt(wld[0])+1;	
+		s.executeUpdate("update statistics set wld='"+w+wld[1]+wld[2]+"' where username='"+userName+"'");
 	}
-	
-	private void incLosses(String userName) {
-		
+	/**
+	 * Increments losses in the database for the username specified.
+	 * @param userName
+	 * @throws SQLException
+	 */
+	private void incLosses(String userName) throws SQLException {
+		rs = s.executeQuery("select wld from statistics where username='"+userName+"'");
+		String[] wld = rs.getString(1).split("/");
+		int l = Integer.parseInt(wld[1])+1;	
+		s.executeUpdate("update statistics set wld='"+wld[0]+l+wld[2]+"' where username='"+userName+"'");
 	}
-	
-	private void incDraws(String userName) {
-		
+	/**
+	 * Increments draws in the database for the username specified.
+	 * @param userName
+	 * @throws SQLException
+	 */
+	private void incDraws(String userName) throws SQLException {
+		rs = s.executeQuery("select wld from statistics where username='"+userName+"'");
+		String[] wld = rs.getString(1).split("/");
+		int d = Integer.parseInt(wld[2])+1;	
+		s.executeUpdate("update statistics set wld='"+wld[0]+wld[1]+d+"' where username='"+userName+"'");
+	}
+	/**
+	 * Adds a new game to the database.
+	 * @param user1
+	 * @param user2
+	 * @param gameBoard
+	 * @throws SQLException
+	 */
+	private void newGame(String user1, String user2, String gameBoard) throws SQLException {
+		s.executeUpdate("insert into game(user1, user2, board, turns, timestamp) values('"+user1+"','"+user2+"','"+gameBoard+"','"+"0"+"','"+"CURRENT_TIMESTAMP)");
 	}
 	
 	
