@@ -154,7 +154,7 @@ public class DbHandler {
 				return new ArrayList();
 			}
 			List<String> games = new ArrayList();
-			String[] dbGames = sb.toString().split(":");
+			String[] dbGames = sb.toString().split(";");
 			for(String s : dbGames) {
 				games.add(s);
 			}
