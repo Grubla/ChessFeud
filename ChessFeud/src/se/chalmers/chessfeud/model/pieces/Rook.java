@@ -38,9 +38,9 @@ public class Rook extends Piece {
 	@Override
 	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
-		for (int x = -1; x < 2; x++) {
-			for (int y = -1; y < 2; y++) {
-				if ((x != 0 && y != 0) && (x == 0 || y == 0)) {
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				if (x != y && x*y == 0) {
 					List<Position> moveList = moveDirection(x, y, p);
 					if (moveList.size() != 0)
 						posList.add(moveList);
