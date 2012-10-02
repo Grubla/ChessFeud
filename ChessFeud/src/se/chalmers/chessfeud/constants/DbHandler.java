@@ -94,6 +94,43 @@ public class DbHandler {
 
 	}
 	/**
+	 * Gives the server a username and returns the current statistics from that user in a String with / between all the different stats, which is w/l/d/numberofmoves.
+	 * @param userName
+	 * @return
+	 */
+	public String getStats(String userName) {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair("tag", "getStats"));
+		pairs.add(new BasicNameValuePair("username", userName));
+		
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse response = client.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			is = entity.getContent();
+			Scanner sc = new Scanner(is);
+			StringBuilder sb = new StringBuilder();
+			while(sc.hasNext()){
+				sb.append(sc.next());
+			}
+			if(sb.toString() == null) {
+				return "";
+			}
+			return sb.toString();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+	/**
 	 * Contacts the database and request a list of all ongoing games, returns a list of all the games, an empty list if there are no games and null if something went wrong.
 	 * @param userName
 	 * @return
