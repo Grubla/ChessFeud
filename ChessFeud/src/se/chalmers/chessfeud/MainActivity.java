@@ -85,14 +85,15 @@ public class MainActivity extends Activity implements OnClickListener{
     	public View getView(int position, View convertView, ViewGroup parent) {
 
     		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		View view = inflater.inflate(resourceId, parent, false);
+    		View vRow = inflater.inflate(123, parent, false);
+    		//TextView tTurn = (TExtView)vRow.findViewById(R.id.player_turn)
     		//TextView opponentName = (TextView) view.findViewById(123534)
     		//Do this for every element
     		//String s = l.get(position);
     		//decode s
     		//opponentView.setText("decoded s")
     			
-    			return view;
+    			return vRow;
     	}
     	
     }
