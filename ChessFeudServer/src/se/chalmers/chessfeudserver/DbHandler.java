@@ -95,7 +95,7 @@ public class DbHandler extends HttpServlet {
 				StringBuilder sb = new StringBuilder();
 				for(String s : games) {
 					sb.append(s);
-					sb.append("/");
+					sb.append(";");
 				}
 				out.print(sb.toString());		
 				break;
@@ -236,6 +236,17 @@ public class DbHandler extends HttpServlet {
 	private void newGame(String user1, String user2, String gameBoard) throws SQLException {
 		s.executeUpdate("insert into game(user1, user2, board, turns, timestamp) values('"+user1+"','"+user2+"','"+gameBoard+"','"+"0"+"','"+"CURRENT_TIMESTAMP)");
 	}
+	/**
+	 * Deletes a game between two users from the database.
+	 * @param user1
+	 * @param user2
+	 * @throws SQLException
+	 */
+	private void deleteGame(String user1, String user2) throws SQLException {
+		s.executeUpdate("delete from game where user1='"+user1+"' and user2='"+user2+"'");
+		s.executeUpdate("delete from game where user1='"+user2+"' and user2='"+user1+"'");
+	}
+	
 	
 	
 	
