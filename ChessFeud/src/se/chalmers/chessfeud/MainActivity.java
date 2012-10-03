@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnClickListener{
 	private Button bPlay, bMyProfile, bSettings, bAbout;
@@ -85,13 +86,16 @@ public class MainActivity extends Activity implements OnClickListener{
     	public View getView(int position, View convertView, ViewGroup parent) {
 
     		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		View vRow = inflater.inflate(123, parent, false);
-    		//TextView tTurn = (TExtView)vRow.findViewById(R.id.player_turn)
-    		//TextView opponentName = (TextView) view.findViewById(123534)
+    		View vRow = inflater.inflate(R.layout.menu_listitem, parent, false);
+    		TextView tTurn = (TextView)vRow.findViewById(R.id.player_turn);
+    		TextView blackName = (TextView) vRow.findViewById(R.id.player_black);
+    		TextView whiteName = (TextView) vRow.findViewById(R.id.player_white);
+    		TextView blackPawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_black);
+    		TextView whitePawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_white);
     		//Do this for every element
     		//String s = l.get(position);
     		//decode s
-    		//opponentView.setText("decoded s")
+    		//allViews.setText("decoded s")
     			
     			return vRow;
     	}
