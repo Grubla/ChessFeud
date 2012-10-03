@@ -3,12 +3,13 @@ package se.chalmers.chessfeud.model.pieces;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
 
 public class NoPiece extends Piece{
 	
 	public NoPiece() {
-		super(-1, -1);
+		super(-1, C.PIECE_NOPIECE);
 	}
 	
 	@Override

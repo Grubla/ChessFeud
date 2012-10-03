@@ -2,12 +2,13 @@ package se.chalmers.chessfeud.constants;
 
 public class C {
 
-	public static final int PIECE_PAWN = 0;
-	public static final int PIECE_ROOK = 1;
-	public static final int PIECE_BISHOP = 2;
-	public static final int PIECE_KNIGHT = 3;
-	public static final int PIECE_QUEEN = 4;
-	public static final int PIECE_KING = 5;
+	public static final int PIECE_PAWN = 8;
+	public static final int PIECE_ROOK = 10;
+	public static final int PIECE_BISHOP = 12;
+	public static final int PIECE_KNIGHT = 14;
+	public static final int PIECE_QUEEN = 16;
+	public static final int PIECE_KING = 18;
+	public static final int PIECE_NOPIECE = 25;
 	
 	public static final int SQUARE_WHITE = 0xFFFFCE9E;
 	public static final int SQUARE_WHITE_SELECTED = 0xFFFFDE5F;

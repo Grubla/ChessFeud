@@ -37,12 +37,15 @@ public class ChessModel {
 	}
 	
 	/**
-	 * Creates a chessmodel in the same way a chessmodel is exported with the exportModel() method.
+	 * Creates the model from the same way the exportModel() exports.
+	 * It is saved like this: "gameboard/turns" where gameboard is represented
+	 * like in the GameBoard(String s) constructor.
 	 * @param s
 	 */
 	public ChessModel(String s){
-		chessBoard = new ChessBoard(s);
-		//activePlayer = 0; from string
+		String tmp[] = s.split("/");
+		chessBoard = new ChessBoard(tmp[0]);
+		activePlayer = Integer.parseInt(tmp[1]);
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
@@ -119,7 +122,7 @@ public class ChessModel {
 	 * @return the player who's turn it is to move
 	 */
 	public int acitvePlayer(){
-		return activePlayer;
+		return activePlayer%2;
 	}
 	
 	/**
@@ -174,7 +177,7 @@ public class ChessModel {
 	
 	/* Changes the turn (the actve player) */
 	private void changeTurn(){
-		activePlayer = (activePlayer+1)%2;
+		activePlayer++;
 	}
 	
 }

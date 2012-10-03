@@ -12,7 +12,7 @@ public class PieceFactory {
 	}
 	
 	public Piece createPiece(int id){
-		Piece p = null;
+		Piece p;
 		switch(id){
 		case C.PIECE_BISHOP:
 			p = new Bishop(team);
@@ -32,7 +32,7 @@ public class PieceFactory {
 			p = new Rook(team);
 			break;
 		default:
-				
+			p = new NoPiece();
 		} 
 		return p;
 	}

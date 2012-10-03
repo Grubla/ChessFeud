@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud.model;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
@@ -42,18 +43,42 @@ public class ChessBoard {
 	 * Creates a chess board from the given string.
 	 * The string should be on the following format:
 	 * Every letter symbolises a position and the order of chars is the pieces
-	 * starting position. The char's int is the position where the top left tower stands on 1
-	 * and the black pawns from 9-16 and the white pawns on 49-56.
+	 * starting position. The char's int is the position where the top left tower stands on 0
+	 * and the black pawns from 8-15 and the white pawns on 48-55.
 	 * This is the string for the starting board: <------------------------------------>
 	 * @param s
 	 */
 	public ChessBoard(String s){
+		
+		PieceFactory[] pf = {new PieceFactory(C.TEAM_WHITE), new PieceFactory(C.TEAM_BLACK)};
 		board = new Piece[8][8];
-		for(int i = 0; i < s.length(); i++){
-			int x = ((int)s.charAt(i))%8;
-			int y = ((int)s.charAt(i))/8;
-			
-		}
+		for(int x = 0; x < board.length; x++)
+			for(int y = 0; y < board[x].length; y++){
+				int team = ((int)s.charAt(8*x+y)) % 2;
+				int id = ((int)s.charAt(8*x+y)) - team;
+				board[x][y] = pf[team].createPiece(id);
+			}
+		for(int x = 0; x < board.length; x++)
+			for(int y = 0; y < board[x].length; y++)
+				if(board[x][y] == null)
+					board[x][y] = new NoPiece();
+	}
+	/**
+	 * Returns a string representing a board.
+	 * The String holds the position of every Piece where a pos is between 0-63 and 65 is removed.
+	 * 
+	 * @return
+	 */
+	public String exportBoard(){
+		char c = (char)65;
+		StringBuilder export = new StringBuilder();
+		for(int i = 0; i < 64; i++)
+			export.append(c);
+		for(int x = 0; x < board.length; x++)
+			for(int y = 0; y < board[x].length; y++){
+				export.append((char)getPieceAt(x, y).getId()+getPieceAt(x, y).getTeam());
+			}
+		return export.toString();	
 	}
 	/**
 	 * Returns the piece at the given position
