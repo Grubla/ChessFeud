@@ -89,8 +89,70 @@ public class DbHandler {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	/**
+	 * Contacts the database and tells it to create a new game, returns false if it failed.
+	 * @param user1
+	 * @param user2
+	 * @param board
+	 * @return
+	 */
+	public boolean newGame(String user1, String user2, String board) {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair("tag", "addUser"));
+		pairs.add(new BasicNameValuePair("user1", user1));
+		pairs.add(new BasicNameValuePair("user2", user2));
+		pairs.add(new BasicNameValuePair("board", board));
+		
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse response = client.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			is = entity.getContent();
+			Scanner sc = new Scanner(is);
+			return(sc.nextBoolean());
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		//TODO remove all the try and get a method for it instead.
 		
 		
+	}
+	/**
+	 * Contacts the server and tells it to save a new inquirie, returns false if it couldnt be saved or if something went wrong.
+	 * @param user
+	 * @param target
+	 * @return
+	 */
+	public boolean addInquirie(String user, String target) {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair("tag", "addInquirie"));
+		pairs.add(new BasicNameValuePair("user", user));
+		pairs.add(new BasicNameValuePair("target", target));		
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse response = client.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			is = entity.getContent();
+			Scanner sc = new Scanner(is);
+			return(sc.nextBoolean());
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 
 	}
 	/**
