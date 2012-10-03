@@ -69,7 +69,8 @@ public class DbHandler extends HttpServlet {
         tags.put("incLosses", 6);
         tags.put("incDraws", 7);
         tags.put("newGame", 8);
-        tags.put("", 9);
+        tags.put("deleteGame", 9);
+        tags.put("newInquirie", 10);
         
         
     }
@@ -116,7 +117,14 @@ public class DbHandler extends HttpServlet {
 				break;
 			case 8:
 				newGame(request.getParameter("user1"), request.getParameter("user2"), request.getParameter("gameBoard"));
+				break;
+			case 9:
+				deleteGame(request.getParameter("user1"), request.getParameter("user2"));
+				break;
+			case 10:
+				newInquirie(request.getParameter("user"), request.getParameter("target"));
 			}
+				
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -235,6 +243,15 @@ public class DbHandler extends HttpServlet {
 	 */
 	private void newGame(String user1, String user2, String gameBoard) throws SQLException {
 		s.executeUpdate("insert into game(user1, user2, board, turns, timestamp) values('"+user1+"','"+user2+"','"+gameBoard+"','"+"0"+"','"+"CURRENT_TIMESTAMP)");
+	}
+	/**
+	 * Adds a new inquirie to the database.
+	 * @param user
+	 * @param target
+	 * @throws SQLException
+	 */
+	private void newInquirie(String user, String target) throws SQLException {
+		s.executeUpdate("insert into inquiries(user, target, timestamp) values('"+user+"','"+target+"',CURRENT_TIMESTAMP)");
 	}
 	/**
 	 * Deletes a game between two users from the database.
