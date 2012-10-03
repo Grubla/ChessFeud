@@ -13,7 +13,7 @@
     <string name ="list_finished">Finished Games</string>
     <string name ="image_description_logotype">ChessFeud Logotype</string>
     
-    <string name="dscr_list_opponent_avatar">Opponent's Avatar</string>
+    <string name="dscr_list_opponent_avatar">Opponents Avatar</string>
     <string name="dscr_list_team_white">White Team</string>
     <string name="dscr_list_team_black">Black Team</string>
     <string name="dscr_list_turn_bg">Number of Turns Background</string>
