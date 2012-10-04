@@ -89,7 +89,7 @@ public class DbHandler extends HttpServlet {
 				out.print(authenticate(request.getParameter("username"), request.getParameter("password")));
 				break;
 			case 1:
-				;
+				newMove(request.getParameter("user1"), request.getParameter("user2"), request.getParameter("gameBoard"));
 				break;
 			case 2:
 				List<String> games = getGamesInProgress(request.getParameter("username"));
@@ -243,6 +243,17 @@ public class DbHandler extends HttpServlet {
 	 */
 	private void newGame(String user1, String user2, String gameBoard) throws SQLException {
 		s.executeUpdate("insert into game(user1, user2, board, turns, timestamp) values('"+user1+"','"+user2+"','"+gameBoard+"','"+"0"+"','"+"CURRENT_TIMESTAMP)");
+	}
+	/**
+	 * A new gameboard is inserted into the database replacing the old one.
+	 * @param user1
+	 * @param user2
+	 * @param newBoard
+	 * @throws SQLException
+	 */
+	private void newMove(String user1, String user2, String newBoard) throws SQLException {
+		s.executeUpdate("update game set board='"+newBoard+"'where user1='"+user1+"' and user2='"+user2+"'");
+		s.executeUpdate("update game set board='"+newBoard+"'where user2='"+user1+"' and user2='"+user1+"'");
 	}
 	/**
 	 * Adds a new inquirie to the database.
