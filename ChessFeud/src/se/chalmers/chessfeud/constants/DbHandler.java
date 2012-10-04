@@ -1,6 +1,5 @@
 package se.chalmers.chessfeud.constants;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,41 +21,13 @@ public class DbHandler {
 	
 	private HttpClient client;
 	private HttpPost httpPost;
-	
 	private InputStream is;
-	
-	List pairs;
-	
-
+	private List pairs;
 	public DbHandler() {
 		client = new DefaultHttpClient();
 		httpPost = new HttpPost("46.239.99.71:8080/ChessFeudServer/DbHandler/*");
 		is = null;
-		pairs = new ArrayList();
-		String username = "twister";
-		String pass = "awesomeness";
-		String email = "1336@grubla.n00b";
-		pairs.add(new BasicNameValuePair("tag", "addUser"));
-		pairs.add(new BasicNameValuePair("username", username));
-		pairs.add(new BasicNameValuePair("password", pass));
-		pairs.add(new BasicNameValuePair("email", email));
-		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			HttpResponse response = client.execute(httpPost);
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		
-		}
-		
+		pairs = new ArrayList();	
 	}
 	/**
 	 * Contacts the server and tells it to save a new user, returns false if the player couldnt be added.
@@ -71,24 +42,7 @@ public class DbHandler {
 		pairs.add(new BasicNameValuePair("email", email));
 		pairs.add(new BasicNameValuePair("username", userName));
 		pairs.add(new BasicNameValuePair("password", password));
-
-		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
-			HttpResponse response = client.execute(httpPost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			Scanner sc = new Scanner(is);
-			return(sc.nextBoolean());
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return false;
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
+		return (updateDatabase());
 	}
 	/**
 	 * Contacts the database and tells it to create a new game, returns false if it failed.
@@ -103,27 +57,7 @@ public class DbHandler {
 		pairs.add(new BasicNameValuePair("user1", user1));
 		pairs.add(new BasicNameValuePair("user2", user2));
 		pairs.add(new BasicNameValuePair("board", board));
-		
-		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
-			HttpResponse response = client.execute(httpPost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			Scanner sc = new Scanner(is);
-			return(sc.nextBoolean());
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return false;
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-		//TODO remove all the try and get a method for it instead.
-		
-		
+		return updateDatabase();
 	}
 	/**
 	 * Contacts the server and tells it to save a new inquirie, returns false if it couldnt be saved or if something went wrong.
@@ -136,24 +70,7 @@ public class DbHandler {
 		pairs.add(new BasicNameValuePair("tag", "addInquirie"));
 		pairs.add(new BasicNameValuePair("user", user));
 		pairs.add(new BasicNameValuePair("target", target));		
-		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
-			HttpResponse response = client.execute(httpPost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			Scanner sc = new Scanner(is);
-			return(sc.nextBoolean());
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return false;
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-
+		return updateDatabase();
 	}
 	/**
 	 * Gives the server a username and returns the current statistics from that user in a String with / between all the different stats, which is w/l/d/numberofmoves.
@@ -188,9 +105,7 @@ public class DbHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
-		}
-		
-		
+		}	
 	}
 	/**
 	 * Contacts the database and request a list of all ongoing games, returns a list of all the games, an empty list if there are no games and null if something went wrong.
@@ -201,37 +116,18 @@ public class DbHandler {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "getGames"));
 		pairs.add(new BasicNameValuePair("username", userName));
-		
-		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
-			HttpResponse response = client.execute(httpPost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			Scanner sc = new Scanner(is);
-			StringBuilder sb = new StringBuilder();
-			while(sc.hasNext()){
-				sb.append(sc.next());
-			}
-			if(sb.toString() == null) {
-				return new ArrayList();
-			}
-			List<String> games = new ArrayList();
-			String[] dbGames = sb.toString().split(";");
-			for(String s : dbGames) {
-				games.add(s);
-			}
-			return games;
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		String s = getFromDatabase();		
+		if(s == null) {
 			return null;
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
+		} else if(s.equals("")) { //If something went wrong when contacting the database.
+			return new ArrayList<String>();
 		}
-		
+		List<String> games = new ArrayList<String>();
+		String[] dbGames = s.toString().split(";");
+		for(String i : dbGames) {
+			games.add(i);
+		}
+		return games;	
 	}
 	/**
 	 * Increments the wins for a user in the database, returns false if something went wrong.
@@ -241,25 +137,8 @@ public class DbHandler {
 	public boolean incWins(String userName) {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "incWins"));
-		pairs.add(new BasicNameValuePair("username", userName));
-		
-		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
-			HttpResponse response = client.execute(httpPost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			Scanner sc = new Scanner(is);
-			return sc.nextBoolean();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return false;
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
+		pairs.add(new BasicNameValuePair("username", userName));		
+		return updateDatabase();
 		
 	}
 	/**
@@ -271,7 +150,25 @@ public class DbHandler {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "incDraws"));
 		pairs.add(new BasicNameValuePair("username", userName));
+		return updateDatabase();
+	}
+	/**
+	 * Increments the losses for a user in the database, returns false if something went wrong.
+	 * @param userName
+	 * @return
+	 */
+	public boolean incLosses(String userName) {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair("tag", "incLosses"));
+		pairs.add(new BasicNameValuePair("username", userName));
 		
+		return updateDatabase();
+	}
+	/**
+	 * Contacts the database with an update and returns true if it sucseeded or false if something went wrong along the way.
+	 * @return
+	 */
+	public boolean updateDatabase() {
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse response = client.execute(httpPost);
@@ -291,31 +188,33 @@ public class DbHandler {
 		}
 	}
 	/**
-	 * Increments the losses for a user in the database, returns false if something went wrong.
-	 * @param userName
+	 * Requests a String from the database, returns null if something went wrong.
 	 * @return
 	 */
-	public boolean incLosses(String userName) {
-		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "incLosses"));
-		pairs.add(new BasicNameValuePair("username", userName));
-		
+	public String getFromDatabase() {	
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse response = client.execute(httpPost);
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
 			Scanner sc = new Scanner(is);
-			return sc.nextBoolean();
+			StringBuilder sb = new StringBuilder();
+			while(sc.hasNext()){
+				sb.append(sc.next());
+			}
+			return sb.toString();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
-			return false;
+			return null;
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 	
