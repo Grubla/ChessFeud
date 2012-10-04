@@ -100,7 +100,6 @@ public class GameView extends View implements OnTouchListener{
 							uri = "drawable/pieces_" + uri;
 							int imageResource = getResources().getIdentifier(uri, null,
 									context.getPackageName());
-							Drawable image = getResources().getDrawable(imageResource);
 							Bitmap bm = BitmapFactory.decodeResource(getResources(),
 									imageResource);
 							bm = Bitmap.createScaledBitmap(bm, chessSquareWidth,
