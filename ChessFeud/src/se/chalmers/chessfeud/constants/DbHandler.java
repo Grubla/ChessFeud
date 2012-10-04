@@ -30,6 +30,19 @@ public class DbHandler {
 		pairs = new ArrayList();	
 	}
 	/**
+	 * Tries to authenticate the specified username and password with an existing user on the server, returns false if it wasn't there or if something went wrong otherwise true.
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	public boolean login(String userName, String password) {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair("tag", "login"));
+		pairs.add(new BasicNameValuePair("username", userName));
+		pairs.add(new BasicNameValuePair("password", password));
+		return updateDatabase();
+	}
+	/**
 	 * Contacts the server and tells it to save a new user, returns false if the player couldnt be added.
 	 * @param email
 	 * @param userName
