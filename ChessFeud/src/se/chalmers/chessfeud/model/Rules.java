@@ -13,7 +13,6 @@ import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.pieces.Queen;
 import se.chalmers.chessfeud.model.pieces.Rook;
 import se.chalmers.chessfeud.model.utils.Position;
-import android.util.Log;
 /**
  * A class for managing the Rules in a chessgame.
  * @author grubla
@@ -202,8 +201,6 @@ public class Rules {
 					pm.add(tryPos);
 			}
 		}
-		for(Position p : pm)
-			Log.d("CanMoveTo:", p.toString());
 		return pm;
 	}
 	

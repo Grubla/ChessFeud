@@ -120,8 +120,6 @@ public class ChessBoard {
 		Piece piece = getPieceAt(newPos);
 		board[newPos.getX()][newPos.getY()] = getPieceAt(oldPos);
 		board[oldPos.getX()][oldPos.getY()] = new NoPiece();
-		Log.d("Piece ret:", piece.toString());
-		Log.d("New pos:",board[newPos.getX()][newPos.getY()].toString());
 		return piece;
 	}
 	

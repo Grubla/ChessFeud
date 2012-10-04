@@ -12,6 +12,14 @@ public class PieceFactory {
 	}
 	
 	public Piece createPiece(int id){
+		return createPiece(this.team, id);
+	}
+	
+	public static Piece createNewPiece(Piece p){
+		return createPiece(p.getTeam(), p.getId());
+	}
+	
+	private static Piece createPiece(int team, int id){
 		Piece p;
 		switch(id){
 		case C.PIECE_BISHOP:

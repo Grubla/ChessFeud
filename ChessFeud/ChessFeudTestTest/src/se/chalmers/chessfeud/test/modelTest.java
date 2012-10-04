@@ -1,10 +1,14 @@
 package se.chalmers.chessfeud.test;
 
 
+import java.util.List;
+
 import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 import android.test.AndroidTestCase;
+
 
 public class modelTest extends AndroidTestCase {
 
@@ -25,20 +29,21 @@ public class modelTest extends AndroidTestCase {
 		ChessModel cm = new ChessModel();
 		for(int i = 0; i < pos.length; i++){
 			cm.click(pos[i]);
-			if(i == 10)
+			if(i == 11)
 				assertTrue(cm.getTakenPieces().size() == 1);
-			if(i == 14)
+			if(i == 13)
 				assertTrue(cm.getTakenPieces().size() == 2);
-			if(i == 22){
+			if(i == 21){
 				cm.click(new Position(4,1));
 				assertTrue(cm.getPossibleMoves().size() == 0);
-				cm.click(new Position(0,4));
-			if(i == 24)
+				cm.click(new Position(4,1));
+			}
+			if(i == 23){
 				assertTrue(cm.getTakenPieces().size() == 3);
 				assertTrue(cm.getState() == C.STATE_CHECK);
 				//Only king can move
 			}
-			if(i == 32){
+			if(i == 31){
 				//Only 36, 37, 56 can move
 			}
 			if(i == 42){

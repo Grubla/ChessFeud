@@ -61,21 +61,23 @@ public class ChessModel {
 	 * @param p, the position clicked
 	 */
 	public void click(Position p){
-		Log.d("Pos:", p.toString());
 		if(selected != null){ //Some piece is selected
 			if(possibleMoves.contains(p)){ //A valid move has been clicked
 				Piece pi = chessBoard.movePiece(selected, p);
 				deselectPiece();
-				if(!(pi instanceof NoPiece))
+				if(!(pi instanceof NoPiece)){
 					takenPieces.add(pi);
+					Log.d("List", "Added");
+				}
+					
 				changeTurn();
-				if(Rules.isCheck(chessBoard, activePlayer))
-					if(Rules.isCheckMate(chessBoard, activePlayer)){
-						setState(C.STATE_VICTORY_WHITE + activePlayer);
+				if(Rules.isCheck(chessBoard, activePlayer()))
+					if(Rules.isCheckMate(chessBoard, activePlayer())){
+						setState(C.STATE_VICTORY_WHITE + activePlayer());
 					}else{
 						setState(C.STATE_CHECK);
 					}
-				else if(Rules.isDraw(chessBoard, activePlayer)){
+				else if(Rules.isDraw(chessBoard, activePlayer())){
 						setState(C.STATE_DRAW);	
 				}else{
 					//Next Turn
@@ -86,7 +88,7 @@ public class ChessModel {
 				//Check for check draw etc
 				//Next turn or gameOver
 			}else{ //Clicked on a place the piece cannot go
-				if(chessBoard.getPieceAt(p).getTeam() == activePlayer){ 
+				if(chessBoard.getPieceAt(p).getTeam() == activePlayer()){ 
 					if(p.equals(selected)){ //Clicked on the same piece twice
 						deselectPiece();
 					}else{ //Clicked on a new piece in its team
@@ -97,10 +99,14 @@ public class ChessModel {
 				}
 			}
 		}else{
-			if(chessBoard.getPieceAt(p) != null && chessBoard.getPieceAt(p).getTeam() == activePlayer){ //Clicked on a new valid piece
+			if(chessBoard.getPieceAt(p) != null && chessBoard.getPieceAt(p).getTeam() == activePlayer()){ //Clicked on a new valid piece
 				setSelected(p);
 			}
 		}
+		Log.d("Click:",p.toString());
+		if(selected != null)
+			Log.d("Sel:",selected.toString());
+		Log.d("MoveSize",""+getPossibleMoves().size());
 	}
 	/*
 	 * Returns the possible moves (according to ALL rules) for the chosen piece.
@@ -121,7 +127,7 @@ public class ChessModel {
 	 * Returns the active player where 0 is "white" and 1 is "black"
 	 * @return the player who's turn it is to move
 	 */
-	public int acitvePlayer(){
+	public int activePlayer(){
 		return activePlayer%2;
 	}
 	
