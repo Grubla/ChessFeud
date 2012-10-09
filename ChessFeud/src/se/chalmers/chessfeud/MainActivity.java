@@ -52,37 +52,10 @@ public class MainActivity extends Activity implements OnClickListener{
     	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
     	//startedGames.setListAdapter(this, R.id.list_ongoingGames, getList());
 
-				try {
-					HttpResponse response = client.execute(httpPost);
-					//HttpEntity entity = response.getEntity();
-					//is = entity.getContent();
-
-				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				
-//				try {
-//			        BufferedReader reader =
-//			            new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-//			        StringBuilder sb = new StringBuilder();
-//			        String line = null;
-//			        while ((line = reader.readLine()) != null) {
-//			            sb.append(line + "\n");
-//			        }
-//			        is.close();
-//			        TextView t = (TextView)findViewById(R.id.textView1);
-//			        t.setText(sb.toString());
-//			    } catch (Exception e) {
-//			    }
 				
-			}
-		});
+	}
 		
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
