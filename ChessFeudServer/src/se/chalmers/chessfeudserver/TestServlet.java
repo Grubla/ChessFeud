@@ -26,14 +26,10 @@ public class TestServlet extends HttpServlet {
 		response.setContentType("text/xml");
 		final ServletOutputStream out = response.getOutputStream();			
 			try {
-				String userName = request.getParameter("userName");
+				String userName = request.getParameter("username");
 		        String password = request.getParameter("password");
 				boolean authenticated = login(userName, password);
-				if (authenticated) {
-					out.println("<login><status>SUCSESS</status></login>");
-				} else {
-					out.println("<login><status>FAIL</status></login>");
-				}
+				out.print(authenticated);
 				} catch(Exception e) {
 				e.printStackTrace();
 				
