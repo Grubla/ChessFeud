@@ -1,75 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent" 
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:background="#CCCCCC" 
+  android:orientation="vertical">
     <!-- Wrapping the whole structure -->
+    <ImageView 
+        android:id="@+id/img_login_logo" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_weight="1" 
+        android:src="@drawable/logo_chessfeud"/>
     <LinearLayout 
-        android:layout_width="fill_parent" 
-        android:layout_height="fill_parent" 
-        android:background="#CCCCCC" 
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_horizontal" 
+        android:layout_weight="1" 
         android:orientation="vertical">
         
-        <!-- Logotype -->
-        <ImageView 
-            android:id="@+id/img_login_logo" 
+        <EditText 
+            android:id="@+id/inputUsername" 
+            android:layout_width="match_parent" 
+            android:layout_height="40dp" 
+            android:ems="10" 
+            android:hint="@string/hint_username"/>
+        <EditText 
+            android:id="@+id/inputPassword" 
+            android:layout_width="match_parent" 
+            android:layout_height="40dp" 
+            android:ems="10" 
+            android:hint="@string/hint_password" 
+            android:inputType="textPassword"/>
+        <Button 
+            android:id="@+id/login" 
+            style="@style/ButtonText" 
+            android:background="@drawable/btn_orange" 
+            android:paddingBottom="5dp" 
+            android:paddingTop="5dp" 
+            android:text="@string/button_login" 
+            android:textSize="20dp"/>
+        <TextView 
+            android:id="@+id/noAccount" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
-            android:layout_weight="1" 
-            android:src="@drawable/logo_chessfeud"/>
-        
-        <!-- Login info -->
-        <LinearLayout 
-            android:layout_width="200dp" 
-            android:layout_height="wrap_content" 
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1" 
-            android:orientation="vertical">
-            <!-- Username input -->
-            <EditText 
-                android:id="@+id/inputUsername" 
-                android:layout_width="match_parent" 
-                android:layout_height="40dp" 
-                android:ems="10" 
-                android:hint="Username">
-                <requestFocus />
-            </EditText>
-            <!-- Password input -->
-            <EditText 
-                android:id="@+id/inputPassword" 
-                android:layout_width="match_parent" 
-                android:layout_height="40dp" 
-                android:ems="10" 
-                android:hint="Password" android:inputType="textPassword">
-                <requestFocus />
-            </EditText>
-            <!-- Login button -->
-            <Button 
-		        android:id="@+id/login" 
-		        style="@style/ButtonText" 
-		        android:background="@drawable/btn_orange" 
-		        android:paddingBottom="5dp" 
-		        android:paddingTop="5dp" 
-		        android:text="@string/button_login" 
-		        android:textSize="20dp"/>
-            <!-- No account? -->
-            <TextView 
-                android:id="@+id/noAccount" 
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content" 
-                android:layout_marginTop="40dp" 
-                android:text="@string/no_account"/>
-            <!-- Login button -->
-            <Button 
-		        android:id="@+id/register" 
-		        style="@style/ButtonText" android:layout_marginTop="5dp" android:background="@drawable/btn_orange" android:paddingBottom="5dp" android:paddingTop="5dp" android:text="@string/button_register" android:textSize="20dp"/>
-        </LinearLayout>
-        <FrameLayout 
-            android:layout_width="match_parent" 
-            android:layout_height="wrap_content" 
-            android:layout_weight="1">
-        </FrameLayout>
+            android:layout_marginTop="40dp" 
+            android:text="@string/no_account"/>
+        <Button 
+            android:id="@+id/register" 
+            style="@style/ButtonText" 
+            android:layout_marginTop="5dp" 
+            android:background="@drawable/btn_orange" 
+            android:paddingBottom="5dp" 
+            android:paddingTop="5dp" 
+            android:text="@string/button_register" 
+            android:textSize="20dp"/>
     </LinearLayout>
+    <FrameLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_weight="1">
+    </FrameLayout>
     
 </LinearLayout>

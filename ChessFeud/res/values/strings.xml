@@ -15,8 +15,14 @@
     <string name ="image_description_logotype">ChessFeud Logotype</string>
     
     <string name ="button_login">Log in</string>
+    <string name ="hint_username">Username</string>
+    <string name ="hint_password">Password</string>
     <string name ="no_account">Do not have an account?</string>
     <string name ="button_register">Register for free</string>
+    
+    <string name ="dscr_register">Fill in the fields below, hit the register button and have fun!</string>
+    <string name ="hint_email">E-Mail</string>
+    <string name ="button_register_now">Register!</string>
     
     <string name="dscr_list_opponent_avatar">Opponents Avatar</string>
     <string name="dscr_list_team_white">White Team</string>
