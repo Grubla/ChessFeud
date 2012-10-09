@@ -27,7 +27,7 @@ public class ServerTest extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		client = new DefaultHttpClient();
-		httpPost = new HttpPost("servlet");
+		httpPost = new HttpPost("129.16.179.79:8080/ChessFeudServer/TestServlet/*");
 		List pairs = new ArrayList();
 		String username = "twister";
 		String pass = "12345";
