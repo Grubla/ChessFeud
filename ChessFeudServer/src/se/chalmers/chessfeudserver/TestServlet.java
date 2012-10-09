@@ -1,10 +1,8 @@
 package se.chalmers.chessfeudserver;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,12 +24,7 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/xml");
-		
-		final ServletOutputStream out = response.getOutputStream();
-
-
-
-			
+		final ServletOutputStream out = response.getOutputStream();			
 			try {
 				String userName = request.getParameter("userName");
 		        String password = request.getParameter("password");
@@ -42,7 +35,7 @@ public class TestServlet extends HttpServlet {
 					out.println("<login><status>FAIL</status></login>");
 				}
 				} catch(Exception e) {
-				out.println("<login><status>ERROR</login></status>");
+				out.println("<login><status>ERROR</status></login>");
 				
 				} 
 
@@ -61,7 +54,7 @@ public class TestServlet extends HttpServlet {
 
 	}
 	
-	protected boolean login(String userName, String password) {
+	public boolean login(String userName, String password) {
 		if (userName.equals("twister") && password.equals("awesomeness")) {
 			return true;
 		} else {

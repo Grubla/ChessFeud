@@ -13,8 +13,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
 
 public class ServerTest extends Activity {
@@ -26,8 +30,13 @@ public class ServerTest extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		System.out.println("jeh");
+	}
+
+	public boolean onTouch(View arg0, MotionEvent arg1) {
+		System.out.println("hej");
 		client = new DefaultHttpClient();
-		httpPost = new HttpPost("129.16.179.79:8080/ChessFeudServer/TestServlet/*");
+		httpPost = new HttpPost("localhost:8080/ChessFeudServer/TestServlet/*");
 		List pairs = new ArrayList();
 		String username = "twister";
 		String pass = "awesomeness";
@@ -48,6 +57,6 @@ public class ServerTest extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return false;
 	}
 }

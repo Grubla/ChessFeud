@@ -51,6 +51,7 @@ public class MainActivity extends Activity implements OnClickListener{
     	
     	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
     	//startedGames.setListAdapter(this, R.id.list_ongoingGames, getList());
+
     }
 
     @Override
@@ -108,4 +109,5 @@ public class MainActivity extends Activity implements OnClickListener{
     	}
     	
     }
+
 }

@@ -2,6 +2,8 @@
     package="se.chalmers.chessfeud"
     android:versionCode="1"
     android:versionName="1.0" >
+    
+    <uses-permission android:name="android.permission.INTERNET" /> 
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -12,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ServerTest"
+            android:name="MainActivity"
             android:label="hej" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
