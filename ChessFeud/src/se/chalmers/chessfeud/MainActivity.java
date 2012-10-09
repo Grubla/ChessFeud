@@ -22,7 +22,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	private Button bPlay, bMyProfile, bSettings, bAbout;
 	private ImageView iLogo;
 	private ListView finishedGames, startedGames;
-
+ 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +99,7 @@ public class MainActivity extends Activity implements OnClickListener{
     		TextView blackPawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_black);
     		TextView whitePawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_white);
     		//Do this for every element
+    		//PLease R COME BACK TO ME
     		//String s = l.get(position);
     		//decode s
     		//allViews.setText("decoded s")

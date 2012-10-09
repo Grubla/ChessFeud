@@ -35,6 +35,13 @@
     <string name="dscr_list_black_piece_6">Black Knight</string>
     <string name="dscr_list_black_piece_7">Black Queen</string>
     <string name="dscr_list_black_piece_8">Black King</string>
+    <string name="play_pieces_taken">Pieces taken:</string>
+    <string name="dscr_bg_nbr_of_turns">Background image for number of turns</string>
+    <string name="dscr_avatar_white">White players avatar</string>
+    <string name="dscr_avatar_black">Black players avatar</string>
+    <string name="dscr_icon_team_white">White player</string>
+    <string name="dscr_icon_team_black">Black player</string>
+    
     
     <style name="ButtonText">
 	    <item name="android:layout_width">fill_parent</item>

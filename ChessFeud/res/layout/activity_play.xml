@@ -11,141 +11,334 @@
 	    android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 		
+	    <!-- Left Side -->
 		<FrameLayout 
 		    android:layout_width="40dp"
-			android:layout_height="40dp" 
-			android:layout_marginRight="45dp"
-			android:layout_weight="1">
+			android:layout_height="40dp">
 		</FrameLayout>
 		
+		<!-- Whose Turn -->
 		<TextView 
-		    android:id="@+id/textView1" 
-		    android:layout_width="wrap_content"
+		    android:id="@+id/whoseTurnAndTime" 
+		    android:layout_width="0dip"
 			android:layout_height="wrap_content" 
-			android:layout_weight="1"
-			android:text="Your turn" 
-			android:textSize="30dp" />
+			android:layout_gravity="bottom" 
+			android:layout_marginBottom="3dp" 
+			android:layout_weight="1" 
+			android:gravity="center_horizontal" 
+			android:text="White Turn(67h)" 
+			android:textSize="23dp"/>
 		
+		<!-- Number of turns -->
 		<FrameLayout 
 		    android:layout_width="wrap_content"
-			android:layout_height="wrap_content" 
-			android:layout_marginLeft="45dp"
-			android:layout_weight="1">
+			android:layout_height="wrap_content">
 			
 			<ImageView 
-			    android:id="@+id/imageView1"
+			    android:id="@+id/bgNbrOfTurns"
 				android:layout_width="40dp" 
 				android:layout_height="40dp"
-				android:src="@drawable/icon_turns" />
+				android:src="@drawable/icon_turns" 
+				android:contentDescription="@string/dscr_bg_nbr_of_turns" />
 			
+			<!-- Data: Number of turns -->
 			<TextView 
-			    android:id="@+id/textView2" 
+			    android:id="@+id/nbrOfTurns" 
 			    android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
+				android:gravity="center_horizontal"
 				android:padding="5dp"
 				android:text="99" 
 				android:textSize="25dp" />
 		</FrameLayout>
 	</LinearLayout>
 	
+	<!-- Player Data -->
 	<LinearLayout 
 	    android:layout_width="match_parent"
-		android:layout_height="wrap_content">
-		
+		android:layout_height="wrap_content"
+		android:baselineAligned="false">
+		<!-- White Player -->
 		<LinearLayout 
 		    android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:layout_marginLeft="5dp"
-			android:layout_weight="1" 
-			android:orientation="vertical">
+			android:layout_weight="1" android:background="#dedede" android:orientation="vertical" android:padding="5dp">
 			
 			<LinearLayout 
 			    android:layout_width="match_parent"
 				android:layout_height="wrap_content">
-				
+				<!-- Avatar -->
 				<FrameLayout 
-				    android:layout_width="40dp"
-					android:layout_height="40dp" 
-					android:background="#FFFFFF">
+				    android:layout_width="45dp"
+					android:layout_height="45dp" 
+					android:background="#FFFFFF" 
+					android:paddingLeft="3dp" 
+					android:paddingTop="3dp">
+					<!-- Data: White Avatar -->
+					<ImageView 
+					    android:id="@+id/imgAvatarWhite" 
+					    android:layout_width="39dp" 
+					    android:layout_height="39dp" 
+					    android:src="@drawable/avatar_stina"
+					    android:contentDescription="@string/dscr_avatar_white" />
 				</FrameLayout>
+				<ImageView 
+				    android:id="@+id/imgTeamWhite" 
+				    android:layout_width="10dp" 
+				    android:layout_height="10dp"
+				     android:layout_marginLeft="5dp" 
+				     android:src="@drawable/icon_team_white"
+				     android:contentDescription="@string/dscr_icon_team_white" />
+				<!-- Data: White Player Name -->
+				<TextView 
+				    android:id="@+id/PlayerNameWhite" 
+				    android:layout_width="wrap_content" 
+				    android:layout_height="wrap_content" 
+				    android:layout_marginLeft="3dp" 
+				    android:text="White P" 
+				    android:textSize="10dp"/>
 			</LinearLayout>
-			
-			<ImageView 
-			    android:id="@+id/imageView2"
-				android:layout_width="wrap_content" 
-				android:layout_height="wrap_content"
-				android:src="@drawable/sign_chess" />
 			
 			<TextView 
-			    android:id="@+id/textView3" 
+			    android:id="@+id/play_pieces_taken_white" 
 			    android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
-				android:text="Pieces taken:"
-				android:textSize="10dp" />
+				android:layout_marginTop="3dp" 
+				android:text="@string/play_pieces_taken" 
+				android:textSize="10dp"/>
 			
-			<LinearLayout 
-			    android:layout_width="match_parent"
-				android:layout_height="wrap_content">
-				
-				<ImageView 
-				    android:id="@+id/imageView4"
-					android:layout_width="10dp" 
-					android:layout_height="10dp"
-					android:src="@drawable/icon_pieces_white_rook" />
-				<ImageView 
-				    android:id="@+id/imageView6"
-					android:layout_width="10dp" 
-					android:layout_height="10dp"
-					android:src="@drawable/icon_pieces_white_rook" />
-			</LinearLayout>
+
+			 <!-- White pieces -->
+          	<LinearLayout 
+             android:layout_width="match_parent" 
+             android:layout_height="wrap_content" 
+             android:layout_marginTop="3dp">
+              
+              <ImageView 
+                  android:id="@+id/img_white_piece_0" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_0" 
+                  android:src="@drawable/icon_pieces_white_pawn"/>
+              <TextView 
+                  android:id="@+id/nbr_pawn_white" 
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content" 
+                  android:layout_gravity="bottom" 
+                  android:text="x8" 
+                  android:textSize="5dp"/>
+              <ImageView 
+                  android:id="@+id/img_white_piece_1" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_1" 
+                  android:src="@drawable/icon_pieces_white_rook"/>
+              <ImageView 
+                  android:id="@+id/img_white_piece_2" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_2" 
+                  android:src="@drawable/icon_pieces_white_rook"/>
+              <ImageView 
+                  android:id="@+id/img_white_piece_3" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_3" 
+                  android:src="@drawable/icon_pieces_white_bishop"/>
+              <ImageView 
+                  android:id="@+id/img_white_piece_4" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_4" 
+                  android:src="@drawable/icon_pieces_white_bishop"/>
+              <ImageView 
+                  android:id="@+id/img_white_piece_5" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_5" 
+                  android:src="@drawable/icon_pieces_white_knight"/>
+              <ImageView 
+                  android:id="@+id/img_white_piece_6" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_6" 
+                  android:src="@drawable/icon_pieces_white_knight"/>
+              <ImageView 
+                  android:id="@+id/img_white_piece_7" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_7" 
+                  android:src="@drawable/icon_pieces_white_queen"/>
+              <ImageView 
+                  android:id="@+id/img_white_piece_8" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_white_piece_8" 
+                  android:src="@drawable/icon_pieces_white_king"/>
+          </LinearLayout>
+          
 		</LinearLayout>
-		
+		<!-- Black player -->
 		<LinearLayout 
 		    android:layout_width="wrap_content"
 			android:layout_height="match_parent" 
-			android:layout_marginLeft="5dp"
 			android:layout_weight="1" 
-			android:orientation="vertical">
+			android:background="#acacac" 
+			android:orientation="vertical" 
+			android:padding="5dp">
 			
 			<LinearLayout 
 			    android:layout_width="match_parent"
 				android:layout_height="wrap_content">
-				
 				<FrameLayout 
-				    android:layout_width="40dp"
-					android:layout_height="40dp" 
-					android:background="#FFFFFF">
+				    android:layout_width="45dp"
+					android:layout_height="45dp" 
+					android:background="#FFFFFF" 
+					android:paddingLeft="3dp" 
+					android:paddingTop="3dp">
+					<!-- Data: Black Avatar -->
+					<ImageView 
+					    android:id="@+id/imgAvatarBlack" 
+					    android:layout_width="39dp" 
+					    android:layout_height="39dp" 
+					    android:src="@drawable/avatar_stina"
+					    android:contentDescription="@string/dscr_avatar_black" />
 				</FrameLayout>
+				<ImageView 
+				    android:id="@+id/imgTeamBlack" 
+				    android:layout_width="10dp" 
+				    android:layout_height="10dp"
+				     android:layout_marginLeft="5dp" 
+				     android:src="@drawable/icon_team_black"
+				     android:contentDescription="@string/dscr_icon_team_black" />
+				<!-- Data: Black Player Name -->
+				<TextView 
+				    android:id="@+id/PlayerNameBlack" 
+				    android:layout_width="wrap_content" 
+				    android:layout_height="wrap_content" 
+				    android:layout_marginLeft="3dp" 
+				    android:text="Black P" 
+				    android:textSize="10dp"/>
 			</LinearLayout>
-			
-			<ImageView 
-			    android:id="@+id/imageView3"
-				android:layout_width="wrap_content" 
-				android:layout_height="wrap_content" android:src="@drawable/sign_chess"/>
 			
 			<TextView 
-			    android:id="@+id/textView4" 
+			    android:id="@+id/play_pieces_taken_black" 
 			    android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
-				android:text="Pieces taken:"
-				android:textSize="10dp" />
-			<LinearLayout 
-			    android:layout_width="match_parent" 
-			    android:layout_height="wrap_content">
-				
-				<ImageView 
-				    android:id="@+id/imageView5" 
-				    android:layout_width="10dp" 
-				    android:layout_height="10dp" 
-				    android:src="@drawable/icon_pieces_black_knight"/>
-			</LinearLayout>
+				android:layout_marginTop="3dp" 
+				android:text="@string/play_pieces_taken" 
+				android:textSize="10dp"/>
+			
+          <!-- Black pieces -->
+          	<LinearLayout 
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="3dp">
+              
+              <ImageView 
+                  android:id="@+id/img_black_piece_0" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_0" 
+                  android:src="@drawable/icon_pieces_black_pawn"/>
+              <TextView 
+                  android:id="@+id/nbr_pawn_black" 
+                  android:layout_width="wrap_content" 
+                  android:layout_height="wrap_content" 
+                  android:layout_gravity="bottom" 
+                  android:text="x8" 
+                  android:textSize="5dp"/>
+              <ImageView 
+                  android:id="@+id/img_black_piece_1" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_1" 
+                  android:src="@drawable/icon_pieces_black_rook"/>
+              <ImageView 
+                  android:id="@+id/img_black_piece_2" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_2" 
+                  android:src="@drawable/icon_pieces_black_rook"/>
+              <ImageView 
+                  android:id="@+id/img_black_piece_3" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_3"
+                  android:src="@drawable/icon_pieces_black_bishop"/>
+              <ImageView 
+                  android:id="@+id/img_black_piece_4" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_4" 
+                  android:src="@drawable/icon_pieces_black_bishop"/>
+              <ImageView 
+                  android:id="@+id/img_black_piece_5" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_5" 
+                  android:src="@drawable/icon_pieces_black_knight"/>
+              <ImageView 
+                  android:id="@+id/img_black_piece_6" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_6" 
+                  android:src="@drawable/icon_pieces_black_knight"/>
+              <ImageView 
+                  android:id="@+id/img_black_piece_7" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_7" 
+                  android:src="@drawable/icon_pieces_black_queen"/>
+              <ImageView 
+                  android:id="@+id/img_black_piece_8" 
+                  android:layout_width="15dp" 
+                  android:layout_height="15dp" 
+                  android:contentDescription="@string/dscr_list_black_piece_8" 
+                  android:src="@drawable/icon_pieces_black_king"/>
+          </LinearLayout>
 		</LinearLayout>
 	</LinearLayout>
-	<!-- <se.chalmers.chessfeud.view.GameView
+	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="5dp">
+		<FrameLayout 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="match_parent" 
+		    android:layout_weight="1">
+		</FrameLayout>
+		<!-- Check if text color is editable??? -->
+		<TextView 
+		    android:id="@+id/statusCheck" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:text="Check" 
+		    android:textColor="#dd0000" 
+		    android:textSize="20dp"/>
+		<TextView 
+		    android:id="@+id/statusWin" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:text="You Win" 
+		    android:textColor="#00dd00" 
+		    android:textSize="20dp"/>
+		<TextView 
+		    android:id="@+id/statusDraw" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:layout_weight="1" 
+		    android:text="Draw" 
+		    android:textColor="#555555" 
+		    android:textSize="20dp"/>
+		<FrameLayout 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="match_parent" 
+		    android:layout_weight="1">
+		</FrameLayout>
+	</LinearLayout>
+	
+	<se.chalmers.chessfeud.view.GameView
 	    android:id="@+id/chessBoard" 
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
-		android:layout_margin="5dp"/>-->
-
+		android:layout_margin="5dp"/>
 
 </LinearLayout>
