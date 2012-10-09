@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud.model;
 
+import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 
@@ -32,7 +33,7 @@ public class ChessBoard {
 			for(int y = 0; y < board[x].length; y++)
 				board[x][y] = cb.getPieceAt(x, y);
 		board[newPos.getX()][newPos.getY()] = board[oldPos.getX()][oldPos.getY()];
-		board[oldPos.getX()][oldPos.getY()] = null;
+		board[oldPos.getX()][oldPos.getY()] = new NoPiece();
 	}
 	/**
 	 * Returns the piece at the given position
@@ -73,13 +74,13 @@ public class ChessBoard {
 	public Piece movePiece(Position oldPos, Position newPos){
 		Piece piece = getPieceAt(newPos);
 		board[newPos.getX()][newPos.getY()] = getPieceAt(oldPos);
-		board[oldPos.getX()][oldPos.getY()] = null;
+		board[oldPos.getX()][oldPos.getY()] = new NoPiece();
 		return piece;
 	}
 	
 	/* Returns true if there is no piece at the given position */
 	public boolean isEmpty(Position pos) {
-		return getPieceAt(pos) == null;
+		return getPieceAt(pos) instanceof NoPiece;
 	}
 	
 }

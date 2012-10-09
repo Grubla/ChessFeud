@@ -7,6 +7,7 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.Bishop;
 import se.chalmers.chessfeud.model.pieces.King;
 import se.chalmers.chessfeud.model.pieces.Knight;
+import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Pawn;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.pieces.Queen;
@@ -17,9 +18,28 @@ public class Rules {
 	
 	private static final int[] HORSE_X = {-2, -1, 1, 2, 2, 1, -1, -2};
 	private static final int[] HORSE_Y = {1, 2, 2, 1, -1, -2, -2, -1};
+	private static final Piece[][] START_BOARD = {
+		{new Rook(C.TEAM_BLACK), new Knight(C.TEAM_BLACK), new Bishop(C.TEAM_BLACK), 
+			new Queen(C.TEAM_BLACK), new King(C.TEAM_BLACK), new Bishop(C.TEAM_BLACK), 
+			new Knight(C.TEAM_BLACK), new Rook(C.TEAM_BLACK)},
+		{new Pawn(C.TEAM_BLACK), new Pawn(C.TEAM_BLACK), new Pawn(C.TEAM_BLACK), 
+				new Pawn(C.TEAM_BLACK), new Pawn(C.TEAM_BLACK), new Pawn(C.TEAM_BLACK), 
+				new Pawn(C.TEAM_BLACK), new Pawn(C.TEAM_BLACK)},
+		{new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece()},
+		{new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece()},
+		{new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece()},
+		{new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece(), new NoPiece()},
+		{new Pawn(C.TEAM_WHITE), new Pawn(C.TEAM_WHITE), new Pawn(C.TEAM_WHITE), 
+			new Pawn(C.TEAM_WHITE), new Pawn(C.TEAM_WHITE), new Pawn(C.TEAM_WHITE), 
+			new Pawn(C.TEAM_WHITE), new Pawn(C.TEAM_WHITE)},
+		{new Rook(C.TEAM_WHITE), new Knight(C.TEAM_WHITE), new Bishop(C.TEAM_WHITE), 
+				new Queen(C.TEAM_WHITE), new King(C.TEAM_WHITE), new Bishop(C.TEAM_WHITE), 
+				new Knight(C.TEAM_WHITE), new Rook(C.TEAM_WHITE)}
+	};
 	
+	 
 	public static Piece startBoard(int x, int y){
-		return null;
+		return START_BOARD[y][x];
 	}
 	/**
 	 * Returns true if the board is in an state that makes the game over.

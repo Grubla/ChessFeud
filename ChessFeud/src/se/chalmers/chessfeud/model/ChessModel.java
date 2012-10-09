@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.chalmers.chessfeud.model.pieces.Bishop;
-import se.chalmers.chessfeud.model.pieces.King;
+import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
-import se.chalmers.chessfeud.model.pieces.Queen;
-import se.chalmers.chessfeud.model.pieces.Rook;
 import se.chalmers.chessfeud.model.utils.Position;
+import android.util.Log;
 /**
  * A class that implements the model of a chessgame
  * @author grubla
@@ -38,10 +36,13 @@ public class ChessModel {
 	 * @param p, the position clicked
 	 */
 	public void click(Position p){
+		Log.d("click", "Made it");
+		Log.d("Pos:", ""+p.getX()+","+p.getY());
+		Log.d("selected", ""+selected);
 		if(selected != null){ //Some piece is selected
 			if(possibleMoves.contains(p)){ //A valid move has been clicked
 				Piece pi = chessBoard.movePiece(selected, p);
-				if(pi != null)
+				if(!(pi instanceof NoPiece))
 					takenPieces.add(pi);
 				changeTurn();
 				if(Rules.isCheck(chessBoard, activePlayer))
@@ -70,8 +71,9 @@ public class ChessModel {
 					deselectPiece();
 				}
 			}
-		}else{ 
-			if(chessBoard.getPieceAt(p).getTeam() == activePlayer){ //Clicked on a new valid piece
+		}else{
+			Log.d("setSelected", ""+(chessBoard.getPieceAt(p) != null)+" "+(chessBoard.getPieceAt(p).getTeam() == activePlayer));
+			if(chessBoard.getPieceAt(p) != null && chessBoard.getPieceAt(p).getTeam() == activePlayer){ //Clicked on a new valid piece
 				setSelected(p);
 			}
 		}

@@ -1,6 +1,9 @@
 package se.chalmers.chessfeud.view;
 
 import se.chalmers.chessfeud.constants.C;
+import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.model.pieces.Piece;
+import se.chalmers.chessfeud.model.utils.Position;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -21,6 +25,8 @@ import android.view.View.OnTouchListener;
  */
 public class GameView extends View implements OnTouchListener{
 	private Context context;
+	private int chessSquareHeight;
+	private int chessSquareWidth;
 	ChessModel gm = new ChessModel();
 
 	// For testing purposes only
@@ -38,15 +44,16 @@ public class GameView extends View implements OnTouchListener{
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
+		this.setOnTouchListener(this);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		int chessSquareHeight = this.getHeight() / 8;
-		int chessSquareWidth = this.getWidth() / 8;
 
+		chessSquareHeight = this.getHeight() / 8;
+		chessSquareWidth = this.getWidth() / 8;
 		// White square property
 		Paint pW = new Paint();
 		pW.setColor(C.SQUARE_WHITE);
@@ -70,7 +77,7 @@ public class GameView extends View implements OnTouchListener{
 				Piece p = gm.getPieceAt(new Position(j, i));
 				// Paint piece at position is there is any
 				if (p != null) {
-					String uri = getPieceFileName(p.getTeam, p.getId);
+					String uri = getPieceFileName(p.getTeam(), p.getId());
 					uri = "drawable/pieces/" + uri
 							+ ".png";
 					int imageResource = getResources().getIdentifier(uri, null,
@@ -146,6 +153,10 @@ public class GameView extends View implements OnTouchListener{
 		if(pA.length > i)
 			gm.click(pA[i]);
 		i++;
+		if(gm.getTakenPieces() != null)
+			Log.d("Amount:", ""+gm.getTakenPieces().size());
+		String s = ""+event.getX()/chessSquareWidth+","+event.getY()/chessSquareHeight;
+		Log.d("Point clicked:", s);
 		return false;
 	}
 

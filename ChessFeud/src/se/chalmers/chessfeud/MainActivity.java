@@ -22,7 +22,6 @@ public class MainActivity extends Activity implements OnClickListener{
 	private Button bPlay, bMyProfile, bSettings, bAbout;
 	private ImageView iLogo;
 	private ListView finishedGames, startedGames;
-	
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,11 +30,12 @@ public class MainActivity extends Activity implements OnClickListener{
         
         bMyProfile = (Button) findViewById(R.id.button_myprofile);
         bSettings = (Button) findViewById(R.id.button_settings);
-        bMyProfile.setOnClickListener(this);
-        bSettings.setOnClickListener(this);
         
         iLogo = (ImageView) findViewById(R.id.imageView1);
         iLogo.setOnClickListener(this);
+        
+        bMyProfile.setOnClickListener(this);
+        bSettings.setOnClickListener(this);
         
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
@@ -65,6 +65,9 @@ public class MainActivity extends Activity implements OnClickListener{
     		break;
     	case R.id.button_settings:
     		startActivity(new Intent(this, SettingsActivity.class));
+    		break;
+    	case R.id.imageView1:
+    		startActivity(new Intent(this, PlayActivity.class));
     		break;
     	default:
     		Log.d("Default", "Should not get here!");
