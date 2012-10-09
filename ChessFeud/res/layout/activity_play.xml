@@ -9,7 +9,7 @@
 	
 	<LinearLayout 
 	    android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content" android:padding="3dp">
 		
 	    <!-- Left Side -->
 		<FrameLayout 
@@ -45,11 +45,10 @@
 			<TextView 
 			    android:id="@+id/nbrOfTurns" 
 			    android:layout_width="wrap_content"
-				android:layout_height="wrap_content" 
-				android:gravity="center_horizontal"
-				android:padding="5dp"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center" 
 				android:text="99" 
-				android:textSize="25dp" />
+				android:textSize="25dp"/>
 		</FrameLayout>
 	</LinearLayout>
 	
@@ -62,7 +61,10 @@
 		<LinearLayout 
 		    android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:layout_weight="1" android:background="#dedede" android:orientation="vertical" android:padding="5dp">
+			android:layout_weight="1" 
+			android:background="#dedede" 
+			android:orientation="vertical" 
+			android:padding="5dp">
 			
 			<LinearLayout 
 			    android:layout_width="match_parent"
@@ -116,7 +118,7 @@
               
               <ImageView 
                   android:id="@+id/img_white_piece_0" 
-                  android:layout_width="15dp" 
+                  android:layout_width="10dp" 
                   android:layout_height="15dp" 
                   android:contentDescription="@string/dscr_list_white_piece_0" 
                   android:src="@drawable/icon_pieces_white_pawn"/>
@@ -124,9 +126,7 @@
                   android:id="@+id/nbr_pawn_white" 
                   android:layout_width="wrap_content" 
                   android:layout_height="wrap_content" 
-                  android:layout_gravity="bottom" 
-                  android:text="x8" 
-                  android:textSize="5dp"/>
+                  android:layout_gravity="bottom" android:layout_marginRight="2dp" android:text="x8" android:textSize="7dp"/>
               <ImageView 
                   android:id="@+id/img_white_piece_1" 
                   android:layout_width="15dp" 
@@ -237,7 +237,7 @@
               
               <ImageView 
                   android:id="@+id/img_black_piece_0" 
-                  android:layout_width="15dp" 
+                  android:layout_width="10dp" 
                   android:layout_height="15dp" 
                   android:contentDescription="@string/dscr_list_black_piece_0" 
                   android:src="@drawable/icon_pieces_black_pawn"/>
@@ -245,9 +245,7 @@
                   android:id="@+id/nbr_pawn_black" 
                   android:layout_width="wrap_content" 
                   android:layout_height="wrap_content" 
-                  android:layout_gravity="bottom" 
-                  android:text="x8" 
-                  android:textSize="5dp"/>
+                  android:layout_gravity="bottom" android:layout_marginRight="2dp" android:text="x8" android:textSize="7dp"/>
               <ImageView 
                   android:id="@+id/img_black_piece_1" 
                   android:layout_width="15dp" 
@@ -299,7 +297,10 @@
           </LinearLayout>
 		</LinearLayout>
 	</LinearLayout>
-	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="5dp">
+	<LinearLayout 
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content" 
+	    android:padding="5dp">
 		<FrameLayout 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="match_parent" 
@@ -307,26 +308,11 @@
 		</FrameLayout>
 		<!-- Check if text color is editable??? -->
 		<TextView 
-		    android:id="@+id/statusCheck" 
+		    android:id="@+id/statusTxt" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content" 
-		    android:text="Check" 
+		    android:text="Checkmate" 
 		    android:textColor="#dd0000" 
-		    android:textSize="20dp"/>
-		<TextView 
-		    android:id="@+id/statusWin" 
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:text="You Win" 
-		    android:textColor="#00dd00" 
-		    android:textSize="20dp"/>
-		<TextView 
-		    android:id="@+id/statusDraw" 
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:layout_weight="1" 
-		    android:text="Draw" 
-		    android:textColor="#555555" 
 		    android:textSize="20dp"/>
 		<FrameLayout 
 		    android:layout_width="wrap_content" 
