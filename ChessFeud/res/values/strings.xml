@@ -14,6 +14,10 @@
     <string name ="list_finished">Finished Games</string>
     <string name ="image_description_logotype">ChessFeud Logotype</string>
     
+    <string name ="button_login">Log in</string>
+    <string name ="no_account">Don't have an account?</string>
+    <string name ="button_register">Register for free</string>
+    
     <string name="dscr_list_opponent_avatar">Opponents Avatar</string>
     <string name="dscr_list_team_white">White Team</string>
     <string name="dscr_list_team_black">Black Team</string>
@@ -76,7 +80,6 @@
 	    <item name="android:layout_height">wrap_content</item>
 	    <item name="android:textColor">#ffffff</item>
 	    <item name="android:gravity">center</item>
-	    <item name="android:textSize">30dp</item>
 	    <item name="android:textStyle">bold</item>
 	    <item name="android:shadowColor">#000000</item>
 	    <item name="android:shadowDx">1</item>
