@@ -15,9 +15,7 @@
     <LinearLayout 
         android:layout_width="200dp"
         android:layout_height="wrap_content" 
-        android:layout_gravity="center_horizontal" 
-        android:layout_weight="1" 
-        android:orientation="vertical">
+        android:layout_gravity="center_horizontal" android:layout_marginBottom="40dp" android:layout_weight="1" android:orientation="vertical">
         
         <EditText 
             android:id="@+id/inputUsername" 
@@ -56,10 +54,5 @@
             android:text="@string/button_register" 
             android:textSize="20dp"/>
     </LinearLayout>
-    <FrameLayout 
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content" 
-        android:layout_weight="1">
-    </FrameLayout>
     
 </LinearLayout>

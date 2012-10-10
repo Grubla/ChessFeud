@@ -14,10 +14,14 @@
             android:id="@+id/img_register_logo" 
             android:layout_width="200dp" 
             android:layout_height="100dp" 
+            android:contentDescription="@string/image_description_logotype" 
             android:src="@drawable/logo_chessfeud"/>
         <TextView android:id="@+id/textView1" 
             android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" android:layout_marginTop="30dp" android:text="@string/dscr_register" android:textSize="12dp"/>
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="30dp" 
+            android:text="@string/dscr_register" 
+            android:textSize="12dp"/>
         <EditText 
             android:id="@+id/regInputUsername" 
             android:layout_width="match_parent" 
@@ -41,7 +45,13 @@
             android:inputType="textEmailAddress"/>
         <Button 
             android:id="@+id/regButtonRegister" 
-            style="@style/ButtonText" android:layout_marginTop="20dp" android:background="@drawable/btn_orange" android:paddingBottom="5dp" android:paddingTop="5dp" android:text="@string/button_register_now" android:textSize="20dp"/>
+            style="@style/ButtonText" 
+            android:layout_marginTop="20dp" 
+            android:background="@drawable/btn_orange" 
+            android:paddingBottom="5dp" 
+            android:paddingTop="5dp" 
+            android:text="@string/button_register_now" 
+            android:textSize="20dp"/>
     </LinearLayout>
     
 </LinearLayout>
