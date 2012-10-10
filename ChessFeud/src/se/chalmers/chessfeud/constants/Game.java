@@ -73,5 +73,16 @@ public class Game {
 	public String getTimestamp() {
 		return timestamp;
 	}
+	/**
+	 * Returns the color of the current player.
+	 * @return
+	 */
+	public int getCurrentColor() {
+		if(turns%2 == 0) {
+			return C.TEAM_WHITE;
+		} else {
+			return C.TEAM_BLACK;
+		}
+	}
 	
 }
