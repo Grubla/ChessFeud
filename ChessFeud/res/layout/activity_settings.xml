@@ -3,6 +3,125 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    <!-- Menu Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp" 
+        android:layout_marginTop="5dp" 
+        android:background="@drawable/bg_menu_border" 
+        xmlns:android="http://schemas.android.com/apk/res/android" 
+        xmlns:tools="http://schemas.android.com/tools" 
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:id="@+id/settings_h1_settings" 
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent"
+            android:gravity="center" 
+            android:textSize="30dp"
+            android:text="@string/settings_h1_settings"/>
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:layout_marginTop="10dp">
+        <FrameLayout 
+            android:layout_width="60dp" 
+            android:layout_height="60dp" 
+            android:background="#CCCCCC" android:paddingLeft="5dp" android:paddingTop="5dp">
+            <ImageView 
+                android:id="@+id/imageView1" 
+                android:layout_width="50dp" 
+                android:layout_height="50dp" 
+                android:src="@drawable/avatar_stina"/>
+        </FrameLayout>
+        <LinearLayout 
+            android:layout_width="wrap_content" 
+            android:layout_height="match_parent" 
+            android:layout_weight="9" 
+            android:orientation="vertical" 
+            android:paddingLeft="5dp">
+            <TextView 
+                android:id="@+id/TextView02" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="Avatar"/>
+            <TextView 
+                android:id="@+id/TextView01" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="Choose the avatar that will represent you when playing against others." android:textSize="8dp"/>
+        </LinearLayout>
+        <Spinner 
+            android:id="@+id/spinner1" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+    <FrameLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#cccccc"></FrameLayout>
+    <LinearLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="5dp" 
+        android:layout_marginRight="5dp">
+        
+        <LinearLayout 
+            android:layout_width="wrap_content" 
+            android:layout_height="match_parent" 
+            android:gravity="center_vertical"
+            android:layout_weight="9" 
+            android:orientation="vertical">
+            
+            <TextView 
+                android:id="@+id/textView1" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="Helpful tip"/>
+            <TextView 
+                android:id="@+id/textView2" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="The positions a selected piece can move to will be highligthed." 
+                android:textSize="8dp"/>
+        </LinearLayout>
+        <CheckBox 
+            android:id="@+id/checkBox1" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:gravity="right"/>
+    </LinearLayout>
+    <FrameLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="1dp" 
+        android:background="#cccccc">
+    </FrameLayout>
+    <LinearLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="5dp" 
+        android:layout_marginRight="5dp">
+        <LinearLayout 
+            android:layout_width="wrap_content" 
+            android:layout_height="match_parent" 
+            android:layout_weight="9" 
+            android:gravity="center_vertical" 
+            android:orientation="vertical">
+            <TextView 
+                android:id="@+id/TextView03" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="Sound"/>
+            <TextView 
+                android:id="@+id/TextView04" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="Turn on or off the sound in game." 
+                android:textSize="8dp"/>
+        </LinearLayout>
+        <CheckBox 
+            android:id="@+id/CheckBox02" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
     
 
 </LinearLayout>

@@ -42,6 +42,7 @@
     <string name="dscr_icon_team_white">White player</string>
     <string name="dscr_icon_team_black">Black player</string>
     
+    <string name="settings_h1_settings">Settings</string>
     
     <style name="ButtonText">
 	    <item name="android:layout_width">fill_parent</item>
