@@ -1,6 +1,10 @@
 package se.chalmers.chessfeud;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import se.chalmers.chessfeud.constants.DbHandler;
+import se.chalmers.chessfeud.constants.Game;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -49,11 +53,10 @@ public class MainActivity extends Activity implements OnClickListener{
     protected void onResume() {
     	super.onResume();
     	
+    	DbHandler db = new DbHandler();
     	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
-    	//startedGames.setListAdapter(this, R.id.list_ongoingGames, getList());
-
-				
-				
+    	startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
+    	
 	}
 		
 
@@ -84,30 +87,44 @@ public class MainActivity extends Activity implements OnClickListener{
     private class GameListAdapter extends ArrayAdapter<String> {
     	private Context context;
     	private int resourceId;
+    	private List<Game> gamesList;
     	
     	public GameListAdapter(Context context, int resId, List<String> l){
-    		super(context, resId, new String[] {"hej", "lol"});
+    		super(context, resId);
     		this.context = context;
     		this.resourceId = resId;
+    		gamesList = new ArrayList<Game>();
+    		for(String s : l)
+    			gamesList.add(new Game(s));
     		//To be fixed here when the view is finsihed
     	}
     	
     	@Override
     	public View getView(int position, View convertView, ViewGroup parent) {
-
+    		Game game = gamesList.get(position);
+    		
     		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		View vRow = inflater.inflate(R.layout.menu_listitem, parent, false);
+    		
+    		/* Bind all the views */
     		TextView tTurn = (TextView)vRow.findViewById(R.id.player_turn);
     		TextView blackName = (TextView) vRow.findViewById(R.id.player_black);
     		TextView whiteName = (TextView) vRow.findViewById(R.id.player_white);
-    		TextView blackPawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_black);
-    		TextView whitePawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_white);
-    		//Do this for every element
-    		//PLease R COME BACK TO ME
-    		//String s = l.get(position);
-    		//decode s
-    		//allViews.setText("decoded s")
-    			
+    		TextView tNbrOfTurns = (TextView) vRow.findViewById(R.id.nbrOfTurns);
+    		
+    		/*Fix this later
+    		 *TextView blackPawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_black);
+    		 *TextView whitePawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_white);
+    		 */	
+    		
+    		/* Set all the data */
+    		tTurn.setText(game.getCurrentPlayer());
+    		blackName.setText(game.getBlackPlayer());
+    		whiteName.setText(game.getWhitePlayer());
+    		tNbrOfTurns.setText(game.getTurns());
+    		
+    		//Lets go pieces
+    		
     			return vRow;
     	}
     	
