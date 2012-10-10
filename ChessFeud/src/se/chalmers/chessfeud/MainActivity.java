@@ -46,17 +46,18 @@ public class MainActivity extends Activity implements OnClickListener{
         
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
-        
+        DbHandler db = new DbHandler();
+        startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
     }
     
     @Override
     protected void onResume() {
     	super.onResume();
     	
-    	//DbHandler db = new DbHandler();
-    	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
-    	//startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
     	
+    	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
+    	
+    	Log.d("onResume", "Reached here");
 	}
 		
 
@@ -88,21 +89,28 @@ public class MainActivity extends Activity implements OnClickListener{
     	private Context context;
     	private int resourceId;
     	private List<Game> gamesList;
+    	private List<String> stringList;
     	
     	public GameListAdapter(Context context, int resId, List<String> l){
-    		super(context, resId);
+    		super(context, resId, l);
     		this.context = context;
     		this.resourceId = resId;
     		gamesList = new ArrayList<Game>();
-    		for(String s : l)
+    		stringList = new ArrayList<String>();
+    		for(String s : l){
     			gamesList.add(new Game(s));
+    			stringList.add(s);
+    		}
+    			
+    		Log.d("Constructor", ""+ l.get(0));
     		//To be fixed here when the view is finsihed
     	}
     	
     	@Override
     	public View getView(int position, View convertView, ViewGroup parent) {
     		Game game = gamesList.get(position);
-    		
+    		final String gameString = stringList.get(position);
+    		Log.d("getView", "Reached here");
     		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		View vRow = inflater.inflate(R.layout.menu_listitem, parent, false);
     		
@@ -110,7 +118,7 @@ public class MainActivity extends Activity implements OnClickListener{
     		TextView tTurn = (TextView)vRow.findViewById(R.id.player_turn);
     		TextView blackName = (TextView) vRow.findViewById(R.id.player_black);
     		TextView whiteName = (TextView) vRow.findViewById(R.id.player_white);
-    		TextView tNbrOfTurns = (TextView) vRow.findViewById(R.id.nbrOfTurns);
+    		TextView tNbrOfTurns = (TextView) vRow.findViewById(R.id.nbr_turns);
     		
     		/*Fix this later
     		 *TextView blackPawnAmount = (TextView) vRow.findViewById(R.id.nbr_pawn_black);
@@ -118,14 +126,22 @@ public class MainActivity extends Activity implements OnClickListener{
     		 */	
     		
     		/* Set all the data */
-    		tTurn.setText(game.getCurrentPlayer());
+    		tTurn.setText(game.getCurrentPlayer() + "'s turn");
     		blackName.setText(game.getBlackPlayer());
     		whiteName.setText(game.getWhitePlayer());
-    		tNbrOfTurns.setText(game.getTurns());
+    		tNbrOfTurns.setText(""+game.getTurns());
+    		
+    		vRow.setOnClickListener(new OnClickListener(){
+    			@Override
+    			public void onClick(View v) {
+    				Intent i = new Intent(context, PlayActivity.class);
+    				i.putExtra("GameString", gameString);
+    				startActivity(i);
+    			}
+    		});
     		
     		//Lets go pieces
-    		
-    			return vRow;
+    		return vRow;
     	}
     	
     }

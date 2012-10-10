@@ -26,7 +26,7 @@ public class DbHandler {
 
 	public DbHandler() {
 		client = new DefaultHttpClient();
-		httpPost = new HttpPost("46.239.99.71:8080/ChessFeudServer/DbHandler/*");
+		httpPost = new HttpPost("http://46.239.99.71:8080/ChessFeudServer/DbHandler/*");
 		is = null;
 		pairs = new ArrayList();
 	}

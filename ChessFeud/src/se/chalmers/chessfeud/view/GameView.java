@@ -3,6 +3,7 @@ package se.chalmers.chessfeud.view;
 import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
+import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
@@ -13,7 +14,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -37,6 +37,11 @@ public class GameView extends View implements OnTouchListener{
 		this.context = context;
 		this.setOnTouchListener(this);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void setGameModel(String s){
+		Game gameInfo = new Game(s);
+		gm = new ChessModel(gameInfo.getGameBoard(), gameInfo.getTurns(), gameInfo.getCurrentColor());
 	}
 
 	@Override
