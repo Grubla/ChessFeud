@@ -23,14 +23,16 @@ public class ChessModel {
 	private List<Position> possibleMoves;
 	private List<Piece> takenPieces;
 	private int state;
+	private final int thisPlayer;
 	
 	/**
 	 * Creates an instance of chess with a new starting board. 
 	 */
-	public ChessModel(){
+	public ChessModel(int thisPlayer){
 		chessBoard = new ChessBoard();
 		numberOfMoves = 0;
 		selected = null;
+		this.thisPlayer = thisPlayer;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
 		state = C.STATE_NORMAL;
@@ -42,10 +44,11 @@ public class ChessModel {
 	 * like in the GameBoard(String s) constructor.
 	 * @param s
 	 */
-	public ChessModel(String s){
+	public ChessModel(String s, int thisPlayer){
 		String tmp[] = s.split("/");
 		chessBoard = new ChessBoard(tmp[0]);
 		numberOfMoves = Integer.parseInt(tmp[1]);
+		this.thisPlayer = thisPlayer;
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
@@ -71,7 +74,6 @@ public class ChessModel {
 				deselectPiece();
 				if(!(pi instanceof NoPiece)){
 					takenPieces.add(pi);
-					Log.d("List", "Added");
 				}
 					
 				changeTurn();
@@ -208,7 +210,10 @@ public class ChessModel {
 	 * @return the player who's turn it is to move
 	 */
 	public int activePlayer(){
-		return numberOfMoves%2;
+		int activePlayer = numberOfMoves%2;
+		if(activePlayer == this.thisPlayer)
+			return activePlayer;
+		return -1;
 	}
 	
 	private int nextTurn(){
