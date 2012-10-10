@@ -53,9 +53,9 @@ public class MainActivity extends Activity implements OnClickListener{
     protected void onResume() {
     	super.onResume();
     	
-    	DbHandler db = new DbHandler();
+    	//DbHandler db = new DbHandler();
     	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
-    	startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
+    	//startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
     	
 	}
 		
