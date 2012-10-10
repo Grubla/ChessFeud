@@ -58,10 +58,6 @@ public class ChessBoard {
 				int id = ((int)s.charAt(8*x+y)) - team;
 				board[x][y] = pf[team].createPiece(id);
 			}
-		for(int x = 0; x < board.length; x++)
-			for(int y = 0; y < board[x].length; y++)
-				if(board[x][y] == null)
-					board[x][y] = new NoPiece();
 	}
 	/**
 	 * Returns a string representing a board.
@@ -70,10 +66,7 @@ public class ChessBoard {
 	 * @return
 	 */
 	public String exportBoard(){
-		char c = (char)65;
 		StringBuilder export = new StringBuilder();
-		for(int i = 0; i < 64; i++)
-			export.append(c);
 		for(int x = 0; x < board.length; x++)
 			for(int y = 0; y < board[x].length; y++){
 				export.append((char)getPieceAt(x, y).getId()+getPieceAt(x, y).getTeam());

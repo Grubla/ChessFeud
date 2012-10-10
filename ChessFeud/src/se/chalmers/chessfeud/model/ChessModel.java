@@ -18,7 +18,7 @@ import android.util.Log;
  */
 public class ChessModel {
 	private ChessBoard chessBoard;
-	private int activePlayer;
+	private int numberOfMoves;
 	private Position selected;
 	private List<Position> possibleMoves;
 	private List<Piece> takenPieces;
@@ -29,7 +29,7 @@ public class ChessModel {
 	 */
 	public ChessModel(){
 		chessBoard = new ChessBoard();
-		activePlayer = 0;
+		numberOfMoves = 0;
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
@@ -45,15 +45,19 @@ public class ChessModel {
 	public ChessModel(String s){
 		String tmp[] = s.split("/");
 		chessBoard = new ChessBoard(tmp[0]);
-		activePlayer = Integer.parseInt(tmp[1]);
+		numberOfMoves = Integer.parseInt(tmp[1]);
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
-		//state = C.STATE_NORMAL; getState
+		checkState();
 	}
 	
 	public String exportModel(){
-		return "hej";
+		StringBuilder sb = new StringBuilder();
+		sb.append(chessBoard.exportBoard());
+		sb.append("/");
+		sb.append(""+numberOfMoves);
+		return sb.toString();
 	}
 	
 	/**
@@ -124,14 +128,6 @@ public class ChessModel {
 	}
 	
 	/**
-	 * Returns the active player where 0 is "white" and 1 is "black"
-	 * @return the player who's turn it is to move
-	 */
-	public int activePlayer(){
-		return activePlayer%2;
-	}
-	
-	/**
 	 * Returns the piece at the given position
 	 * @param p, a position on the board 0 <= x,y < 8 
 	 * @return a Piece object
@@ -167,6 +163,27 @@ public class ChessModel {
 	public int getState(){
 		return this.state;
 	}
+	/* Manually checks and updates the state.
+	 * Also all the elses are needed to make sure it will only get into on if/else.*/
+	private void checkState(){
+		if(Rules.isCheck(chessBoard, activePlayer())){
+			if(Rules.isCheckMate(chessBoard, nextTurn())){
+				if(activePlayer() == C.TEAM_WHITE){
+					setState(C.STATE_VICTORY_WHITE);
+				}else{
+					setState(C.STATE_VICTORY_BLACK);
+				}
+			}else{
+				setState(C.STATE_CHECK);
+			}
+		}else{
+				if(Rules.isDraw(chessBoard, nextTurn())){
+					setState(C.STATE_DRAW);
+				}else{
+					setState(C.STATE_NORMAL);
+				}
+		}
+	}
 	
 	/* Sets the state of the game */
 	private void setState(int newState){
@@ -183,7 +200,20 @@ public class ChessModel {
 	
 	/* Changes the turn (the actve player) */
 	private void changeTurn(){
-		activePlayer++;
+		numberOfMoves++;
+	}
+	
+	/**
+	 * Returns the active player where 0 is "white" and 1 is "black"
+	 * @return the player who's turn it is to move
+	 */
+	public int activePlayer(){
+		return numberOfMoves%2;
+	}
+	
+	private int nextTurn(){
+		int next = numberOfMoves%2 == 0 ? 1 : 0;
+		return next;
 	}
 	
 }
