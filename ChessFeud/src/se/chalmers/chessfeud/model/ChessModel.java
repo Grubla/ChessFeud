@@ -44,10 +44,9 @@ public class ChessModel {
 	 * like in the GameBoard(String s) constructor.
 	 * @param s
 	 */
-	public ChessModel(String s, int thisPlayer){
-		String tmp[] = s.split("/");
-		chessBoard = new ChessBoard(tmp[0]);
-		numberOfMoves = Integer.parseInt(tmp[1]);
+	public ChessModel(String s, int numberOfMoves, int thisPlayer){
+		chessBoard = new ChessBoard(s);
+		this.numberOfMoves = numberOfMoves;
 		this.thisPlayer = thisPlayer;
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
