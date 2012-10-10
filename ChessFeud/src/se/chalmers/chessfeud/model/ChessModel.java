@@ -8,7 +8,6 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
-import android.util.Log;
 /**
  * A class that implements the model of a chessgame
  * @author grubla
@@ -108,10 +107,6 @@ public class ChessModel {
 				setSelected(p);
 			}
 		}
-		Log.d("Click:",p.toString());
-		if(selected != null)
-			Log.d("Sel:",selected.toString());
-		Log.d("MoveSize",""+getPossibleMoves().size());
 	}
 	/*
 	 * Returns the possible moves (according to ALL rules) for the chosen piece.

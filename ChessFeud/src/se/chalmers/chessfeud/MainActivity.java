@@ -46,8 +46,12 @@ public class MainActivity extends Activity implements OnClickListener{
         
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
-        DbHandler db = new DbHandler();
-        startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
+        try{
+	        DbHandler db = new DbHandler();
+	        startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
+        }catch(Exception e){
+        	
+        }
     }
     
     @Override
@@ -57,7 +61,6 @@ public class MainActivity extends Activity implements OnClickListener{
     	
     	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
     	
-    	Log.d("onResume", "Reached here");
 	}
 		
 
@@ -102,7 +105,6 @@ public class MainActivity extends Activity implements OnClickListener{
     			stringList.add(s);
     		}
     			
-    		Log.d("Constructor", ""+ l.get(0));
     		//To be fixed here when the view is finsihed
     	}
     	
@@ -110,7 +112,6 @@ public class MainActivity extends Activity implements OnClickListener{
     	public View getView(int position, View convertView, ViewGroup parent) {
     		Game game = gamesList.get(position);
     		final String gameString = stringList.get(position);
-    		Log.d("getView", "Reached here");
     		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		View vRow = inflater.inflate(R.layout.menu_listitem, parent, false);
     		

@@ -42,6 +42,7 @@ public class GameView extends View implements OnTouchListener{
 	public void setGameModel(String s){
 		Game gameInfo = new Game(s);
 		gm = new ChessModel(gameInfo.getGameBoard(), gameInfo.getTurns(), gameInfo.getCurrentColor());
+		this.invalidate();
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
-import android.util.Log;
 
 /**
  * A class for representing a chessboard.
@@ -49,13 +48,13 @@ public class ChessBoard {
 	 * @param s
 	 */
 	public ChessBoard(String s){
-		
+		String pieces[] = s.split(",");
 		PieceFactory[] pf = {new PieceFactory(C.TEAM_WHITE), new PieceFactory(C.TEAM_BLACK)};
 		board = new Piece[8][8];
 		for(int x = 0; x < board.length; x++)
 			for(int y = 0; y < board[x].length; y++){
-				int team = ((int)s.charAt(8*x+y)) % 2;
-				int id = ((int)s.charAt(8*x+y)) - team;
+				int team = Integer.parseInt(pieces[8*x+y]) % 2;
+				int id = Integer.parseInt(pieces[8*x+y]) - team;
 				board[x][y] = pf[team].createPiece(id);
 			}
 	}
@@ -69,8 +68,10 @@ public class ChessBoard {
 		StringBuilder export = new StringBuilder();
 		for(int x = 0; x < board.length; x++)
 			for(int y = 0; y < board[x].length; y++){
-				export.append((char)getPieceAt(x, y).getId()+getPieceAt(x, y).getTeam());
+				int id = getPieceAt(x, y).getId()+getPieceAt(x, y).getTeam();
+				export.append(","+id);
 			}
+		export.deleteCharAt(0);
 		return export.toString();	
 	}
 	/**
