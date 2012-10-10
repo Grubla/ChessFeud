@@ -11,7 +11,7 @@ public class bishopTest extends AndroidTestCase {
 
 	public void testBishop() {
 		Piece bishop = new Bishop(0);
-		Position[] pos = { new Position(7, 7), new Position(7, 3) };
+		Position[] pos = { new Position(7, 7), new Position(3, 3) };
 		for (int i = 0; i < pos.length; i++) {
 			List<List<Position>> testList = bishop.theoreticalMoves(pos[i]);
 			for (List<Position> l : testList) {
@@ -26,7 +26,10 @@ public class bishopTest extends AndroidTestCase {
 								&& (p.getX() == p.getY()));
 					}
 					if (i == 1) {
-						
+						assertTrue((p.getX() >= 0 && p.getX() <= 7
+								&& p.getY() >= 0 && p.getY() <= 7)
+								&& ((p.getX() == p.getY()) || (p.getX()
+										+ p.getY() == 6)));
 					}
 				}
 			}
