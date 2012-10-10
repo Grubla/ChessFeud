@@ -26,27 +26,24 @@ public class PlayerInfo {
 	}
 	
 	private String getUserName() {
-		;
+		loadInfoFromFile();
+		return userName;
 	}
 	
-	private String getPassWord() {
-		;
+	private String getPassword() {
+		loadInfoFromFile();
+		return password;
 	}
 	private void loadInfoFromFile() {
 		File sdcard = Environment.getExternalStorageDirectory();
 		File credentials = new File(sdcard, "usercred.txt");
-		StringBuilder info = new StringBuilder();
-		
 		try {
 		    BufferedReader br = new BufferedReader(new FileReader(credentials));
-		    String line;
-
-		    while ((line = br.readLine()) != null) {
-		        info.append(line);
-		        info.append('\n');
-		    }
-		}
+		    userName = br.readLine();
+		    password = br.readLine();
+		}	
 		catch (IOException e) {
+			
 		}
 
 		
