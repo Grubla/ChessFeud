@@ -23,13 +23,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-<<<<<<< HEAD
 public class MainActivity extends Activity implements OnClickListener, PropertyChangeListener{
-	private Button bPlay, bMyProfile, bSettings, bAbout;
-=======
-public class MainActivity extends Activity implements OnClickListener{
 	private Button bPlay, bStats, bSettings, bAbout;
->>>>>>> stats
 	private ImageView iLogo;
 	private ListView finishedGames, startedGames;
  
