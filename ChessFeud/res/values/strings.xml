@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name">ChessFeud</string>
     <string name="hello_world">Hello world!</string>
@@ -7,6 +7,7 @@
     <string name ="play_activity">PlayActivity</string>
     <string name ="settings_activity">SettingsActivity</string>
     <string name ="profile_activity">ProfileActivity</string>
+    <string name ="stats_activity">StatsActivity</string>
     <string name ="about_activity">AboutActivity</string>
     <string name ="new_game">New Game +</string>
     <string name ="list_started">Started Games</string>
@@ -51,6 +52,24 @@
     <string name="settings_dscr_helptip">The positions a selected piece can move to will be highligthed.</string>
     <string name="settings_dscr_sound">Turn on or off the sound in game.</string>
     <string name="about">About</string>
+
+    <style name="Stats_p">
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+    <style name="Stats_h2">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">30dp</item>
+    </style>
+    <string name="stats_h1_stats">Stats</string>
+    <string name="stats_txt_nbrPlayed">Games played:</string>
+    <string name="stats_txt_averageMoves">Average moves:</string>
+    <string name="stats_txt_totalMoves">Total moves:</string>
+    <string name="stats_h2_wins">Wins</string>
+    <string name="stats_h2_loss">Loss</string>
+    <string name="stats_h2_draw">Draw</string>
+
     
     <style name="ButtonText">
 	    <item name="android:layout_width">fill_parent</item>

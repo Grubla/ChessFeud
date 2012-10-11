@@ -23,8 +23,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 public class MainActivity extends Activity implements OnClickListener, PropertyChangeListener{
 	private Button bPlay, bMyProfile, bSettings, bAbout;
+=======
+public class MainActivity extends Activity implements OnClickListener{
+	private Button bPlay, bStats, bSettings, bAbout;
+>>>>>>> stats
 	private ImageView iLogo;
 	private ListView finishedGames, startedGames;
  
@@ -33,7 +38,7 @@ public class MainActivity extends Activity implements OnClickListener, PropertyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_main);
         
-        bMyProfile = (Button) findViewById(R.id.button_myprofile);
+        bStats = (Button) findViewById(R.id.button_stats);
         bSettings = (Button) findViewById(R.id.button_settings);
         
         iLogo = (ImageView) findViewById(R.id.imageView1);
@@ -43,7 +48,7 @@ public class MainActivity extends Activity implements OnClickListener, PropertyC
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
         
-        bMyProfile.setOnClickListener(this);
+        bStats.setOnClickListener(this);
         bSettings.setOnClickListener(this);
         
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
@@ -76,8 +81,8 @@ public class MainActivity extends Activity implements OnClickListener, PropertyC
     	int id = v.getId();
     	
     	switch(id){
-    	case R.id.button_myprofile:
-    		startActivity(new Intent(this, ProfileActivity.class));
+    	case R.id.button_stats:
+    		startActivity(new Intent(this, StatsActivity.class));
     		break;
     	case R.id.button_settings:
     		startActivity(new Intent(this, SettingsActivity.class));
