@@ -13,6 +13,8 @@ public class PlayerInfo {
 	
 	private String userName;
 	private String password;
+	
+	private boolean loggedIn = false;
 
 	
 	protected PlayerInfo() {
@@ -41,12 +43,16 @@ public class PlayerInfo {
 		    BufferedReader br = new BufferedReader(new FileReader(credentials));
 		    userName = br.readLine();
 		    password = br.readLine();
+		    loggedIn = true;
 		}	
 		catch (IOException e) {
-			//TODO add required login thingie
+			loggedIn = false;
 		}
 
 		
+	}
+	private boolean loggedIn() {
+		return loggedIn;
 	}
 
 
