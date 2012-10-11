@@ -251,9 +251,14 @@ public class DbHandler extends HttpServlet {
 	 * @param newBoard
 	 * @throws SQLException
 	 */
-	private void newMove(String user1, String user2, String newBoard) throws SQLException {
+	private void newMove(String user1, String user2, String newModel) throws SQLException {
+		String[] boardandturns = newModel.split("/");
+		String newBoard = boardandturns[0];
+		int turns = Integer.parseInt(boardandturns[1]);
 		s.executeUpdate("update game set board='"+newBoard+"'where user1='"+user1+"' and user2='"+user2+"'");
 		s.executeUpdate("update game set board='"+newBoard+"'where user2='"+user1+"' and user2='"+user1+"'");
+		s.executeUpdate("update game set turns='"+turns+"'where user1='"+user1+"' and user2='"+user2+"'");
+		s.executeUpdate("update game set turns='"+turns+"'where user2='"+user1+"' and user2='"+user1+"'");
 	}
 	/**
 	 * Adds a new inquirie to the database.
