@@ -1,0 +1,19 @@
+Android Project
+XML - IDs
+
+|||Settings
+settingsCurrentAvatar		The avatar you use right now
+settingsAvatarSpinner		The spinner that contains available avatars
+settingsHelptipCheckBox		CheckBox for helptip
+settingsSoundCheckBox		CheckBox for sounds
+settingsAboutButton		Button that will proceed to about activity
+
+|||Stats
+statsCurrentAvatar		The avatar you use right now
+statsPlayerName			Name of the user(you)
+statsGamesPlayed		Number of games played
+statsAverageMoves		Average moves per game
+statsTotalMoves			Total moves of all games
+statsPercentWins		How many percent wins in total
+statsPercentLoss		How many percent loss in total
+statsPercentDraw		How many percent draw in total
