@@ -7,6 +7,7 @@
     <string name ="play_activity">PlayActivity</string>
     <string name ="settings_activity">SettingsActivity</string>
     <string name ="profile_activity">ProfileActivity</string>
+    <string name ="stats_activity">StatsActivity</string>
     <string name ="about_activity">AboutActivity</string>
     <string name ="new_game">New Game +</string>
     <string name ="list_started">Started Games</string>

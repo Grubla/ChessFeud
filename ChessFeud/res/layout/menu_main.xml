@@ -19,7 +19,7 @@
 
         <!-- Profile & Stats -->
         <Button
-            android:id="@+id/button_myprofile"
+            android:id="@+id/button_stats"
             android:layout_width="55dp"
 			android:layout_height="55dp" 
             android:layout_marginLeft="5dp" 
