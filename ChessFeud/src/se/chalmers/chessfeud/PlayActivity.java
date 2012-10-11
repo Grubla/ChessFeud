@@ -33,7 +33,7 @@ public class PlayActivity extends Activity implements PropertyChangeListener{
 			Game gameInfo = (Game)event.getOldValue();
 			String gameBoard = (String)event.getNewValue();
 			try{
-				DbHandler dbh = new DbHandler();
+				DbHandler dbh = DbHandler.getInstance();
 				dbh.newMove(gameInfo.getWhitePlayer(), gameInfo.getBlackPlayer(), gameBoard);
 			}catch(Exception e){//Add exception message TODO:
 			}

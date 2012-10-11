@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements OnClickListener, PropertyC
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
     	try{
-	        DbHandler db = new DbHandler();
+	        DbHandler db = DbHandler.getInstance();
 	        startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
         }catch(Exception e){
         	
