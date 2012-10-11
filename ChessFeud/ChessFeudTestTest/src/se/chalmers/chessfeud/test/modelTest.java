@@ -10,7 +10,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 import android.test.AndroidTestCase;
 
 
-public class modelTest extends AndroidTestCase {
+public class ModelTest extends AndroidTestCase {
 
 
 
@@ -26,7 +26,7 @@ public class modelTest extends AndroidTestCase {
 				new Position(7,3), new Position(2,6), new Position(4,5), new Position(5,6), new Position(4,5),
 				new Position(0,1), new Position(0,3), new Position(2,4), new Position(4,3), new Position(1,1), 
 				new Position(1,2), new Position(7,3), new Position(5,1) };
-		ChessModel cm = new ChessModel();
+		ChessModel cm = new ChessModel(0);
 		for(int i = 0; i < pos.length; i++){
 			cm.click(pos[i]);
 			if(i == 11)
