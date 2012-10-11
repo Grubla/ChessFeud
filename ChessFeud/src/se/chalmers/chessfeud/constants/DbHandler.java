@@ -25,13 +25,23 @@ public class DbHandler {
 	private HttpPost httpPost;
 	private InputStream is;
 	private List pairs;
+	
+	private static DbHandler instance;
+	//TODO add a PlayerInfo object here
 
-	public DbHandler() {
-		client = new DefaultHttpClient();
-		httpPost = new HttpPost("http://46.239.99.71:8080/ChessFeudServer/DbHandler/*");
-		is = null;
-		pairs = new ArrayList();
+	protected DbHandler() {
 	}
+	public static DbHandler getInstance() {
+		if(instance == null) {
+			instance = new DbHandler();
+		}
+		return instance;
+	}
+	
+//	client = new DefaultHttpClient();
+//	httpPost = new HttpPost("http://46.239.99.71:8080/ChessFeudServer/DbHandler/*");
+//	is = null;
+//	pairs = new ArrayList();
 
 	/**
 	 * Tries to authenticate the specified username and password with an

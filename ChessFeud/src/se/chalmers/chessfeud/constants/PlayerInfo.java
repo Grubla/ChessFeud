@@ -22,7 +22,7 @@ public class PlayerInfo {
 	
 	public static PlayerInfo getInstance() {
 		if(instance == null) {
-			return new PlayerInfo();
+			instance = new PlayerInfo();
 		}
 		return instance;
 	}
