@@ -43,6 +43,14 @@
     <string name="dscr_icon_team_black">Black player</string>
     
     <string name="settings_h1_settings">Settings</string>
+    <string name="settings_cdscr_avatar">Your current avatar.</string>
+    <string name="settings_h2_avatar">Avatar</string>
+    <string name="settings_h2_helptip">Helpful tip</string>
+    <string name="settings_h2_sound">Sound</string>
+    <string name="settings_dscr_avatar">Choose the avatar that will represent you when playing against others.</string>
+    <string name="settings_dscr_helptip">The positions a selected piece can move to will be highligthed.</string>
+    <string name="settings_dscr_sound">Turn on or off the sound in game.</string>
+    <string name="about">About</string>
     
     <style name="ButtonText">
 	    <item name="android:layout_width">fill_parent</item>

@@ -23,41 +23,52 @@
     </LinearLayout>
     <LinearLayout 
         android:layout_width="match_parent" 
-        android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:layout_marginTop="10dp">
+        android:layout_height="wrap_content" 
+        android:layout_marginBottom="10dp" 
+        android:layout_marginLeft="5dp" 
+        android:layout_marginRight="5dp" 
+        android:layout_marginTop="10dp">
         <FrameLayout 
             android:layout_width="60dp" 
             android:layout_height="60dp" 
-            android:background="#CCCCCC" android:paddingLeft="5dp" android:paddingTop="5dp">
+            android:background="#CCCCCC" 
+            android:paddingLeft="5dp" 
+            android:paddingTop="5dp">
             <ImageView 
-                android:id="@+id/imageView1" 
+                android:id="@+id/settingsCurrentAvatar" 
                 android:layout_width="50dp" 
                 android:layout_height="50dp" 
-                android:src="@drawable/avatar_stina"/>
+                android:src="@drawable/avatar_stina"
+                android:contentDescription="@string/settings_cdscr_avatar"/>
         </FrameLayout>
         <LinearLayout 
-            android:layout_width="wrap_content" 
+            android:layout_width="0dip" 
             android:layout_height="match_parent" 
             android:layout_weight="9" 
             android:orientation="vertical" 
             android:paddingLeft="5dp">
             <TextView 
-                android:id="@+id/TextView02" 
+                android:id="@+id/settingsH2Avatar" 
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
-                android:text="Avatar"/>
+                android:text="@string/settings_h2_avatar"/>
             <TextView 
-                android:id="@+id/TextView01" 
+                android:id="@+id/settingsDscrAvatar" 
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
-                android:text="Choose the avatar that will represent you when playing against others." android:textSize="8dp"/>
+                android:text="@string/settings_dscr_avatar" 
+                android:textSize="8dp"/>
         </LinearLayout>
         <Spinner 
-            android:id="@+id/spinner1" 
+            android:id="@+id/settingsAvatarSpinner" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
-    <FrameLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#cccccc"></FrameLayout>
+    <FrameLayout android:layout_width="match_parent" 
+        android:layout_height="1dp" 
+        android:background="#cccccc">
+    </FrameLayout>
     <LinearLayout 
         android:layout_width="match_parent" 
         android:layout_height="wrap_content" 
@@ -65,26 +76,26 @@
         android:layout_marginRight="5dp">
         
         <LinearLayout 
-            android:layout_width="wrap_content" 
+            android:layout_width="0dip" 
             android:layout_height="match_parent" 
             android:gravity="center_vertical"
             android:layout_weight="9" 
             android:orientation="vertical">
             
             <TextView 
-                android:id="@+id/textView1" 
+                android:id="@+id/settingsH2Helptip" 
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
-                android:text="Helpful tip"/>
+                android:text="@string/settings_h2_helptip"/>
             <TextView 
-                android:id="@+id/textView2" 
+                android:id="@+id/settingsDscrHelptip" 
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
-                android:text="The positions a selected piece can move to will be highligthed." 
+                android:text="@string/settings_dscr_helptip" 
                 android:textSize="8dp"/>
         </LinearLayout>
         <CheckBox 
-            android:id="@+id/checkBox1" 
+            android:id="@+id/settingsHelptipCheckBox" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
             android:gravity="right"/>
@@ -100,28 +111,46 @@
         android:layout_marginLeft="5dp" 
         android:layout_marginRight="5dp">
         <LinearLayout 
-            android:layout_width="wrap_content" 
+            android:layout_width="0dip" 
             android:layout_height="match_parent" 
             android:layout_weight="9" 
             android:gravity="center_vertical" 
             android:orientation="vertical">
             <TextView 
-                android:id="@+id/TextView03" 
+                android:id="@+id/settingsH2Sound" 
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
-                android:text="Sound"/>
+                android:text="@string/settings_h2_sound"/>
             <TextView 
-                android:id="@+id/TextView04" 
+                android:id="@+id/settingsDscrSound" 
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
-                android:text="Turn on or off the sound in game." 
+                android:text="@string/settings_dscr_sound" 
                 android:textSize="8dp"/>
         </LinearLayout>
         <CheckBox 
-            android:id="@+id/CheckBox02" 
+            android:id="@+id/settingsSoundCheckBox" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    <FrameLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="0dip" 
+        android:layout_weight="1">
+	        <Button 
+		        android:id="@+id/settingsAboutButton" 
+		        style="@style/ButtonText" 
+		        android:layout_width="65dp"
+		        android:layout_height="30dp"
+		        android:layout_gravity="bottom|right" 
+		        android:layout_marginBottom="10dp" 
+		        android:layout_marginLeft="5dp" 
+		        android:layout_marginRight="5dp" 
+		        android:layout_marginTop="10dp" 
+		        android:textSize="10dp"
+		        android:text="@string/about" 
+		        android:background="@drawable/btn_orange"/>
+    </FrameLayout>
     
 
 </LinearLayout>
