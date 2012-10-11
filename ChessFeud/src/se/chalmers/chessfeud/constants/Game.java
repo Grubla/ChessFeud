@@ -1,4 +1,7 @@
 package se.chalmers.chessfeud.constants;
+
+import java.beans.PropertyChangeListener;
+
 /**
  * A class representing an ongoing game.
  * @author twister
@@ -12,19 +15,23 @@ public class Game {
 	private String gameBoard;
 	
 	private int turns;
+	private int position;
+	
+	PropertyChangeListener listener;
 	
 	private String timestamp;
 	/**
 	 * Sets all the values depending on what the string says.
 	 * @param info
 	 */
-	public Game(String info) {
+	public Game(String info, int position) {
 		String[] s = info.split("/");
 		whitePlayer = s[0];
 		blackPlayer = s[1];
 		gameBoard = s[2];
 		turns = Integer.parseInt(s[3]);
 		timestamp = s[4];
+		this.position = position;
 		
 	}
 	/**
@@ -83,6 +90,12 @@ public class Game {
 		} else {
 			return C.TEAM_BLACK;
 		}
+	}
+	/**
+	 * Returns the position (or id) for this game in the list.
+	 */
+	public int getPosition(){
+		return this.position;
 	}
 	
 }

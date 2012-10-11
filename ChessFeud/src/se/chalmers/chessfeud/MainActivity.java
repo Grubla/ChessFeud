@@ -1,5 +1,7 @@
 package se.chalmers.chessfeud;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements OnClickListener{
+public class MainActivity extends Activity implements OnClickListener, PropertyChangeListener{
 	private Button bPlay, bMyProfile, bSettings, bAbout;
 	private ImageView iLogo;
 	private ListView finishedGames, startedGames;
@@ -46,7 +48,7 @@ public class MainActivity extends Activity implements OnClickListener{
         
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
-        try{
+    	try{
 	        DbHandler db = new DbHandler();
 	        startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
         }catch(Exception e){
@@ -60,7 +62,7 @@ public class MainActivity extends Activity implements OnClickListener{
     	
     	
     	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
-    	
+
 	}
 		
 
@@ -88,6 +90,12 @@ public class MainActivity extends Activity implements OnClickListener{
     	}
     }
     
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		//evt.get
+	}
+    
     private class GameListAdapter extends ArrayAdapter<String> {
     	private Context context;
     	private int resourceId;
@@ -100,17 +108,18 @@ public class MainActivity extends Activity implements OnClickListener{
     		this.resourceId = resId;
     		gamesList = new ArrayList<Game>();
     		stringList = new ArrayList<String>();
-    		for(String s : l){
-    			gamesList.add(new Game(s));
-    			stringList.add(s);
+    		for(int i = 0; i < l.size(); i++){
+    			gamesList.add(new Game(l.get(i), i));
+    			
+    			stringList.add(l.get(i));
     		}
     			
     		//To be fixed here when the view is finsihed
     	}
     	
     	@Override
-    	public View getView(int position, View convertView, ViewGroup parent) {
-    		Game game = gamesList.get(position);
+    	public View getView(final int position, View convertView, ViewGroup parent) {
+    		final Game game = gamesList.get(position);
     		final String gameString = stringList.get(position);
     		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		View vRow = inflater.inflate(R.layout.menu_listitem, parent, false);
@@ -137,6 +146,7 @@ public class MainActivity extends Activity implements OnClickListener{
     			public void onClick(View v) {
     				Intent i = new Intent(context, PlayActivity.class);
     				i.putExtra("GameString", gameString);
+    				i.putExtra("Position", position);
     				startActivity(i);
     			}
     		});

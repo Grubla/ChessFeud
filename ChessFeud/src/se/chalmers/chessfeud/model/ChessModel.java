@@ -1,10 +1,13 @@
 package se.chalmers.chessfeud.model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
+import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
@@ -23,11 +26,14 @@ public class ChessModel {
 	private List<Piece> takenPieces;
 	private int state;
 	private final int thisPlayer;
+	private Game gameInfo;
+	private PropertyChangeListener listener;
 	
 	/**
 	 * Creates an instance of chess with a new starting board. 
 	 */
 	public ChessModel(int thisPlayer){
+		gameInfo = null;
 		chessBoard = new ChessBoard();
 		numberOfMoves = 0;
 		selected = null;
@@ -43,16 +49,18 @@ public class ChessModel {
 	 * like in the GameBoard(String s) constructor.
 	 * @param s
 	 */
-	public ChessModel(String s, int numberOfMoves, int thisPlayer){
-		chessBoard = new ChessBoard(s);
-		this.numberOfMoves = numberOfMoves;
-		this.thisPlayer = thisPlayer;
+	public ChessModel(Game gameInfo, PropertyChangeListener pcl) {
+		this.gameInfo = gameInfo;
+		chessBoard = new ChessBoard(gameInfo.getGameBoard());
+		this.numberOfMoves = gameInfo.getTurns();
+		this.thisPlayer = 0; ////////////////////////////////////FIX
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
+		this.listener = pcl;
 		checkState();
 	}
-	
+
 	public String exportModel(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(chessBoard.exportBoard());
@@ -73,7 +81,6 @@ public class ChessModel {
 				if(!(pi instanceof NoPiece)){
 					takenPieces.add(pi);
 				}
-					
 				changeTurn();
 				if(Rules.isCheck(chessBoard, activePlayer()))
 					if(Rules.isCheckMate(chessBoard, activePlayer())){
@@ -83,9 +90,8 @@ public class ChessModel {
 					}
 				else if(Rules.isDraw(chessBoard, activePlayer())){
 						setState(C.STATE_DRAW);	
-				}else{
-					//Next Turn
-					//Really needed?
+				}else{ //Next Turn
+					sendModel();
 				}
 						
 					
@@ -213,6 +219,11 @@ public class ChessModel {
 	private int nextTurn(){
 		int next = numberOfMoves%2 == 0 ? 1 : 0;
 		return next;
+	}
+	
+	private void sendModel(){
+		PropertyChangeEvent event = new PropertyChangeEvent(this, "Model", gameInfo, this.exportModel());
+		this.listener.propertyChange(event);
 	}
 	
 }

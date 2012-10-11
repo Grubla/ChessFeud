@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud.view;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
@@ -39,9 +40,9 @@ public class GameView extends View implements OnTouchListener{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setGameModel(String s){
-		Game gameInfo = new Game(s);
-		gm = new ChessModel(gameInfo.getGameBoard(), gameInfo.getTurns(), gameInfo.getCurrentColor());
+	public void setGameModel(String s, int position, PropertyChangeListener pcl){
+		Game gameInfo = new Game(s, position);
+		gm = new ChessModel(gameInfo, pcl);
 		this.invalidate();
 	}
 
