@@ -93,12 +93,12 @@ public class DbHandler {
 	 * @param newBoard
 	 * @return
 	 */
-	public boolean newMove(String user1, String user2, String newBoard) {
+	public boolean newMove(String user1, String user2, String newModel) {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "newMove"));
 		pairs.add(new BasicNameValuePair("user1", user1));
 		pairs.add(new BasicNameValuePair("user2", user2));
-		pairs.add(new BasicNameValuePair("board", newBoard));
+		pairs.add(new BasicNameValuePair("board", newModel));
 		return updateDatabase();
 	}
 
