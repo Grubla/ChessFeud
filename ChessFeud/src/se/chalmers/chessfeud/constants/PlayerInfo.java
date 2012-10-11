@@ -43,7 +43,7 @@ public class PlayerInfo {
 		    password = br.readLine();
 		}	
 		catch (IOException e) {
-			
+			//TODO add required login thingie
 		}
 
 		
