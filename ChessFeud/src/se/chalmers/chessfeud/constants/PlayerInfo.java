@@ -24,6 +24,7 @@ public class PlayerInfo {
 
 	
 	protected PlayerInfo() {
+		loadInfoFromFile();
 	}
 	
 	public static PlayerInfo getInstance() {
@@ -59,7 +60,7 @@ public class PlayerInfo {
 
 		
 	}
-	private boolean loggedIn() {
+	public boolean isLoggedIn() {
 		return loggedIn;
 	}
 	
@@ -85,5 +86,4 @@ public class PlayerInfo {
 		}
 		return suc;
 	}
-
 }
