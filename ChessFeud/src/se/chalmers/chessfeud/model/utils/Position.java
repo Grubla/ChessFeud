@@ -65,17 +65,32 @@ public class Position {
 	public static boolean inBounds(int x, int y) {
 		return (0 <= x && x <= 7 && 0 <= y && y <= 7);
 	}
-
+	
 	@Override
-	public boolean equals(Object o) {
-		if (o instanceof Position) {
-			Position p = (Position) o;
-			if (this.x == p.getX() && this.y == p.getY())
-				return true;
-		}
-		return false;
+	public int hashCode() {
+		int result = 1;
+		result = 31 * result + x;
+		result = 47 * result + y;
+		return result;
 	}
-
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Position other = (Position) obj;
+		if (x != other.x)
+			return false;
+		if (y != other.y)
+			return false;
+		return true;
+	}
+	
+	@Override
 	public String toString() {
 		return "x: " + this.x + " y: " + this.y;
 	}

@@ -19,7 +19,6 @@ public class Rook extends Piece {
 
 	public Rook(int team) {
 		super(team, C.PIECE_ROOK);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -40,10 +39,11 @@ public class Rook extends Piece {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
-				if (x != y && x*y == 0) {
+				if (x != y && x * y == 0) {
 					List<Position> moveList = moveDirection(x, y, p);
-					if (moveList.size() != 0)
+					if (moveList.size() != 0) {
 						posList.add(moveList);
+					}
 				}
 			}
 		}

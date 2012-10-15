@@ -40,8 +40,9 @@ public class Bishop extends Piece {
 			for (int y = -1; y < 2; y++) {
 				if (x != 0 && y != 0) {
 					List<Position> moveList = moveDirection(x, y, p);
-					if (moveList.size() != 0)
+					if (moveList.size() != 0){
 						posList.add(moveList);
+					}	
 				}
 			}
 		}
