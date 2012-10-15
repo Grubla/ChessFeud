@@ -1,9 +1,12 @@
 package se.chalmers.chessfeud.constants;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import android.os.Environment;
 
@@ -14,6 +17,9 @@ public class PlayerInfo {
 	private String userName;
 	private String password;
 	
+	private static File sdcard;
+	private static File credentials;
+	
 	private boolean loggedIn = false;
 
 	
@@ -23,6 +29,8 @@ public class PlayerInfo {
 	public static PlayerInfo getInstance() {
 		if(instance == null) {
 			instance = new PlayerInfo();
+			sdcard = Environment.getExternalStorageDirectory();
+			credentials = new File(sdcard, "usercred.txt");
 		}
 		return instance;
 	}
@@ -37,13 +45,13 @@ public class PlayerInfo {
 		return password;
 	}
 	private void loadInfoFromFile() {
-		File sdcard = Environment.getExternalStorageDirectory();
-		File credentials = new File(sdcard, "usercred.txt");
+
 		try {
 		    BufferedReader br = new BufferedReader(new FileReader(credentials));
 		    userName = br.readLine();
 		    password = br.readLine();
 		    loggedIn = true;
+		    br.close();
 		}	
 		catch (IOException e) {
 			loggedIn = false;
@@ -54,6 +62,16 @@ public class PlayerInfo {
 	private boolean loggedIn() {
 		return loggedIn;
 	}
-
+	
+	private boolean login(String userName, String password) throws IOException, NoSuchAlgorithmException {
+		boolean suc = DbHandler.getInstance().login(userName, password);
+		if(suc) {
+			BufferedWriter out = new BufferedWriter(new FileWriter(credentials));
+			out.write(userName);
+			out.newLine();
+			out.write(password);
+		}
+		return suc;
+	}
 
 }
