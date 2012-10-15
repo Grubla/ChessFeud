@@ -24,4 +24,6 @@ public class C {
 	public static final int STATE_VICTORY_WHITE = 22;
 	public static final int STATE_VICTORY_BLACK = 23;
 	public static final int STATE_DRAW = 24;
+	
+	public static final int BOARD_LENGTH = 7;
 }
