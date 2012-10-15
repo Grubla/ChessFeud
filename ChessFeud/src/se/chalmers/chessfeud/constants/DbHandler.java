@@ -86,6 +86,17 @@ public class DbHandler {
 		pairs.add(new BasicNameValuePair("password", enc));
 		return (updateDatabase());
 	}
+	/**
+	 * Contacts the server and checks if the specified username exists in the database.
+	 * @param userName
+	 * @return
+	 */
+	public boolean userExists(String userName) {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair("tag", "userExists"));
+		pairs.add(new BasicNameValuePair("username", userName));
+		return updateDatabase();
+	}
 
 	/**
 	 * Contacts the database and tells it to create a new game, returns false if
