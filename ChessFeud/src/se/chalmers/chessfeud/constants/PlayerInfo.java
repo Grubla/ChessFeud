@@ -63,13 +63,25 @@ public class PlayerInfo {
 		return loggedIn;
 	}
 	
-	private boolean login(String userName, String password) throws IOException, NoSuchAlgorithmException {
-		boolean suc = DbHandler.getInstance().login(userName, password);
+	private boolean login(String userName, String password) {
+		boolean suc = false;
+		try {
+			suc = DbHandler.getInstance().login(userName, password);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Add what to do if there is no such algoritm.
+			e.printStackTrace();
+		}
 		if(suc) {
-			BufferedWriter out = new BufferedWriter(new FileWriter(credentials));
-			out.write(userName);
-			out.newLine();
-			out.write(password);
+			BufferedWriter out;
+			try {
+				out = new BufferedWriter(new FileWriter(credentials));
+				out.write(userName);
+				out.newLine();
+				out.write(password);
+			} catch (IOException e) {
+				// TODO Add IOexception path
+				e.printStackTrace();
+			}
 		}
 		return suc;
 	}
