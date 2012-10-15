@@ -58,9 +58,15 @@ public class DbHandler {
 	 * @return
 	 * @throws NoSuchAlgorithmException 
 	 */
-	public boolean login(String userName, String password) throws NoSuchAlgorithmException {
+	public boolean login(String userName, String password){
 		pairs.clear();
-		String enc = encrypt(password);
+		String enc;
+		try {
+			enc = encrypt(password);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Add exceptionpath
+			e.printStackTrace();
+		}
 		pairs.add(new BasicNameValuePair("tag", "login"));
 		pairs.add(new BasicNameValuePair("username", userName));
 		pairs.add(new BasicNameValuePair("password", enc));
@@ -77,9 +83,15 @@ public class DbHandler {
 	 * @return
 	 * @throws NoSuchAlgorithmException 
 	 */
-	public boolean addUser(String email, String userName, String password) throws NoSuchAlgorithmException {
+	public boolean addUser(String email, String userName, String password) {
 		pairs.clear();
-		String enc = encrypt(password);
+		String enc;
+		try {
+			enc = encrypt(password);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Add exception path
+			e.printStackTrace();
+		}
 		pairs.add(new BasicNameValuePair("tag", "addUser"));
 		pairs.add(new BasicNameValuePair("email", email));
 		pairs.add(new BasicNameValuePair("username", userName));
