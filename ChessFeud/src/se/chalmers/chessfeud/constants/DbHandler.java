@@ -63,13 +63,13 @@ public class DbHandler {
 		String enc;
 		try {
 			enc = encrypt(password);
+			pairs.add(new BasicNameValuePair("tag", "login"));
+			pairs.add(new BasicNameValuePair("username", userName));
+			pairs.add(new BasicNameValuePair("password", enc));
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Add exceptionpath
 			e.printStackTrace();
 		}
-		pairs.add(new BasicNameValuePair("tag", "login"));
-		pairs.add(new BasicNameValuePair("username", userName));
-		pairs.add(new BasicNameValuePair("password", enc));
 		return updateDatabase();
 	}
 
@@ -88,14 +88,14 @@ public class DbHandler {
 		String enc;
 		try {
 			enc = encrypt(password);
+			pairs.add(new BasicNameValuePair("tag", "addUser"));
+			pairs.add(new BasicNameValuePair("email", email));
+			pairs.add(new BasicNameValuePair("username", userName));
+			pairs.add(new BasicNameValuePair("password", enc));
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Add exception path
 			e.printStackTrace();
 		}
-		pairs.add(new BasicNameValuePair("tag", "addUser"));
-		pairs.add(new BasicNameValuePair("email", email));
-		pairs.add(new BasicNameValuePair("username", userName));
-		pairs.add(new BasicNameValuePair("password", enc));
 		return (updateDatabase());
 	}
 	/**

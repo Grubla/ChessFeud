@@ -57,6 +57,9 @@ public class PlayerInfo {
 		catch (IOException e) {
 			loggedIn = false;
 		}
+		catch (NullPointerException e){
+			loggedIn = false;
+		}
 
 		
 	}
@@ -66,12 +69,7 @@ public class PlayerInfo {
 	
 	private boolean login(String userName, String password) {
 		boolean suc = false;
-		try {
-			suc = DbHandler.getInstance().login(userName, password);
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Add what to do if there is no such algoritm.
-			e.printStackTrace();
-		}
+		suc = DbHandler.getInstance().login(userName, password);
 		if(suc) {
 			BufferedWriter out;
 			try {
