@@ -56,12 +56,14 @@ public class DbHandler {
 	 * @param userName
 	 * @param password
 	 * @return
+	 * @throws NoSuchAlgorithmException 
 	 */
-	public boolean login(String userName, String password) {
+	public boolean login(String userName, String password) throws NoSuchAlgorithmException {
 		pairs.clear();
+		String enc = encrypt(password);
 		pairs.add(new BasicNameValuePair("tag", "login"));
 		pairs.add(new BasicNameValuePair("username", userName));
-		pairs.add(new BasicNameValuePair("password", password));
+		pairs.add(new BasicNameValuePair("password", enc));
 		return updateDatabase();
 	}
 
@@ -73,13 +75,15 @@ public class DbHandler {
 	 * @param userName
 	 * @param password
 	 * @return
+	 * @throws NoSuchAlgorithmException 
 	 */
-	public boolean addUser(String email, String userName, String password) {
+	public boolean addUser(String email, String userName, String password) throws NoSuchAlgorithmException {
 		pairs.clear();
+		String enc = encrypt(password);
 		pairs.add(new BasicNameValuePair("tag", "addUser"));
 		pairs.add(new BasicNameValuePair("email", email));
 		pairs.add(new BasicNameValuePair("username", userName));
-		pairs.add(new BasicNameValuePair("password", password));
+		pairs.add(new BasicNameValuePair("password", enc));
 		return (updateDatabase());
 	}
 
