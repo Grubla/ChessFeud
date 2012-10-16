@@ -26,6 +26,8 @@ public class DbHandler {
 	private InputStream is;
 	private List pairs;
 	
+	private String tag = "tag";
+	
 	private static DbHandler instance;
 	private PlayerInfo player;
 	/**
@@ -69,7 +71,7 @@ public class DbHandler {
 		String enc;
 		try {
 			enc = encrypt(password);
-			pairs.add(new BasicNameValuePair("tag", "login"));
+			pairs.add(new BasicNameValuePair(tag, "login"));
 			pairs.add(new BasicNameValuePair("username", userName));
 			pairs.add(new BasicNameValuePair("password", enc));
 		} catch (NoSuchAlgorithmException e) {
@@ -93,7 +95,7 @@ public class DbHandler {
 		String enc;
 		try {
 			enc = encrypt(password);
-			pairs.add(new BasicNameValuePair("tag", "addUser"));
+			pairs.add(new BasicNameValuePair(tag, "addUser"));
 			pairs.add(new BasicNameValuePair("email", email));
 			pairs.add(new BasicNameValuePair("username", userName));
 			pairs.add(new BasicNameValuePair("password", enc));
@@ -109,7 +111,7 @@ public class DbHandler {
 	 */
 	public boolean userExists(String userName) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "userExists"));
+		pairs.add(new BasicNameValuePair(tag, "userExists"));
 		pairs.add(new BasicNameValuePair("username", userName));
 		return updateDatabase();
 	}
@@ -125,7 +127,7 @@ public class DbHandler {
 	 */
 	public boolean newGame(String target, String board) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "addUser"));
+		pairs.add(new BasicNameValuePair(tag, "addUser"));
 		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
 		pairs.add(new BasicNameValuePair("user2", target));
 		pairs.add(new BasicNameValuePair("board", board));
@@ -142,7 +144,7 @@ public class DbHandler {
 	 */
 	public boolean newMove(String target, String newModel) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "newMove"));
+		pairs.add(new BasicNameValuePair(tag, "newMove"));
 		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
 		pairs.add(new BasicNameValuePair("user2", target));
 		pairs.add(new BasicNameValuePair("board", newModel));
@@ -157,7 +159,7 @@ public class DbHandler {
 	 */
 	public boolean addInquirie(String target) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "addInquirie"));
+		pairs.add(new BasicNameValuePair(tag, "addInquirie"));
 		pairs.add(new BasicNameValuePair("user", player.getUserName()));
 		pairs.add(new BasicNameValuePair("target", target));
 		return updateDatabase();
@@ -172,7 +174,7 @@ public class DbHandler {
 	 */
 	public String getStats() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "getStats"));
+		pairs.add(new BasicNameValuePair(tag, "getStats"));
 		pairs.add(new BasicNameValuePair("username", player.getUserName()));
 		String s = getFromDatabase();
 		return s;
@@ -186,7 +188,7 @@ public class DbHandler {
 	 */
 	public List<String> getGames() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "getGames"));
+		pairs.add(new BasicNameValuePair(tag, "getGames"));
 		pairs.add(new BasicNameValuePair("username", player.getUserName()));
 		String s = getFromDatabase();
 		if (s == null) {
@@ -210,7 +212,7 @@ public class DbHandler {
 	 */
 	public boolean incWins() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "incWins"));
+		pairs.add(new BasicNameValuePair(tag, "incWins"));
 		pairs.add(new BasicNameValuePair("username",player.getUserName()));
 		return updateDatabase();
 
@@ -223,7 +225,7 @@ public class DbHandler {
 	 */
 	public boolean incDraws() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "incDraws"));
+		pairs.add(new BasicNameValuePair(tag, "incDraws"));
 		pairs.add(new BasicNameValuePair("username", player.getUserName()));
 		return updateDatabase();
 	}
@@ -235,7 +237,7 @@ public class DbHandler {
 	 */
 	public boolean incLosses() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair("tag", "incLosses"));
+		pairs.add(new BasicNameValuePair(tag, "incLosses"));
 		pairs.add(new BasicNameValuePair("username", player.getUserName()));
 
 		return updateDatabase();
