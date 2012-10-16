@@ -123,11 +123,11 @@ public class DbHandler {
 	 * @param board
 	 * @return
 	 */
-	public boolean newGame(String user1, String user2, String board) {
+	public boolean newGame(String target, String board) {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "addUser"));
-		pairs.add(new BasicNameValuePair("user1", user1));
-		pairs.add(new BasicNameValuePair("user2", user2));
+		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
+		pairs.add(new BasicNameValuePair("user2", target));
 		pairs.add(new BasicNameValuePair("board", board));
 		return updateDatabase();
 	}
@@ -141,11 +141,11 @@ public class DbHandler {
 	 * @param newBoard
 	 * @return
 	 */
-	public boolean newMove(String user1, String user2, String newModel) {
+	public boolean newMove(String target, String newModel) {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "newMove"));
-		pairs.add(new BasicNameValuePair("user1", user1));
-		pairs.add(new BasicNameValuePair("user2", user2));
+		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
+		pairs.add(new BasicNameValuePair("user2", target));
 		pairs.add(new BasicNameValuePair("board", newModel));
 		return updateDatabase();
 	}
@@ -158,10 +158,10 @@ public class DbHandler {
 	 * @param target
 	 * @return
 	 */
-	public boolean addInquirie(String user, String target) {
+	public boolean addInquirie(String target) {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "addInquirie"));
-		pairs.add(new BasicNameValuePair("user", user));
+		pairs.add(new BasicNameValuePair("user", player.getUserName()));
 		pairs.add(new BasicNameValuePair("target", target));
 		return updateDatabase();
 	}
@@ -175,10 +175,10 @@ public class DbHandler {
 	 * @param userName
 	 * @return
 	 */
-	public String getStats(String userName) {
+	public String getStats() {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "getStats"));
-		pairs.add(new BasicNameValuePair("username", userName));
+		pairs.add(new BasicNameValuePair("username", player.getUserName()));
 		String s = getFromDatabase();
 		return s;
 	}
@@ -191,10 +191,10 @@ public class DbHandler {
 	 * @param userName
 	 * @return
 	 */
-	public List<String> getGames(String userName) {
+	public List<String> getGames() {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "getGames"));
-		pairs.add(new BasicNameValuePair("username", userName));
+		pairs.add(new BasicNameValuePair("username", player.getUserName()));
 		String s = getFromDatabase();
 		if (s == null) {
 			return null;
@@ -217,10 +217,10 @@ public class DbHandler {
 	 * @param userName
 	 * @return
 	 */
-	public boolean incWins(String userName) {
+	public boolean incWins() {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "incWins"));
-		pairs.add(new BasicNameValuePair("username", userName));
+		pairs.add(new BasicNameValuePair("username",player.getUserName()));
 		return updateDatabase();
 
 	}
@@ -232,10 +232,10 @@ public class DbHandler {
 	 * @param userName
 	 * @return
 	 */
-	public boolean incDraws(String userName) {
+	public boolean incDraws() {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "incDraws"));
-		pairs.add(new BasicNameValuePair("username", userName));
+		pairs.add(new BasicNameValuePair("username", player.getUserName()));
 		return updateDatabase();
 	}
 
@@ -246,10 +246,10 @@ public class DbHandler {
 	 * @param userName
 	 * @return
 	 */
-	public boolean incLosses(String userName) {
+	public boolean incLosses() {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair("tag", "incLosses"));
-		pairs.add(new BasicNameValuePair("username", userName));
+		pairs.add(new BasicNameValuePair("username", player.getUserName()));
 
 		return updateDatabase();
 	}
