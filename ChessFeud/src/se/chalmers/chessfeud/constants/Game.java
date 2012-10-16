@@ -17,12 +17,13 @@ public class Game {
 	private int turns;
 	private int position;
 	
-	PropertyChangeListener listener;
+	private static PlayerInfo player = PlayerInfo.getInstance();
 	
 	private String timestamp;
 	/**
 	 * Sets all the values depending on what the string says.
-	 * @param info
+	 * @param info a sting containg all the info for the game. should be on the form 
+	 * whiteplayer/blackplayer/gameboard/turns/timestamp
 	 */
 	public Game(String info, int position) {
 		String[] s = info.split("/");
@@ -60,29 +61,58 @@ public class Game {
 		}
 	}
 	/**
+	 * A getter for the user name of the current client.
+	 * @return a string containing the username.
+	 */
+	public String thisPlayer(){
+		return player.getUserName();
+	}
+	/**
+	 * Returns the color (C.TEAM_WHITE or C.TEAM_BLACK) 
+	 * of this client
+	 * @return an int containing the team
+	 */
+	public int thisPlayersTeam(){
+		if(player.getUserName().equals(whitePlayer)){
+			return C.TEAM_WHITE;
+		}else{
+			return C.TEAM_BLACK;
+		}
+	}
+	/**
+	 * The username of the opponent in this game.
+	 * @return a string containing the username
+	 */
+	public String getOpponent(){
+		if(player.getUserName().equals(whitePlayer)){
+			return blackPlayer;
+		}
+		return whitePlayer;
+	}
+	/**
 	 * Returns the total number of turns taken this game.
-	 * @return
+	 * @return the number of turns
 	 */
 	public int getTurns() {
 		return turns;
 	}
 	/**
 	 * Returns a string representing the gameboard.
-	 * @return
+	 * @return the string representation of the gameboard.
 	 */
 	public String getGameBoard() {
 		return gameBoard;
 	}
 	/**
 	 * Returns a timestamp on when the newest move was made.
-	 * @return
+	 * @return the timestamp
 	 */
 	public String getTimestamp() {
 		return timestamp;
 	}
 	/**
 	 * Returns the color of the current player.
-	 * @return
+	 * @return the int team of this turn
 	 */
 	public int getCurrentColor() {
 		if(turns%2 == 0) {
@@ -93,6 +123,7 @@ public class Game {
 	}
 	/**
 	 * Returns the position (or id) for this game in the list.
+	 * @return the position in the list of this game.
 	 */
 	public int getPosition(){
 		return this.position;

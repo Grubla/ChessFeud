@@ -21,8 +21,10 @@ public class PlayActivity extends Activity implements PropertyChangeListener{
 		GameView gv = (GameView) findViewById(R.id.chessBoard);
 		String gameInfo = getIntent().getStringExtra("GameString");
 		int position = getIntent().getIntExtra("Position", -1);
-		if(gameInfo != null)
+		if(gameInfo != null){
 			gv.setGameModel(gameInfo, position, this);
+		}
+			
 		
 		
 	}
@@ -33,7 +35,7 @@ public class PlayActivity extends Activity implements PropertyChangeListener{
 			String gameBoard = (String)event.getNewValue();
 			try{
 				DbHandler dbh = DbHandler.getInstance();
-				dbh.newMove(gameInfo.getWhitePlayer(), gameInfo.getBlackPlayer(), gameBoard);
+				dbh.newMove(gameInfo.getOpponent(), gameBoard);
 			}catch(Exception e){//Add exception message TODO:
 			}
 		}

@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements OnClickListener, PropertyChangeListener{
+public class MainActivity extends Activity implements OnClickListener{
 	private Button bPlay, bStats, bSettings, bAbout;
 	private ImageView iLogo;
 	private ListView finishedGames, startedGames;
@@ -50,7 +50,7 @@ public class MainActivity extends Activity implements OnClickListener, PropertyC
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
     	try{
 	        DbHandler db = DbHandler.getInstance();
-	        startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames("hej")));
+	        startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames()));
         }catch(Exception e){
         	
         }
@@ -89,10 +89,6 @@ public class MainActivity extends Activity implements OnClickListener, PropertyC
     		Log.d("Default", "Should not get here!");
     	}
     }
-    
-	public void propertyChange(PropertyChangeEvent evt) {
-		//evt.get
-	}
     
     private class GameListAdapter extends ArrayAdapter<String> {
     	private Context context;

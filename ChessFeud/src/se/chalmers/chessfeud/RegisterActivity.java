@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class RegisterActivity extends Activity implements OnClickListener{
+public class RegisterActivity extends Activity{
 	private Button bRegister;
 	private EditText eUsername;
 	private EditText ePassword1;
@@ -35,30 +35,31 @@ public class RegisterActivity extends Activity implements OnClickListener{
 		ePassword2 = (EditText) findViewById(R.id.regReInputPassword);
 		eEmail = (EditText) findViewById(R.id.regInputEmail);
 		
-		bRegister.setOnClickListener(this);
+		bRegister.setOnClickListener(new OnClickListener(){
+			public void onClick(View v) {
+				System.out.println("HEJEJEJ");
+				if(fieldsOk()){
+					boolean userAdded = dbh.addUser(eEmail.getText().toString(), eUsername.getText().toString(), ePassword1.getText().toString());
+					if(userAdded){
+						player.login(eUsername.getText().toString(), ePassword1.getText().toString());
+						startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+					}else{
+						Log.d("Register", "Couldnt Register");
+					}
+					
+				}
+			}
+		});
 	}
-
-	public void onClick(View v) {
-		//The registerbutton has been clicked.
-		//Check so that all fields are correct.
-		if(fieldsOk()){
-			dbh.addUser(eEmail.toString(), eUsername.toString(), ePassword1.toString());
-			//player.login(eUsername.toString(), ePassword1.toString())
-			startActivity(new Intent(this, MainActivity.class));
-		}
-	}
-
 
 	private boolean fieldsOk() {
-		/* if(dbh.userExists()){
-		 * Print user already exists..
-		 * return false;
-		 * }
-		 */
+		if(dbh.userExists(eUsername.getText().toString())){
+			Log.d("UserExists", eUsername.getText().toString());
+		}
+		System.out.println("hej");
 		Log.d(ePassword1.getText().toString(), ePassword2.getText().toString());
-		
 		if(!ePassword1.getText().toString().equals(ePassword2.getText().toString())){
-			//Print the passwords doesnt match
+			//Print the passwords doesn't match
 			return false;
 		}
 		return true;

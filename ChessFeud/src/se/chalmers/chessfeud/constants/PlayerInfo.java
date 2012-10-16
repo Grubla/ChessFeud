@@ -102,7 +102,7 @@ public class PlayerInfo {
 	 * @param password
 	 * @return
 	 */
-	private boolean login(String userName, String password) {
+	public boolean login(String userName, String password) {
 		boolean suc = false;
 		suc = DbHandler.getInstance().login(userName, password);
 		if (suc) {
