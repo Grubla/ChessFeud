@@ -70,6 +70,7 @@ public class DbHandler extends HttpServlet {
 		tags.put("deleteGame", 9);
 		tags.put("newInquirie", 10);
 		tags.put("userExists", 11);
+		tags.put("getFinishedGames", 12);
 
 	}
 
@@ -135,6 +136,15 @@ public class DbHandler extends HttpServlet {
 						request.getParameter("target"));
 			case 11:
 				out.print(userExists(request.getParameter("username")));
+			case 12:
+				List<String> finishedGames = getGamesInProgress(request
+						.getParameter("username"));
+				StringBuilder strbuilder = new StringBuilder();
+				for (String s : finishedGames) {
+					strbuilder.append(s);
+					strbuilder.append(";");
+				}
+				out.print(strbuilder.toString());
 			}
 
 		} catch (NumberFormatException e) {
@@ -182,8 +192,10 @@ public class DbHandler extends HttpServlet {
 		return false;
 
 	}
+
 	/**
 	 * Checks if the username currently is registred in the database.
+	 * 
 	 * @param userName
 	 * @return
 	 * @throws SQLException
@@ -211,6 +223,26 @@ public class DbHandler extends HttpServlet {
 		List<String> games = new ArrayList<String>();
 		rs = s.executeQuery("select * from game where user1='" + userName
 				+ "' or user2='" + userName + "'");
+		while (rs.next()) {
+			games.add(rs.getString(1) + "/" + rs.getString(2) + "/"
+					+ rs.getString(3) + "/" + rs.getString(4) + "/"
+					+ rs.getString(5));
+		}
+		return games;
+	}
+
+	/**
+	 * Checks for games in the table for finishedgames in the database where the
+	 * user is playing and returns an arraylist with them.
+	 * 
+	 * @param userName
+	 * @return an arraylist with all the finished games.
+	 * @throws SQLException
+	 */
+	private List<String> getFinishedGames(String userName) throws SQLException {
+		List<String> games = new ArrayList<String>();
+		rs = s.executeQuery("select * from finishedgames where user1='"
+				+ userName + "' or user2='" + userName + "'");
 		while (rs.next()) {
 			games.add(rs.getString(1) + "/" + rs.getString(2) + "/"
 					+ rs.getString(3) + "/" + rs.getString(4) + "/"
