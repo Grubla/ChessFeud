@@ -28,9 +28,15 @@ public class DbHandler {
 	
 	private static DbHandler instance;
 	//TODO add a PlayerInfo object here
-
+	/**
+	 * Empty constructor following the Singleton-pattern.
+	 */
 	protected DbHandler() {
 	}
+	/**
+	 * Returns a new instance of DbHandler if there isnt already an instance, otherwise returns the instance.
+	 * @return
+	 */
 	public static DbHandler getInstance() {
 		if(instance == null) {
 			instance = new DbHandler();
