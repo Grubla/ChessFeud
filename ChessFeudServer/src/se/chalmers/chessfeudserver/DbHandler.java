@@ -10,6 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Servlet implementation for handling request from the andriod-app.
  */
@@ -62,7 +69,7 @@ public class DbHandler extends HttpServlet {
 		tags.put("newGame", 8);
 		tags.put("deleteGame", 9);
 		tags.put("newInquirie", 10);
-		tags.put("userExists");
+		tags.put("userExists", 11);
 
 	}
 
@@ -175,8 +182,13 @@ public class DbHandler extends HttpServlet {
 		return false;
 
 	}
-
-	private boolean userExists(String userName) {
+	/**
+	 * Checks if the username currently is registred in the database.
+	 * @param userName
+	 * @return
+	 * @throws SQLException
+	 */
+	private boolean userExists(String userName) throws SQLException {
 		rs = s.executeQuery("select userName from auth where userName='"
 				+ userName + "'");
 		rs.first();
