@@ -14,7 +14,7 @@ public class PawnTest extends AndroidTestCase {
 		Piece blackPawn = new Pawn(1);
 		Position[] pos = { new Position(6, 6), new Position(1, 1) };
 		for (int i = 0; i < pos.length; i++) {
-			if (i == 0) {
+			if (i == 0) { // Test the white pawn
 				List<List<Position>> testList = whitePawn
 						.theoreticalMoves(pos[i]);
 				for (List<Position> l : testList) {
@@ -26,7 +26,7 @@ public class PawnTest extends AndroidTestCase {
 					}
 				}
 			}
-			if (i == 1) {
+			if (i == 1) { // Test the black pawn
 				List<List<Position>> testList = blackPawn
 						.theoreticalMoves(pos[i]);
 				for (List<Position> l : testList) {

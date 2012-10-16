@@ -20,9 +20,11 @@ public class ChessBoard {
 	 */
 	public ChessBoard(){
 		board = new Piece[8][8];
-		for(int x = 0; x < board.length; x++)
-			for(int y = 0; y < board[x].length; y++)
+		for(int x = 0; x < board.length; x++) {
+			for(int y = 0; y < board[x].length; y++) {
 				board[x][y] = Rules.startBoard(x, y);
+			}
+		}	
 	}
 	/**
 	 * Creates a clone of board given with the piece from oldPos moved to newPos
@@ -32,9 +34,11 @@ public class ChessBoard {
 	 */
 	public ChessBoard(ChessBoard cb, Position oldPos, Position newPos){
 		board = new Piece[8][8];
-		for(int x = 0; x < board.length; x++)
-			for(int y = 0; y < board[x].length; y++)
+		for(int x = 0; x < board.length; x++) {
+			for(int y = 0; y < board[x].length; y++) {
 				board[x][y] = cb.getPieceAt(x, y);
+			}
+		}	
 		board[newPos.getX()][newPos.getY()] = board[oldPos.getX()][oldPos.getY()];
 		board[oldPos.getX()][oldPos.getY()] = new NoPiece();
 	}
@@ -51,12 +55,13 @@ public class ChessBoard {
 		String pieces[] = s.split(",");
 		PieceFactory[] pf = {new PieceFactory(C.TEAM_WHITE), new PieceFactory(C.TEAM_BLACK)};
 		board = new Piece[8][8];
-		for(int x = 0; x < board.length; x++)
+		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board[x].length; y++){
 				int team = Integer.parseInt(pieces[8*x+y]) % 2;
 				int id = Integer.parseInt(pieces[8*x+y]) - team;
 				board[x][y] = pf[team].createPiece(id);
 			}
+		}	
 	}
 	/**
 	 * Returns a string representing a board.
@@ -66,11 +71,12 @@ public class ChessBoard {
 	 */
 	public String exportBoard(){
 		StringBuilder export = new StringBuilder();
-		for(int x = 0; x < board.length; x++)
+		for(int x = 0; x < board.length; x++) {
 			for(int y = 0; y < board[x].length; y++){
 				int id = getPieceAt(x, y).getId()+getPieceAt(x, y).getTeam();
 				export.append(","+id);
 			}
+		}	
 		export.deleteCharAt(0);
 		return export.toString();	
 	}
