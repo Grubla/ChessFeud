@@ -136,8 +136,7 @@ public class DbHandler {
 	 * Contacts the database with a new gameboard for the existing game between
 	 * two players.
 	 * 
-	 * @param user1
-	 * @param user2
+	 * @param target
 	 * @param newBoard
 	 * @return
 	 */
