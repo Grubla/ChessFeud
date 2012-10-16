@@ -35,7 +35,7 @@ public class DbHandler {
 	}
 	/**
 	 * Returns a new instance of DbHandler if there isnt already an instance, otherwise returns the instance.
-	 * @return
+	 * @return an instance of the DbHandler
 	 */
 	public static DbHandler getInstance() {
 		if(instance == null) {
@@ -62,7 +62,7 @@ public class DbHandler {
 	 * 
 	 * @param userName
 	 * @param password
-	 * @return
+	 * @return boolean is login sucseeded
 	 */
 	public boolean login(String userName, String password){
 		pairs.clear();
@@ -152,10 +152,8 @@ public class DbHandler {
 	/**
 	 * Contacts the server and tells it to save a new inquirie, returns false if
 	 * it couldnt be saved or if something went wrong.
-	 * 
-	 * @param user
 	 * @param target
-	 * @return
+	 * @return boolean true if it worked false otherwise.
 	 */
 	public boolean addInquirie(String target) {
 		pairs.clear();
@@ -170,9 +168,7 @@ public class DbHandler {
 	 * user in a String with / between all the different stats, which is
 	 * w/l/d/numberofmoves. Returns null of something went wrong when contacting
 	 * the database.
-	 * 
-	 * @param userName
-	 * @return
+	 * @return returns the stats of that user.
 	 */
 	public String getStats() {
 		pairs.clear();
@@ -186,9 +182,7 @@ public class DbHandler {
 	 * Contacts the database and request a list of all ongoing games, returns a
 	 * list of all the games, an empty list if there are no games and null if
 	 * something went wrong.
-	 * 
-	 * @param userName
-	 * @return
+	 * @return a list of games of the currently logged in player.
 	 */
 	public List<String> getGames() {
 		pairs.clear();
@@ -212,9 +206,7 @@ public class DbHandler {
 	/**
 	 * Increments the wins for a user in the database, returns false if
 	 * something went wrong.
-	 * 
-	 * @param userName
-	 * @return
+	 * @return boolean if it worked.
 	 */
 	public boolean incWins() {
 		pairs.clear();
@@ -227,9 +219,7 @@ public class DbHandler {
 	/**
 	 * Increments the draws for a user in the databse, returns false if
 	 * something went wrong.
-	 * 
-	 * @param userName
-	 * @return
+	 * @return boolean if sucsessful.
 	 */
 	public boolean incDraws() {
 		pairs.clear();
@@ -241,9 +231,7 @@ public class DbHandler {
 	/**
 	 * Increments the losses for a user in the database, returns false if
 	 * something went wrong.
-	 * 
-	 * @param userName
-	 * @return
+	 * @return boolean the losses were incremented.
 	 */
 	public boolean incLosses() {
 		pairs.clear();
@@ -256,8 +244,7 @@ public class DbHandler {
 	/**
 	 * Contacts the database with an update and returns true if it sucseeded or
 	 * false if something went wrong along the way.
-	 * 
-	 * @return
+	 * @return true if nothing went wrong, true otherwise.
 	 */
 	public boolean updateDatabase() {
 		try {
@@ -284,8 +271,7 @@ public class DbHandler {
 	/**
 	 * Requests a String from the database, returns null if something went
 	 * wrong.
-	 * 
-	 * @return
+	 * @return The String requested from the database.
 	 */
 	public String getFromDatabase() {
 		try {
@@ -312,7 +298,7 @@ public class DbHandler {
 	/**
 	 * A method for encrypting a string using the common md5-encryption pattern.
 	 * @param s
-	 * @return
+	 * @return The encrypted string.
 	 */
 	public String encrypt(String s) throws NoSuchAlgorithmException {
 		MessageDigest md5enc = MessageDigest.getInstance("MD5");
