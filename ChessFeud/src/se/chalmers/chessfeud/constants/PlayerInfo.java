@@ -77,9 +77,9 @@ public class PlayerInfo {
 				out.write(userName);
 				out.newLine();
 				out.write(password);
+				out.close();
 			} catch (IOException e) {
-				// TODO Add IOexception path
-				e.printStackTrace();
+				return false;
 			}
 		}
 		return suc;

@@ -56,7 +56,6 @@ public class DbHandler {
 	 * @param userName
 	 * @param password
 	 * @return
-	 * @throws NoSuchAlgorithmException 
 	 */
 	public boolean login(String userName, String password){
 		pairs.clear();
@@ -67,8 +66,7 @@ public class DbHandler {
 			pairs.add(new BasicNameValuePair("username", userName));
 			pairs.add(new BasicNameValuePair("password", enc));
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Add exceptionpath
-			e.printStackTrace();
+			return false;
 		}
 		return updateDatabase();
 	}
@@ -93,8 +91,7 @@ public class DbHandler {
 			pairs.add(new BasicNameValuePair("username", userName));
 			pairs.add(new BasicNameValuePair("password", enc));
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Add exception path
-			e.printStackTrace();
+			return false;
 		}
 		return (updateDatabase());
 	}
@@ -297,16 +294,12 @@ public class DbHandler {
 			}
 			return sb.toString();
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 			return null;
 		} catch (ClientProtocolException e) {
-			e.printStackTrace();
 			return null;
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
