@@ -27,7 +27,6 @@ public class PlayActivity extends Activity implements PropertyChangeListener{
 		
 	}
 
-	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		if(event.getPropertyName().equals("Model")){
 			Game gameInfo = (Game)event.getOldValue();

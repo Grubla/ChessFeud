@@ -51,7 +51,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 		bRegister.setOnClickListener(this);
 		
 	}
-	@Override
+
 	public void onClick(View v) {
 		int id = v.getId();
 		if(id == R.id.login){

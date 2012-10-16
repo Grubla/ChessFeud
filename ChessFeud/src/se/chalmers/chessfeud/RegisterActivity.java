@@ -5,6 +5,7 @@ import se.chalmers.chessfeud.constants.PlayerInfo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,8 +38,6 @@ public class RegisterActivity extends Activity implements OnClickListener{
 		bRegister.setOnClickListener(this);
 	}
 
-
-	@Override
 	public void onClick(View v) {
 		//The registerbutton has been clicked.
 		//Check so that all fields are correct.
@@ -56,7 +55,9 @@ public class RegisterActivity extends Activity implements OnClickListener{
 		 * return false;
 		 * }
 		 */
-		if(!ePassword1.toString().equals(ePassword2.toString())){
+		Log.d(ePassword1.getText().toString(), ePassword2.getText().toString());
+		
+		if(!ePassword1.getText().toString().equals(ePassword2.getText().toString())){
 			//Print the passwords doesnt match
 			return false;
 		}

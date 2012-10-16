@@ -90,8 +90,6 @@ public class MainActivity extends Activity implements OnClickListener, PropertyC
     	}
     }
     
-
-	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		//evt.get
 	}
@@ -142,8 +140,7 @@ public class MainActivity extends Activity implements OnClickListener, PropertyC
     		tNbrOfTurns.setText(""+game.getTurns());
     		
     		vRow.setOnClickListener(new OnClickListener(){
-    			@Override
-    			public void onClick(View v) {
+      			public void onClick(View v) {
     				Intent i = new Intent(context, PlayActivity.class);
     				i.putExtra("GameString", gameString);
     				i.putExtra("Position", position);
