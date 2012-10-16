@@ -27,7 +27,7 @@ public class DbHandler {
 	private List pairs;
 	
 	private static DbHandler instance;
-	//TODO add a PlayerInfo object here
+	private PlayerInfo player;
 	/**
 	 * Empty constructor following the Singleton-pattern.
 	 */
@@ -51,7 +51,8 @@ public class DbHandler {
 		client = new DefaultHttpClient();
 		httpPost = new HttpPost("http://46.239.99.71:8080/ChessFeudServer/DbHandler/*");
 		is = null;
-		pairs = new ArrayList<BasicNameValuePair>();	
+		pairs = new ArrayList<BasicNameValuePair>();
+		player = PlayerInfo.getInstance();
 	}
 
 	/**

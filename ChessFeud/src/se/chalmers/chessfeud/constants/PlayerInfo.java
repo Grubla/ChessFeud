@@ -49,7 +49,7 @@ public class PlayerInfo {
 	 * 
 	 * @return username
 	 */
-	private String getUserName() {
+	public String getUserName() {
 		loadInfoFromFile();
 		return userName;
 	}
@@ -59,7 +59,7 @@ public class PlayerInfo {
 	 * 
 	 * @return
 	 */
-	private String getPassword() {
+	public String getPassword() {
 		loadInfoFromFile();
 		return password;
 	}
