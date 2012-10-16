@@ -32,7 +32,7 @@ public class GameView extends View implements OnTouchListener {
 	private Context context;
 	private int chessSquareHeight;
 	private int chessSquareWidth;
-	ChessModel gm = new ChessModel(0);
+	private ChessModel gm = new ChessModel(0);
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);

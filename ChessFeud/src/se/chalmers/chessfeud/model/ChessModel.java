@@ -241,7 +241,11 @@ public class ChessModel {
 	/* Returns whos turn it is next (opposite of activePlayer) */
 	private int nextTurn(){
 		int next = numberOfMoves%2 == 0 ? 1 : 0;
-		return next;
+		if(next == 1){
+			return 0;
+		} else{
+			return 1;
+		}
 	}
 	/* Sends the model to the chosen PropertyChangeListener */
 	private void sendModel(){

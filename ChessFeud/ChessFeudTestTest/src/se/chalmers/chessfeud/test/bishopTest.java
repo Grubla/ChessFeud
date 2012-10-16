@@ -31,13 +31,13 @@ public class BishopTest extends AndroidTestCase {
 						assertTrue(!p.equals(new Position(7, 6)));
 						// Checks so the Bishops position is inside the
 						// gameboard
-						assertTrue(p.getX() >= 0 && p.getX() <= C.BOARD_LENGTH
-								&& p.getY() >= 0 && p.getY() <= C.BOARD_LENGTH
+						assertTrue(p.getX() >= 0 && p.getX() < C.BOARD_LENGTH
+								&& p.getY() >= 0 && p.getY() < C.BOARD_LENGTH
 								&& (p.getX() == p.getY()));
 					}
 					if (i == 1) {
-						assertTrue((p.getX() >= 0 && p.getX() <= C.BOARD_LENGTH
-								&& p.getY() >= 0 && p.getY() <= C.BOARD_LENGTH && ((p
+						assertTrue((p.getX() >= 0 && p.getX() < C.BOARD_LENGTH
+								&& p.getY() >= 0 && p.getY() < C.BOARD_LENGTH && ((p
 								.getX() == p.getY()) || (p.getX() + p.getY() == 6))));
 					}
 				}

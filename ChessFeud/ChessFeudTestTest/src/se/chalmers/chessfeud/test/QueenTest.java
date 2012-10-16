@@ -25,26 +25,26 @@ public class QueenTest extends AndroidTestCase {
 						// Checks so the Queen can't go to its own square
 						assertTrue(!p.equals(new Position(7, 7)));
 						// Checks so the positions will be inside the gameboard
-						assertTrue((p.getX() >= 0 && p.getX() <= C.BOARD_LENGTH && p
-								.getY() == C.BOARD_LENGTH) // Checks horizontally
-								|| (p.getY() >= 0 && p.getY() <= C.BOARD_LENGTH && p
-										.getX() == C.BOARD_LENGTH) // Checks vertically
-								|| (p.getX() >= 0 && p.getX() <= C.BOARD_LENGTH
+						assertTrue((p.getX() >= 0 && p.getX() < C.BOARD_LENGTH && p
+								.getY() == 7) // Checks horizontally
+								|| (p.getY() >= 0 && p.getY() < C.BOARD_LENGTH && p
+										.getX() == 7) // Checks vertically
+								|| (p.getX() >= 0 && p.getX() < C.BOARD_LENGTH
 										&& p.getY() >= 0
-										&& p.getY() <= C.BOARD_LENGTH && (p
+										&& p.getY() < C.BOARD_LENGTH && (p
 										.getX() == p.getY()))); // Checks diagonally
 					}
 					if (i == 1) {
 						// Checks so the Queen doesn't have any possible
 						// positions outside the gameboard
-						assertTrue((p.getX() >= 0 && p.getX() <= C.BOARD_LENGTH && p
+						assertTrue((p.getX() >= 0 && p.getX() < C.BOARD_LENGTH && p
 								.getY() == 3)
 								|| (p.getY() >= 0 && p.getY() <= 7
 										&& p.getX() == 3 && !(p.getX() == 3 && p
 										.getY() == 3))
-								|| (p.getX() >= 0 && p.getX() <= C.BOARD_LENGTH
+								|| (p.getX() >= 0 && p.getX() < C.BOARD_LENGTH
 										&& p.getY() >= 0
-										&& p.getY() <= C.BOARD_LENGTH && ((p
+										&& p.getY() < C.BOARD_LENGTH && ((p
 										.getX() == p.getY()) || (p.getX()
 										+ p.getY() == 6))));
 					}

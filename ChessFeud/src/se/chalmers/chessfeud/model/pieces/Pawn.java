@@ -73,7 +73,7 @@ public class Pawn extends Piece {
 				yIntList.add(blackY[i]);
 			}
 		}
-		if (hasMoved == false) {
+		if (!hasMoved) {
 			hasMoved = true;
 		} else {
 			xIntList.remove(xIntList.size() - 1);
