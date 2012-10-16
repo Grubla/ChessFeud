@@ -45,7 +45,7 @@ public class DbHandler {
 		client = new DefaultHttpClient();
 		httpPost = new HttpPost("http://46.239.99.71:8080/ChessFeudServer/DbHandler/*");
 		is = null;
-		pairs = new ArrayList();	
+		pairs = new ArrayList<BasicNameValuePair>();	
 	}
 
 	/**
@@ -307,7 +307,6 @@ public class DbHandler {
 	 * A method for encrypting a string using the common md5-encryption pattern.
 	 * @param s
 	 * @return
-	 * @throws NoSuchAlgorithmException
 	 */
 	public String encrypt(String s) throws NoSuchAlgorithmException {
 		MessageDigest md5enc = MessageDigest.getInstance("MD5");
