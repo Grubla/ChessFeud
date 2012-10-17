@@ -123,9 +123,9 @@ public class DbHandler extends HttpServlet {
 				incDraws(request.getParameter("username"));
 				break;
 			case 8:
-				newGame(request.getParameter("user1"),
+				out.print(newGame(request.getParameter("user1"),
 						request.getParameter("user2"),
-						request.getParameter("gameBoard"));
+						request.getParameter("gameBoard")));
 				break;
 			case 9:
 				deleteGame(request.getParameter("user1"),
@@ -185,7 +185,6 @@ public class DbHandler extends HttpServlet {
 			rs = s.executeQuery("select password from auth where userName='"
 					+ userName + "'");
 			rs.first();
-			System.out.println(rs.getString(1));
 			if (rs.getString(1).equals(password)) {
 				return true;
 			}			 			
@@ -336,17 +335,20 @@ public class DbHandler extends HttpServlet {
 	 * @param gameBoard
 	 * @throws SQLException
 	 */
-	private void newGame(String user1, String user2, String gameBoard)
+	private boolean newGame(String user1, String user2, String gameBoard)
 			throws SQLException {
-		s.executeUpdate("insert into game(user1, user2, board, turns, timestamp) values('"
-				+ user1
-				+ "','"
-				+ user2
-				+ "','"
-				+ gameBoard
-				+ "','"
-				+ "0"
-				+ "','" + "CURRENT_TIMESTAMP)");
+		if(userExists(user2)) {			
+			s.executeUpdate("insert into game(user1, user2, board, turns) values('"
+					+ user1
+					+ "','"
+					+ user2
+					+ "','"
+					+ gameBoard
+					+ "','"
+					+ "0)");
+			return true;
+		}
+		return false;
 	}
 
 	/**
