@@ -5,6 +5,7 @@ import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.constants.Game;
+import se.chalmers.chessfeud.constants.Settings;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
@@ -33,6 +34,7 @@ public class GameView extends View implements OnTouchListener {
 	private int chessSquareHeight;
 	private int chessSquareWidth;
 	private ChessModel gm = new ChessModel(0);
+	private Settings s = Settings.getInstance();
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -84,7 +86,7 @@ public class GameView extends View implements OnTouchListener {
 					if (possibleSquares.contains(new Position(x, y))) {
 						canvas.drawRect(r, wAvailable);
 					} else if (new Position(x, y).equals(gm
-							.getSelectedPosition())) {
+							.getSelectedPosition()) && s.getHelptipStatus()) {
 						canvas.drawRect(r, wSelected);
 					} else {
 						canvas.drawRect(r, wMain);
@@ -94,7 +96,7 @@ public class GameView extends View implements OnTouchListener {
 					if (possibleSquares.contains(new Position(x, y))) {
 						canvas.drawRect(r, bAvailable);
 					} else if (new Position(x, y).equals(gm
-							.getSelectedPosition())) {
+							.getSelectedPosition()) && s.getHelptipStatus()) {
 						canvas.drawRect(r, bSelected);
 					} else {
 						canvas.drawRect(r, bMain);
