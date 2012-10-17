@@ -27,13 +27,19 @@ public class DbHandler extends HttpServlet {
 
 	private ResultSet rs;
 	private Statement s;
-	private HashMap tags;
+	private static HashMap tags;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public DbHandler() {
 		super();
+		try {
+			this.init();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -59,7 +65,7 @@ public class DbHandler extends HttpServlet {
 		}
 		tags = new HashMap();
 		tags.put("login", 0);
-		tags.put("newmove", 1);
+		tags.put("newMove", 1);
 		tags.put("getGames", 2);
 		tags.put("getStats", 3);
 		tags.put("addUser", 4);
@@ -78,26 +84,36 @@ public class DbHandler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		this.init();
-		response.setContentType("text");
-		final ServletOutputStream out = response.getOutputStream();
+	protected void doGet(final HttpServletRequest request,
+			final HttpServletResponse response) throws ServletException, IOException {
+		final int intrequest = (Integer) tags.get(request.getParameter("tag"));
+		final HashMap h =(HashMap) request.getParameterMap();
+		new Thread() {
+			@Override
+			public void run() {
+				doRequest(h, intrequest, response);
+			}
+		
+		}.start();
+	}
+	
+	private void doRequest(HashMap h, int request, HttpServletResponse response){
 
 		try {
-			switch ((Integer) tags.get(request.getParameter("tag"))) {
+			response.setContentType("text");
+			final ServletOutputStream out = response.getOutputStream();
+			switch (request) {
 			case 0:
-				out.print(authenticate(request.getParameter("username"),
-						request.getParameter("password")));
+				out.print(authenticate(((String[])h.get("username"))[0],
+						((String[])h.get("password"))[0]));
 				break;
 			case 1:
-				newMove(request.getParameter("user1"),
-						request.getParameter("user2"),
-						request.getParameter("gameBoard"));
+				newMove(((String[])h.get("user1"))[0],
+						((String[])h.get("user2"))[0],
+						((String[])h.get("gameBoard"))[0]);
 				break;
 			case 2:
-				List<String> games = getGamesInProgress(request
-						.getParameter("username"));
+				List<String> games = getGamesInProgress(((String[])h.get("username"))[0]);
 				StringBuilder sb = new StringBuilder();
 				for (String s : games) {
 					sb.append(s);
@@ -106,39 +122,38 @@ public class DbHandler extends HttpServlet {
 				out.print(sb.toString());
 				break;
 			case 3:
-				out.print(getStatistics(request.getParameter("username")));
+				out.print(getStatistics(((String[])h.get("username"))[0]));
 				break;
 			case 4:
-				out.print(addUser(request.getParameter("email"),
-						request.getParameter("username"),
-						request.getParameter("password")));
+				out.print(addUser(((String[])h.get("email"))[0],
+						((String[])h.get("username"))[0],
+						((String[])h.get("password"))[0]));
 				break;
 			case 5:
-				incWins(request.getParameter("username"));
+				incWins(((String[])h.get("username"))[0]);
 				break;
 			case 6:
-				incLosses(request.getParameter("username"));
+				incLosses(((String[])h.get("username"))[0]);
 				break;
 			case 7:
-				incDraws(request.getParameter("username"));
+				incDraws(((String[])h.get("username"))[0]);
 				break;
 			case 8:
-				out.print(newGame(request.getParameter("user1"),
-						request.getParameter("user2"),
-						request.getParameter("gameBoard")));
+				out.print(newGame(((String[])h.get("user1"))[0],
+						((String[])h.get("user2"))[0],
+						((String[])h.get("gameBoard"))[0]));
 				break;
 			case 9:
-				deleteGame(request.getParameter("user1"),
-						request.getParameter("user2"));
+				deleteGame(((String[])h.get("user1"))[0],
+						((String[])h.get("user2"))[0]);
 				break;
 			case 10:
-				newInquirie(request.getParameter("user"),
-						request.getParameter("target"));
+				newInquirie(((String[])h.get("user"))[0],
+						((String[])h.get("target"))[0]);
 			case 11:
-				out.print(userExists(request.getParameter("username")));
+				out.print(userExists(((String[])h.get("username"))[0]));
 			case 12:
-				List<String> finishedGames = getGamesInProgress(request
-						.getParameter("username"));
+				List<String> finishedGames = getGamesInProgress(((String[])h.get("username"))[0]);
 				StringBuilder strbuilder = new StringBuilder();
 				for (String s : finishedGames) {
 					strbuilder.append(s);
@@ -153,10 +168,10 @@ public class DbHandler extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
-		out.flush();
-		out.close();
 
 	}
 
@@ -337,7 +352,8 @@ public class DbHandler extends HttpServlet {
 	 */
 	private boolean newGame(String user1, String user2, String gameBoard)
 			throws SQLException {
-		if(userExists(user2)) {			
+		System.out.println(""+ user1+ " " + user2);
+		if(userExists(user2)) {	
 			s.executeUpdate("insert into game(user1, user2, board, turns) values('"
 					+ user1
 					+ "','"
@@ -345,7 +361,7 @@ public class DbHandler extends HttpServlet {
 					+ "','"
 					+ gameBoard
 					+ "','"
-					+ "0)");
+					+ "'0')");
 			return true;
 		}
 		return false;
