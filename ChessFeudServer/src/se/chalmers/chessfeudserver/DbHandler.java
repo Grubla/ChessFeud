@@ -201,13 +201,12 @@ public class DbHandler extends HttpServlet {
 	 * @throws SQLException
 	 */
 	private boolean userExists(String userName) throws SQLException {
-		rs = s.executeQuery("select userName from auth where userName='"
+		rs = s.executeQuery("select count userName from auth where userName='"
 				+ userName + "'");
-		rs.first();
-		if (rs.getString(0) == null) {
-			return false;
+		if(rs.getInt(0)>0) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
