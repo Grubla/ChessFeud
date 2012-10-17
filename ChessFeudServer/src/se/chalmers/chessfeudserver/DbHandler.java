@@ -150,8 +150,10 @@ public class DbHandler extends HttpServlet {
 			case 10:
 				newInquirie(((String[])h.get("user"))[0],
 						((String[])h.get("target"))[0]);
+				break;
 			case 11:
 				out.print(userExists(((String[])h.get("username"))[0]));
+				break;
 			case 12:
 				List<String> finishedGames = getGamesInProgress(((String[])h.get("username"))[0]);
 				StringBuilder strbuilder = new StringBuilder();
@@ -160,6 +162,7 @@ public class DbHandler extends HttpServlet {
 					strbuilder.append(";");
 				}
 				out.print(strbuilder.toString());
+				break;
 			}
 
 		} catch (NumberFormatException e) {
