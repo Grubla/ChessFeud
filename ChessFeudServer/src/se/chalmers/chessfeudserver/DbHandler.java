@@ -109,9 +109,9 @@ public class DbHandler extends HttpServlet {
 				out.print(getStatistics(request.getParameter("username")));
 				break;
 			case 4:
-				addUser(request.getParameter("email"),
+				out.print(addUser(request.getParameter("email"),
 						request.getParameter("username"),
-						request.getParameter("password"));
+						request.getParameter("password")));
 				break;
 			case 5:
 				incWins(request.getParameter("username"));
@@ -201,12 +201,9 @@ public class DbHandler extends HttpServlet {
 	 * @throws SQLException
 	 */
 	private boolean userExists(String userName) throws SQLException {
-		rs = s.executeQuery("select count userName from auth where userName='"
+		rs = s.executeQuery("select count(*) from auth where userName='"
 				+ userName + "'");
-		if(rs.getInt(0)>0) {
-			return true;
-		}
-		return false;
+		return rs.first();
 	}
 
 	/**
@@ -272,10 +269,14 @@ public class DbHandler extends HttpServlet {
 	 * @param password
 	 * @throws SQLException
 	 */
-	private void addUser(String email, String userName, String password)
+	private boolean addUser(String email, String userName, String password)
 			throws SQLException {
-		s.executeUpdate("insert into auth(email, username, password) values('"
+		int i = s.executeUpdate("insert into auth(email, username, password) values('"
 				+ email + "','" + userName + "','" + password + "')");
+		if(userExists(userName)) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
