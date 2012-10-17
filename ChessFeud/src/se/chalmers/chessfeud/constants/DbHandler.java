@@ -256,6 +256,7 @@ public class DbHandler {
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
 			Scanner sc = new Scanner(is);
+			System.out.println(sc.next().toString());
 			boolean b = sc.nextBoolean();
 			sc.close();
 			return b;
