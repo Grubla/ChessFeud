@@ -71,16 +71,17 @@ public class DbHandler {
 	 */
 	public boolean login(String userName, String password){
 		pairs.clear();
+		List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
 		String enc;
 		try {
 			enc = encrypt(password);
-			pairs.add(new BasicNameValuePair(TAG, "login"));
-			pairs.add(new BasicNameValuePair(USERNAME, userName));
-			pairs.add(new BasicNameValuePair(PASSWORD, enc));
+			list.add(new BasicNameValuePair(TAG, "login"));
+			list.add(new BasicNameValuePair(USERNAME, userName));
+			list.add(new BasicNameValuePair(PASSWORD, enc));
 		} catch (NoSuchAlgorithmException e) {
 			return false;
 		}
-		return updateDatabase();
+		return updateDatabase(list);
 	}
 
 	/**
@@ -272,7 +273,33 @@ public class DbHandler {
 			return false;
 		} 
 	}
-
+	/**
+	 * Contacts the database with an update and returns true if it sucseeded or
+	 * false if something went wrong along the way.
+	 * @return true if nothing went wrong, true otherwise.
+	 */
+	public boolean updateDatabase(List<BasicNameValuePair> l) {
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(l));
+			HttpResponse response = client.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			InputStream iStream = entity.getContent();
+			Scanner sc = new Scanner(iStream);
+			if(sc.hasNext()){
+				String s = sc.next();
+				if(s.equals("true")){
+					return true;
+				}
+			}
+			return false;
+		} catch (UnsupportedEncodingException e) {
+			return false;
+		} catch (ClientProtocolException e) {
+			return false;
+		} catch (IOException e) {
+			return false;
+		} 
+	}
 	/**
 	 * Requests a String from the database, returns null if something went
 	 * wrong.
