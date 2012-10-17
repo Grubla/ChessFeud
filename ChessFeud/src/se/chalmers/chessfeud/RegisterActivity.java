@@ -19,7 +19,7 @@ public class RegisterActivity extends Activity{
 	private EditText eEmail;
 	
 	private DbHandler dbh;
-	PlayerInfo player;
+	private PlayerInfo player;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,10 @@ public class RegisterActivity extends Activity{
 				if(fieldsOk()){
 					boolean userAdded = dbh.addUser(eEmail.getText().toString(), eUsername.getText().toString(), ePassword1.getText().toString());
 					if(userAdded){
-						player.login(eUsername.getText().toString(), ePassword1.getText().toString());
-						startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+						boolean loggedIn = player.login(eUsername.getText().toString(), ePassword1.getText().toString());
+						if(loggedIn){
+							startActivity(new Intent(RegisterActivity.this, MainActivity.class));							
+						}
 					}else{
 						Log.d("Register", "Couldnt Register");
 					}
@@ -53,7 +55,6 @@ public class RegisterActivity extends Activity{
 
 	private boolean fieldsOk() {
 		if(dbh.userExists(eUsername.getText().toString())){
-			Log.d("UserExists", eUsername.getText().toString());
 		}
 		if(!ePassword1.getText().toString().equals(ePassword2.getText().toString())){
 			//Print the passwords doesn't match

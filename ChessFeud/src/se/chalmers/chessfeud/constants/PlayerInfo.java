@@ -103,17 +103,23 @@ public class PlayerInfo {
 	 * @return
 	 */
 	public boolean login(String userName, String password) {
-		boolean suc = false;
-		suc = DbHandler.getInstance().login(userName, password);
+		boolean suc = DbHandler.getInstance().login(userName, password);
+		System.out.println("AAA"+suc);
 		if (suc) {
-			BufferedWriter out;
+			
 			try {
-				out = new BufferedWriter(new FileWriter(credentials));
+				System.out.println("0");
+				BufferedWriter out = new BufferedWriter(new FileWriter(credentials));
+				System.out.println("1");
 				out.write(userName);
+				System.out.println("2");
 				out.newLine();
+				System.out.println("3");
 				out.write(password);
+				System.out.println("4");
 				out.close();
 			} catch (IOException e) {
+				e.printStackTrace();
 				return false;
 			}
 		}

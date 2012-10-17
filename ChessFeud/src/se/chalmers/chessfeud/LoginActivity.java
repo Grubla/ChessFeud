@@ -5,6 +5,7 @@ import se.chalmers.chessfeud.constants.PlayerInfo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -55,11 +56,10 @@ public class LoginActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		int id = v.getId();
 		if(id == R.id.login){
-			if( dbh.login(eUsername.toString(), ePassword.toString()) ){
-				//player.login
+			if( player.login(eUsername.getText().toString(), ePassword.getText().toString()) ){
 				startActivity(new Intent(this, MainActivity.class));
 			}else{
-				//Failed to log in etc..
+				Log.d("Login: ", "Wrong password"); //CHange to toaster
 			}
 		}else{
 			startActivity(new Intent(this, RegisterActivity.class));

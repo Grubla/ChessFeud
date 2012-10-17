@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.SocketException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -25,9 +24,12 @@ public class DbHandler {
 	private HttpClient client;
 	private HttpPost httpPost;
 	private InputStream is;
-	private List pairs;
+	private List<BasicNameValuePair> pairs;
 	
-	private String tag = "tag";
+	private static final String TAG = "tag";
+	private static final String USERNAME = "username";
+	private static final String PASSWORD = "password";
+	private static final String EMAIL = "email";
 	
 	private static DbHandler instance;
 	private PlayerInfo player;
@@ -72,9 +74,9 @@ public class DbHandler {
 		String enc;
 		try {
 			enc = encrypt(password);
-			pairs.add(new BasicNameValuePair(tag, "login"));
-			pairs.add(new BasicNameValuePair("username", userName));
-			pairs.add(new BasicNameValuePair("password", enc));
+			pairs.add(new BasicNameValuePair(TAG, "login"));
+			pairs.add(new BasicNameValuePair(USERNAME, userName));
+			pairs.add(new BasicNameValuePair(PASSWORD, enc));
 		} catch (NoSuchAlgorithmException e) {
 			return false;
 		}
@@ -96,10 +98,10 @@ public class DbHandler {
 		String enc;
 		try {
 			enc = encrypt(password);
-			pairs.add(new BasicNameValuePair(tag, "addUser"));
-			pairs.add(new BasicNameValuePair("email", email));
-			pairs.add(new BasicNameValuePair("username", userName));
-			pairs.add(new BasicNameValuePair("password", enc));
+			pairs.add(new BasicNameValuePair(TAG, "addUser"));
+			pairs.add(new BasicNameValuePair(EMAIL, email));
+			pairs.add(new BasicNameValuePair(USERNAME, userName));
+			pairs.add(new BasicNameValuePair(PASSWORD, enc));
 		} catch (NoSuchAlgorithmException e) {
 			return false;
 		}
@@ -112,8 +114,8 @@ public class DbHandler {
 	 */
 	public boolean userExists(String userName) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "userExists"));
-		pairs.add(new BasicNameValuePair("username", userName));
+		pairs.add(new BasicNameValuePair(TAG, "userExists"));
+		pairs.add(new BasicNameValuePair(USERNAME, userName));
 		return updateDatabase();
 	}
 
@@ -128,7 +130,7 @@ public class DbHandler {
 	 */
 	public boolean newGame(String target, String board) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "addUser"));
+		pairs.add(new BasicNameValuePair(TAG, "addUser"));
 		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
 		pairs.add(new BasicNameValuePair("user2", target));
 		pairs.add(new BasicNameValuePair("board", board));
@@ -145,7 +147,7 @@ public class DbHandler {
 	 */
 	public boolean newMove(String target, String newModel) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "newMove"));
+		pairs.add(new BasicNameValuePair(TAG, "newMove"));
 		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
 		pairs.add(new BasicNameValuePair("user2", target));
 		pairs.add(new BasicNameValuePair("board", newModel));
@@ -160,7 +162,7 @@ public class DbHandler {
 	 */
 	public boolean addInquirie(String target) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "addInquirie"));
+		pairs.add(new BasicNameValuePair(TAG, "addInquirie"));
 		pairs.add(new BasicNameValuePair("user", player.getUserName()));
 		pairs.add(new BasicNameValuePair("target", target));
 		return updateDatabase();
@@ -175,10 +177,9 @@ public class DbHandler {
 	 */
 	public String getStats() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "getStats"));
-		pairs.add(new BasicNameValuePair("username", player.getUserName()));
-		String s = getFromDatabase();
-		return s;
+		pairs.add(new BasicNameValuePair(TAG, "getStats"));
+		pairs.add(new BasicNameValuePair(USERNAME, player.getUserName()));
+		return getFromDatabase();
 	}
 
 	/**
@@ -189,8 +190,8 @@ public class DbHandler {
 	 */
 	public List<String> getGames() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "getGames"));
-		pairs.add(new BasicNameValuePair("username", player.getUserName()));
+		pairs.add(new BasicNameValuePair(TAG, "getGames"));
+		pairs.add(new BasicNameValuePair(USERNAME, player.getUserName()));
 		String s = getFromDatabase();
 		if (s == null) {
 			return null;
@@ -199,7 +200,7 @@ public class DbHandler {
 			return new ArrayList<String>();
 		}
 		List<String> games = new ArrayList<String>();
-		String[] dbGames = s.toString().split(";");
+		String[] dbGames = s.split(";");
 		for (String i : dbGames) {
 			games.add(i);
 		}
@@ -213,8 +214,8 @@ public class DbHandler {
 	 */
 	public boolean incWins() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "incWins"));
-		pairs.add(new BasicNameValuePair("username",player.getUserName()));
+		pairs.add(new BasicNameValuePair(TAG, "incWins"));
+		pairs.add(new BasicNameValuePair(USERNAME,player.getUserName()));
 		return updateDatabase();
 
 	}
@@ -226,8 +227,8 @@ public class DbHandler {
 	 */
 	public boolean incDraws() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "incDraws"));
-		pairs.add(new BasicNameValuePair("username", player.getUserName()));
+		pairs.add(new BasicNameValuePair(TAG, "incDraws"));
+		pairs.add(new BasicNameValuePair(USERNAME, player.getUserName()));
 		return updateDatabase();
 	}
 
@@ -238,8 +239,8 @@ public class DbHandler {
 	 */
 	public boolean incLosses() {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(tag, "incLosses"));
-		pairs.add(new BasicNameValuePair("username", player.getUserName()));
+		pairs.add(new BasicNameValuePair(TAG, "incLosses"));
+		pairs.add(new BasicNameValuePair(USERNAME, player.getUserName()));
 
 		return updateDatabase();
 	}
@@ -254,12 +255,15 @@ public class DbHandler {
 			httpPost.setEntity(new UrlEncodedFormEntity(pairs));
 			HttpResponse response = client.execute(httpPost);
 			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			Scanner sc = new Scanner(is);
-			System.out.println(sc.next().toString());
-			boolean b = sc.nextBoolean();
-			sc.close();
-			return b;
+			InputStream iStream = entity.getContent();
+			Scanner sc = new Scanner(iStream);
+			if(sc.hasNext()){
+				String s = sc.next();
+				if(s.equals("true")){
+					return true;
+				}
+			}
+			return false;
 		} catch (UnsupportedEncodingException e) {
 			return false;
 		} catch (ClientProtocolException e) {
@@ -304,8 +308,7 @@ public class DbHandler {
 	public String encrypt(String s) throws NoSuchAlgorithmException {
 		MessageDigest md5enc = MessageDigest.getInstance("MD5");
 		md5enc.update(s.getBytes(),0,s.length());
-		String encryption = new BigInteger(1, md5enc.digest()).toString(16);
-		return encryption;
+		return new BigInteger(1, md5enc.digest()).toString(16);
 	}
 
 }
