@@ -56,11 +56,15 @@ public class LoginActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		int id = v.getId();
 		if(id == R.id.login){
-			if( player.login(eUsername.getText().toString(), ePassword.getText().toString()) ){
-				startActivity(new Intent(this, MainActivity.class));
-			}else{
-				Log.d("Login: ", "Wrong password"); //CHange to toaster
-			}
+			new Thread(){
+				public void run() {
+					if( player.login(eUsername.getText().toString(), ePassword.getText().toString(), getApplicationContext()) ){
+						startActivity(new Intent(LoginActivity.this, MainActivity.class));
+					}else{
+						Log.d("Login: ", "Wrong password"); //CHange to toaster
+					}
+				}			
+			}.start();
 		}else{
 			startActivity(new Intent(this, RegisterActivity.class));
 		}

@@ -3,11 +3,12 @@ package se.chalmers.chessfeud.constants;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
+import android.content.Context;
 import android.os.Environment;
 
 public class PlayerInfo {
@@ -102,24 +103,18 @@ public class PlayerInfo {
 	 * @param password
 	 * @return
 	 */
-	public boolean login(String userName, String password) {
+	public boolean login(String userName, String password, Context c) {
 		boolean suc = DbHandler.getInstance().login(userName, password);
 		System.out.println("AAA"+suc);
 		if (suc) {
 			
 			try {
 				System.out.println("0");
-				BufferedWriter out = new BufferedWriter(new FileWriter(credentials));
-				System.out.println("1");
-				out.write(userName);
-				System.out.println("2");
-				out.newLine();
-				System.out.println("3");
-				out.write(password);
-				System.out.println("4");
+				FileOutputStream out = c.openFileOutput("hej.txt", Context.MODE_PRIVATE);
+				out.write((userName+"\n").getBytes());
+				out.write(password.getBytes());
 				out.close();
 			} catch (IOException e) {
-				e.printStackTrace();
 				return false;
 			}
 		}

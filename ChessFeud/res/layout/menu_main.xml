@@ -44,7 +44,7 @@
     
     <!-- New Game -->
     <Button 
-        android:id="@+id/button5" 
+        android:id="@+id/button_newgame" 
         style="@style/ButtonText" 
         android:layout_marginBottom="10dp" 
         android:layout_marginLeft="5dp" 

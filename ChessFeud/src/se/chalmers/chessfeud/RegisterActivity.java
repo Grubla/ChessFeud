@@ -38,16 +38,19 @@ public class RegisterActivity extends Activity{
 		bRegister.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
 				if(fieldsOk()){
-					boolean userAdded = dbh.addUser(eEmail.getText().toString(), eUsername.getText().toString(), ePassword1.getText().toString());
-					if(userAdded){
-						boolean loggedIn = player.login(eUsername.getText().toString(), ePassword1.getText().toString());
-						if(loggedIn){
-							startActivity(new Intent(RegisterActivity.this, MainActivity.class));							
+					new Thread(){
+						public void run() {
+							boolean userAdded = dbh.addUser(eEmail.getText().toString(), eUsername.getText().toString(), ePassword1.getText().toString());
+							if(userAdded){
+								boolean loggedIn = player.login(eUsername.getText().toString(), ePassword1.getText().toString(), getApplicationContext());
+								if(loggedIn){
+									startActivity(new Intent(RegisterActivity.this, MainActivity.class));							
+								}
+							}else{
+								Log.d("Register", "Couldnt Register");
+							}
 						}
-					}else{
-						Log.d("Register", "Couldnt Register");
-					}
-					
+					}.start();
 				}
 			}
 		});

@@ -1,14 +1,15 @@
 package se.chalmers.chessfeud;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.chessfeud.constants.DbHandler;
 import se.chalmers.chessfeud.constants.Game;
+import se.chalmers.chessfeud.model.ChessModel;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +20,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnClickListener{
-	private Button bPlay, bStats, bSettings, bAbout;
+	private Button bPlay, bStats, bSettings, bAbout, bNewGame;
 	private ImageView iLogo;
 	private ListView finishedGames, startedGames;
  
@@ -35,6 +37,7 @@ public class MainActivity extends Activity implements OnClickListener{
         
         bStats = (Button) findViewById(R.id.button_stats);
         bSettings = (Button) findViewById(R.id.button_settings);
+        bNewGame = (Button) findViewById(R.id.button_newgame);
         
         iLogo = (ImageView) findViewById(R.id.imageView1);
         iLogo.setOnClickListener(this);
@@ -45,22 +48,24 @@ public class MainActivity extends Activity implements OnClickListener{
         
         bStats.setOnClickListener(this);
         bSettings.setOnClickListener(this);
+        bNewGame.setOnClickListener(this);
         
         finishedGames = (ListView) findViewById(R.id.list_finishedGames);
         startedGames = (ListView) findViewById(R.id.list_ongoingGames);
-    	try{
-	        DbHandler db = DbHandler.getInstance();
-	        startedGames.setAdapter(new GameListAdapter(this, R.id.list_ongoingGames, db.getGames()));
-        }catch(Exception e){
-        	
-        }
     }
     
     @Override
     protected void onResume() {
     	super.onResume();
-    	
-    	
+    	new Thread(){
+    		public void run() {
+    	try{
+	        DbHandler db = DbHandler.getInstance();
+	        startedGames.setAdapter(new GameListAdapter(MainActivity.this, R.id.list_ongoingGames, db.getGames()));
+        }catch(Exception e){
+        	
+        }
+    	}}.start();
     	//finishedGames.setListAdapter(this, R.id.list_finishedGames, getList());
 
 	}
@@ -85,6 +90,19 @@ public class MainActivity extends Activity implements OnClickListener{
     	case R.id.imageView1:
     		startActivity(new Intent(this, PlayActivity.class));
     		break;
+    	case R.id.button_newgame:
+    		AlertDialog.Builder prompt = new AlertDialog.Builder(this);
+    		prompt.setTitle("New Game");
+    		prompt.setMessage("Type in the username of the person you want to challange:");
+    		final EditText input = new EditText(this);
+    		prompt.setView(input);
+    		prompt.setPositiveButton("Done", new DialogInterface.OnClickListener(){
+        			public void onClick(DialogInterface dialog, int which) {
+				DbHandler.getInstance().newGame(input.getText().toString(), new ChessModel(0).exportModel());
+			}
+		});
+    		prompt.show();
+    		break;
     	default:
     		Log.d("Default", "Should not get here!");
     	}
@@ -104,7 +122,6 @@ public class MainActivity extends Activity implements OnClickListener{
     		stringList = new ArrayList<String>();
     		for(int i = 0; i < l.size(); i++){
     			gamesList.add(new Game(l.get(i), i));
-    			
     			stringList.add(l.get(i));
     		}
     			

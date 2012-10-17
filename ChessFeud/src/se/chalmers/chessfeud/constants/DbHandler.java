@@ -130,7 +130,7 @@ public class DbHandler {
 	 */
 	public boolean newGame(String target, String board) {
 		pairs.clear();
-		pairs.add(new BasicNameValuePair(TAG, "addUser"));
+		pairs.add(new BasicNameValuePair(TAG, "newGame"));
 		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
 		pairs.add(new BasicNameValuePair("user2", target));
 		pairs.add(new BasicNameValuePair("board", board));
