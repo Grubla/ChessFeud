@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.SocketException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -259,15 +260,12 @@ public class DbHandler {
 			sc.close();
 			return b;
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 			return false;
 		} catch (ClientProtocolException e) {
-			e.printStackTrace();
 			return false;
 		} catch (IOException e) {
-			e.printStackTrace();
 			return false;
-		}
+		} 
 	}
 
 	/**
