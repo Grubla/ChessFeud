@@ -181,16 +181,16 @@ public class DbHandler extends HttpServlet {
 
 	private boolean authenticate(String userName, String password)
 			throws SQLException {
-
-		rs = s.executeQuery("select password from auth where userName='"
-				+ userName + "'");
-		rs.first();
-		if (rs.getString(0).equals(password)) {
-			return true;
+		if(userExists(userName)) {
+			rs = s.executeQuery("select password from auth where userName='"
+					+ userName + "'");
+			rs.first();
+			System.out.println(rs.getString(1));
+			if (rs.getString(1).equals(password)) {
+				return true;
+			}			 			
 		}
-
 		return false;
-
 	}
 
 	/**
@@ -203,7 +203,11 @@ public class DbHandler extends HttpServlet {
 	private boolean userExists(String userName) throws SQLException {
 		rs = s.executeQuery("select count(*) from auth where userName='"
 				+ userName + "'");
-		return rs.first();
+		rs.first();
+		if(rs.getInt(1)>0) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -271,9 +275,9 @@ public class DbHandler extends HttpServlet {
 	 */
 	private boolean addUser(String email, String userName, String password)
 			throws SQLException {
-		int i = s.executeUpdate("insert into auth(email, username, password) values('"
-				+ email + "','" + userName + "','" + password + "')");
-		if(userExists(userName)) {
+		if(!userExists(userName)) {
+			int i = s.executeUpdate("insert into auth(email, username, password) values('"
+					+ email + "','" + userName + "','" + password + "')");
 			return true;
 		}
 		return false;
