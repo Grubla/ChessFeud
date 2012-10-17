@@ -245,7 +245,8 @@ public class Rules {
 			}
 		} else { // ID == PAWN
 			int dy = piece.getTeam() == C.TEAM_WHITE ? -1 : 1;
-			int startY = piece.getTeam() == C.TEAM_WHITE ? 6 : 1;
+			int startY = piece.getTeam() == C.TEAM_WHITE ? C.STARTING_POSITION_BLACK_PAWN
+					: 1;
 			Position tryPos = new Position(selected.getX(), selected.getY()
 					+ dy);
 			ChessBoard tmpBoard = new ChessBoard(cb, selected, tryPos);
@@ -290,11 +291,12 @@ public class Rules {
 
 	/* Returns true if the position is inbounds */
 	private static boolean inBounds(int x, int y) {
-		return 0 <= x && x < 8 && 0 <= y && y < 8;
+		return 0 <= x && x < C.BOARD_LENGTH && 0 <= y && y < C.BOARD_LENGTH;
 	}
 
 	/* Returns true if the position is inbounds */
 	private static boolean inBounds(Position p) {
-		return 0 <= p.getX() && p.getX() < 8 && 0 <= p.getY() && p.getY() < 8;
+		return 0 <= p.getX() && p.getX() < C.BOARD_LENGTH && 0 <= p.getY()
+				&& p.getY() < C.BOARD_LENGTH;
 	}
 }

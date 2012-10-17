@@ -1,5 +1,7 @@
 package se.chalmers.chessfeud.model.utils;
 
+import se.chalmers.chessfeud.constants.C;
+
 /**
  * A class to keep track of the position.
  * 
@@ -49,8 +51,8 @@ public class Position {
 	 * @return true if the position is inside the board, otherwise false.
 	 */
 	public boolean inBounds() {
-		return (0 <= this.getX() && this.getX() <= 7 && 0 <= this.getY() && this
-				.getY() <= 7);
+		return (0 <= this.getX() && this.getX() < C.BOARD_LENGTH
+				&& 0 <= this.getY() && this.getY() <= C.BOARD_LENGTH);
 	}
 
 	/**
@@ -63,14 +65,15 @@ public class Position {
 	 * @return true if the position is inside the board, otherwise false.
 	 */
 	public static boolean inBounds(int x, int y) {
-		return (0 <= x && x <= 7 && 0 <= y && y <= 7);
+		return (0 <= x && x < C.BOARD_LENGTH && 0 <= y && y < C.BOARD_LENGTH);
 	}
 
 	@Override
 	public int hashCode() {
+		int prime = 31;
 		int result = 1;
-		result = 31 * result + x;
-		result = 47 * result + y;
+		result = prime * result + x;
+		result = prime * result + y;
 		return result;
 	}
 

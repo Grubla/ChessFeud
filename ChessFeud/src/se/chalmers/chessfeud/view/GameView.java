@@ -50,8 +50,8 @@ public class GameView extends View implements OnTouchListener {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-		chessSquareHeight = this.getHeight() / 8;
-		chessSquareWidth = this.getWidth() / 8;
+		chessSquareHeight = this.getHeight() / C.BOARD_LENGTH;
+		chessSquareWidth = this.getWidth() / C.BOARD_LENGTH;
 		// White square main
 		Paint wMain = new Paint();
 		wMain.setColor(C.SQUARE_WHITE);
@@ -75,8 +75,8 @@ public class GameView extends View implements OnTouchListener {
 		List<Position> possibleSquares = gm.getPossibleMoves();
 		// Draw every square
 		boolean paintWhite = true;
-		for (int y = 0; y < 8; y++) {
-			for (int x = 0; x < 8; x++) {
+		for (int y = 0; y < C.BOARD_LENGTH; y++) {
+			for (int x = 0; x < C.BOARD_LENGTH; x++) {
 				Rect r = new Rect(x * chessSquareWidth, y * chessSquareHeight,
 						(x + 1) * chessSquareWidth, (y + 1) * chessSquareWidth);
 

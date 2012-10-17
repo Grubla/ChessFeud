@@ -37,8 +37,8 @@ public class Knight extends Piece {
 	@Override
 	public List<List<Position>> theoreticalMoves(Position p) {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
-		int[] x = { -2, -1, 1, 2, 2, 1, -1, -2 };
-		int[] y = { 1, 2, 2, 1, -1, -2, -2, -1 };
+		int[] x = C.KNIGHT_X;
+		int[] y = C.KNIGHT_Y;
 		for (int i = 0; i < x.length; i++) {
 			List<Position> moveList = new ArrayList<Position>();
 			moveList.add(new Position(p.getX() + x[i], p.getY() + y[i]));

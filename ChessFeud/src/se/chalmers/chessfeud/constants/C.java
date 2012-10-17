@@ -26,6 +26,10 @@ public class C {
 	public static final int STATE_DRAW = 24;
 
 	public static final int BOARD_LENGTH = 8;
+	public static final int STARTING_POSITION_BLACK_PAWN = 6;
+	
+	public static final int[] KNIGHT_X = { -2, -1, 1, 2, 2, 1, -1, -2 };
+	public static final int[] KNIGHT_Y = { 1, 2, 2, 1, -1, -2, -2, -1 };
 
 	// An empty private constructor to hide utility class constructor
 	private C() {

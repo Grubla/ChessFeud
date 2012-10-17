@@ -67,8 +67,9 @@ public class ChessBoard {
 		board = new Piece[C.BOARD_LENGTH][C.BOARD_LENGTH];
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
-				int team = Integer.parseInt(pieces[8 * x + y]) % 2;
-				int id = Integer.parseInt(pieces[8 * x + y]) - team;
+				int team = Integer.parseInt(pieces[C.BOARD_LENGTH * x + y]) % 2;
+				int id = Integer.parseInt(pieces[C.BOARD_LENGTH * x + y])
+						- team;
 				board[x][y] = pf[team].createPiece(id);
 			}
 		}
