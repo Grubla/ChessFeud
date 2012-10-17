@@ -30,7 +30,7 @@ public class Bishop extends Piece {
 	 * @param p
 	 *            the bishops current position.
 	 * @return posList A list that contains Lists of possible positions in the
-	 *         diffrent directions.
+	 *         different directions.
 	 * 
 	 */
 	@Override
@@ -38,11 +38,11 @@ public class Bishop extends Piece {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
 		for (int x = -1; x < 2; x++) {
 			for (int y = -1; y < 2; y++) {
-				if (x != 0 && y != 0) {
+				if (inBounds(x, y)) {
 					List<Position> moveList = moveDirection(x, y, p);
-					if (moveList.size() != 0){
+					if (moveList.size() != 0) {
 						posList.add(moveList);
-					}	
+					}
 				}
 			}
 		}
@@ -69,6 +69,11 @@ public class Bishop extends Piece {
 			y += dy;
 		}
 		return moveList;
+	}
+
+	/* Checks so the Bishop is insite the game board */
+	private boolean inBounds(int x, int y) {
+		return x != 0 && y != 0;
 	}
 
 	@Override

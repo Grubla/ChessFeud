@@ -9,7 +9,7 @@ import android.test.AndroidTestCase;
 
 public class KingTest extends AndroidTestCase {
 
-	public void testBishop() {
+	public void testKing() {
 		Piece king = new King(0);
 		Position[] pos = { new Position(7, 7), new Position(3, 3) };
 		for (int i = 0; i < pos.length; i++) {

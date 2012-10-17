@@ -61,16 +61,15 @@ public class Pawn extends Piece {
 	private List<Position> moveDirection(int px, int py, int team) {
 		List<Position> moveList = new ArrayList<Position>();
 		int[] x = { -1, 0, 1, 0 };
-		int[] whiteY = { -1, -1, -1, -2 };
-		int[] blackY = { 1, 1, 1, 2 };
+		int[] y = { 1, 1, 1, 2 };
 		List<Integer> xIntList = new ArrayList<Integer>();
 		List<Integer> yIntList = new ArrayList<Integer>();
 		for (int i = 0; i < x.length; i++) {
 			xIntList.add(x[i]);
 			if (team == 0) {
-				yIntList.add(whiteY[i]);
+				yIntList.add(y[i] * -1);
 			} else {
-				yIntList.add(blackY[i]);
+				yIntList.add(y[i]);
 			}
 		}
 		if (!hasMoved) {

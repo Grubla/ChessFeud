@@ -38,7 +38,7 @@ public class Queen extends Piece {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
 		for (int x = -1; x < 2; x++) {
 			for (int y = -1; y < 2; y++) {
-				if (!(x * y == x + y)) {
+				if (!inBounds(x, y)) {
 					List<Position> moveList = moveDirection(x, y, p);
 					if (moveList.size() != 0) {
 						posList.add(moveList);
@@ -70,6 +70,11 @@ public class Queen extends Piece {
 			y += dy;
 		}
 		return moveList;
+	}
+
+	/* Checks so the Queen is insidwe the game board */
+	private boolean inBounds(int x, int y) {
+		return x * y == x + y;
 	}
 
 	@Override

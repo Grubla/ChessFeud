@@ -39,7 +39,7 @@ public class Rook extends Piece {
 		List<List<Position>> posList = new ArrayList<List<Position>>();
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
-				if (x != y && x * y == 0) {
+				if (inBounds(x, y)) {
 					List<Position> moveList = moveDirection(x, y, p);
 					if (moveList.size() != 0) {
 						posList.add(moveList);
@@ -70,6 +70,11 @@ public class Rook extends Piece {
 			y += dy;
 		}
 		return moveList;
+	}
+
+	/* Checks so the Rok is inside the game board */
+	private boolean inBounds(int x, int y) {
+		return x != y && x * y == 0;
 	}
 
 	@Override

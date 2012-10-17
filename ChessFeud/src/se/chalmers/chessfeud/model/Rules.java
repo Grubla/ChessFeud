@@ -170,7 +170,7 @@ public class Rules {
 				for (int y = 0; y < cb.getHeight(); y++) {
 					if (cb.getPieceAt(x, y) != null
 							&& cb.getPieceAt(x, y).getTeam() == nextTurn) {
-						if (getPossibleMoves(cb, new Position(x, y)).size() > 0) {
+						if (isPossibleToMove(cb, x, y)) {
 							return false;
 						}
 					}
@@ -196,8 +196,9 @@ public class Rules {
 				for (int y = 0; y < cb.getHeight(); y++) {
 					if (cb.getPieceAt(x, y) != null
 							&& cb.getPieceAt(x, y).getTeam() == nextTurn) {
-						if (getPossibleMoves(cb, new Position(x, y)).size() > 0)
+						if (isPossibleToMove(cb, x, y)) {
 							return false;
+						}
 					}
 				}
 			}
@@ -230,8 +231,9 @@ public class Rules {
 						if (cb.isEmpty(p)) {
 							pm.add(p);
 						} else {
-							if (team != cb.getPieceAt(p).getTeam())
+							if (team != cb.getPieceAt(p).getTeam()) {
 								pm.add(p);
+							}
 							canMove = false;
 						}
 					} else {
@@ -279,6 +281,11 @@ public class Rules {
 			}
 		}
 		return pm;
+	}
+
+	/* Returns true if any piece on the board can moce for the currrent team */
+	private static boolean isPossibleToMove(ChessBoard cb, int x, int y) {
+		return getPossibleMoves(cb, new Position(x, y)).size() > 0;
 	}
 
 	/* Returns true if the position is inbounds */
