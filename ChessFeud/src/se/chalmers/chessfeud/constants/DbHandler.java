@@ -52,7 +52,7 @@ public class DbHandler {
 	 */
 	private void init() {
 		client = new DefaultHttpClient();
-		httpPost = new HttpPost("http://46.239.99.71:8080/ChessFeudServer/DbHandler/*");
+		httpPost = new HttpPost("http://80.216.140.62:8080/ChessFeudServer/DbHandler/*");
 		is = null;
 		pairs = new ArrayList<BasicNameValuePair>();
 		player = PlayerInfo.getInstance();
