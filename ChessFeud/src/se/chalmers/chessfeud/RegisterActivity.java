@@ -37,7 +37,6 @@ public class RegisterActivity extends Activity{
 		
 		bRegister.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
-				System.out.println("HEJEJEJ");
 				if(fieldsOk()){
 					boolean userAdded = dbh.addUser(eEmail.getText().toString(), eUsername.getText().toString(), ePassword1.getText().toString());
 					if(userAdded){
@@ -56,8 +55,6 @@ public class RegisterActivity extends Activity{
 		if(dbh.userExists(eUsername.getText().toString())){
 			Log.d("UserExists", eUsername.getText().toString());
 		}
-		System.out.println("hej");
-		Log.d(ePassword1.getText().toString(), ePassword2.getText().toString());
 		if(!ePassword1.getText().toString().equals(ePassword2.getText().toString())){
 			//Print the passwords doesn't match
 			return false;
