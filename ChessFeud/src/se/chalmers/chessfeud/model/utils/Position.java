@@ -70,10 +70,9 @@ public class Position {
 
 	@Override
 	public int hashCode() {
-		int prime = 31;
 		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
+		result = C.PRIME * result + x;
+		result = C.PRIME * result + y;
 		return result;
 	}
 
