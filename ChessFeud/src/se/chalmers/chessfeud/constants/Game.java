@@ -1,10 +1,10 @@
 package se.chalmers.chessfeud.constants;
 
-import java.beans.PropertyChangeListener;
-
 /**
  * A class representing an ongoing game.
- * @author twister
+ * Will hold all the information needed by both the model and the list objects.
+ * @author Simon Almgren
+ * @modifiedby Henrik Alburg
  *
  */
 public class Game {
@@ -22,8 +22,8 @@ public class Game {
 	private String timestamp;
 	/**
 	 * Sets all the values depending on what the string says.
-	 * @param info a sting containg all the info for the game. should be on the form 
-	 * whiteplayer/blackplayer/gameboard/turns/timestamp
+	 * @param info a sting containing all the info for the game. should be on the form 
+	 * "whiteplayer/blackplayer/gameboard/turns/timestamp"
 	 */
 	public Game(String info, int position) {
 		String[] s = info.split("/");
@@ -37,21 +37,21 @@ public class Game {
 	}
 	/**
 	 * Returns a string with the name of the player playing white.
-	 * @return
+	 * @return the username of the white player
 	 */
 	public String getWhitePlayer() {
 		return whitePlayer;
 	}
 	/**
 	 * Returns a string with the name of the player playing black.
-	 * @return
+	 * @return the username of the black player
 	 */
 	public String getBlackPlayer() {
 		return blackPlayer;
 	}
 	/**
 	 * Returns a string with the name of the player who's current turn it is.
-	 * @return
+	 * @return the username of the player whoms turn it is
 	 */
 	public String getCurrentPlayer() {
 		if(turns%2 == 0) {
@@ -62,14 +62,14 @@ public class Game {
 	}
 	/**
 	 * A getter for the user name of the current client.
-	 * @return a string containing the username.
+	 * @return a string containing the username for this client
 	 */
 	public String thisPlayer(){
 		return player.getUserName();
 	}
 	/**
 	 * Returns the color (C.TEAM_WHITE or C.TEAM_BLACK) 
-	 * of this client
+	 * of this client.
 	 * @return an int containing the team
 	 */
 	public int thisPlayersTeam(){
@@ -104,8 +104,8 @@ public class Game {
 		return gameBoard;
 	}
 	/**
-	 * Returns a timestamp on when the newest move was made.
-	 * @return the timestamp
+	 * Returns a timestamp on when the latest move was made.
+	 * @return the timestamp of the latest move "2012-10-20 13:37"
 	 */
 	public String getTimestamp() {
 		return timestamp;

@@ -11,6 +11,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * This is the controller activity for a view to register. It uses the
+ * PlayerInfo class and DbHandler to create users.
+ * 
+ * @author Henrik Alburg
+ * 
+ */
 public class RegisterActivity extends Activity {
 	private Button bRegister;
 	private EditText eUsername;
@@ -37,20 +44,11 @@ public class RegisterActivity extends Activity {
 
 		bRegister.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-
 				new Thread() {
 					public void run() {
 						if (fieldsOk()) {
-							boolean userAdded = dbh.addUser(eEmail.getText()
-									.toString(),
-									eUsername.getText().toString(), ePassword1
-											.getText().toString());
-							if (userAdded) {
-								boolean loggedIn = player.login(eUsername
-										.getText().toString(), ePassword1
-										.getText().toString(),
-										getApplicationContext());
-								if (loggedIn) {
+							if (addUser()) {
+								if (login()) {
 									startActivity(new Intent(
 											RegisterActivity.this,
 											MainActivity.class));
@@ -66,13 +64,30 @@ public class RegisterActivity extends Activity {
 		});
 	}
 
+	/* Returns true if the user was successfully added */
+	private boolean addUser() {
+		return dbh.addUser(eEmail.getText().toString(), eUsername.getText()
+				.toString(), ePassword1.getText().toString());
+	}
+
+	/* Returns true if able to log in */
+	private boolean login() {
+		return player.login(eUsername.getText().toString(), ePassword1
+				.getText().toString(), getApplicationContext());
+	}
+
+	/* Returns true if the username and passwords are ok */
 	private boolean fieldsOk() {
 		if (dbh.userExists(eUsername.getText().toString())) {
+			Log.d("Login", "User already exists");
 		}
 		if (!ePassword1.getText().toString()
 				.equals(ePassword2.getText().toString())) {
-			// Print the passwords doesn't match
+			Log.d("Login", "Passwords doesnt match");
 			return false;
+		}
+		if (ePassword1.getText().toString().length() < 4) {
+			Log.d("Login", "Password too short");
 		}
 		return true;
 	}

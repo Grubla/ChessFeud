@@ -17,7 +17,7 @@ import se.chalmers.chessfeud.model.utils.Position;
 /**
  * A class for managing the Rules in a chessgame.
  * 
- * @author grubla
+ * @author Henrik Alburg
  * 
  *         Copyright � 2012 Henrik Alburg, Arvid Karlsson
  * 
@@ -27,7 +27,7 @@ public class Rules {
 	private static final int[] HORSE_X = { -2, -1, 1, 2, 2, 1, -1, -2 };
 	private static final int[] HORSE_Y = { 1, 2, 2, 1, -1, -2, -2, -1 };
 
-	/* The start board for a regular chessgame */
+	/* The start board for a regular chess game */
 	private static final Piece[][] START_BOARD = {
 			{ new Rook(C.TEAM_BLACK), new Knight(C.TEAM_BLACK),
 					new Bishop(C.TEAM_BLACK), new Queen(C.TEAM_BLACK),
@@ -56,13 +56,13 @@ public class Rules {
 
 	/**
 	 * Returns the piece at the given position when a game of chess is
-	 * initiated.
+	 * initiated. The black Rook is on (0,0) The white king is on (4,7)
 	 * 
 	 * @param x
-	 *            , 0 = a 1 = b etc..
+	 *            , the x position of the piece.
 	 * @param y
-	 *            , 0 = 0 1 = 1 etc..
-	 * @return a new Piece-object, belonging to the positon.
+	 *            , the y position of the piece
+	 * @return a new Piece-object, at the start position.
 	 */
 	public static Piece startBoard(int x, int y) {
 		return START_BOARD[y][x];
@@ -72,10 +72,11 @@ public class Rules {
 	 * Returns true if the board is in an state that makes the game over.
 	 * 
 	 * @param cb
-	 *            , the current chessboard to be checked
+	 *            , the current chess board to be checked
 	 * @return true if game over.
 	 */
 	public boolean gameOver(ChessBoard cb) {
+		// To be fixed
 		return false;
 	}
 
@@ -85,8 +86,8 @@ public class Rules {
 	 * @param cb
 	 *            , the board to be checked
 	 * @param team
-	 *            , the currentPlayer
-	 * @return whether it is check or not
+	 *            , the currentPlayer (C.TEAM_WHITE)
+	 * @return true if it is check
 	 */
 	public static boolean isCheck(ChessBoard cb, int team) {
 		for (int x = 0; x < cb.getWidth(); x++) {
@@ -94,58 +95,7 @@ public class Rules {
 				Piece kingPiece = cb.getPieceAt(x, y);
 				if (kingPiece.getId() == C.PIECE_KING
 						&& kingPiece.getTeam() == team) {
-					for (int dx = -1; dx <= 1; dx++) {
-						for (int dy = -1; dy <= 1; dy++) {
-							if (inBounds(x + dx, y + dy)
-									&& !(dx == 0 && dy == 0)) {
-								int dir = 1;
-								while (inBounds(x + dx * dir, y + dy * dir)
-										&& cb.isEmpty(new Position(
-												x + dx * dir, y + dy * dir))) {
-									dir++;
-								}
-								if (inBounds(x + dx * dir, y + dy * dir)) {
-									Piece pi = cb.getPieceAt(x + dx * dir, y
-											+ dy * dir);
-									if (Math.abs(dx * dy) == 0
-											&& (pi.getId() == C.PIECE_QUEEN || pi
-													.getId() == C.PIECE_ROOK)
-											&& pi.getTeam() != team) {
-										return true;
-									}
-									if (Math.abs(dx * dy) == 1
-											&& (pi.getId() == C.PIECE_QUEEN || pi
-													.getId() == C.PIECE_BISHOP)
-											&& pi.getTeam() != team) {
-										return true;
-									}
-									if (dir == 1 && pi.getId() == C.PIECE_KING
-											&& pi.getTeam() != team) {
-										return true;
-									}
-								}
-							}
-						}
-					}
-					for (int i = 0; i < HORSE_X.length; i++) {
-						int dx = HORSE_X[i];
-						int dy = HORSE_Y[i];
-						if (inBounds(x + dx, y + dy)
-								&& cb.getPieceAt(x + dx, y + dy).getId() == C.PIECE_KNIGHT
-								&& cb.getPieceAt(x + dx, y + dy).getTeam() != team) {
-							return true;
-						}
-					}
-					// Check for pawns aswell
-					int forward = team == C.TEAM_WHITE ? -1 : 1;
-					if (inBounds(x + 1, y + forward)
-							&& cb.getPieceAt(x + 1, y + forward).getId() == C.PIECE_PAWN
-							&& cb.getPieceAt(x + 1, y + forward).getTeam() != team) {
-						return true;
-					}
-					if (inBounds(x - 1, y + forward)
-							&& cb.getPieceAt(x - 1, y + forward).getId() == C.PIECE_PAWN
-							&& cb.getPieceAt(x - 1, y + forward).getTeam() != team) {
+					if (isCheck(cb, team, x, y)) {
 						return true;
 					}
 				}
@@ -155,20 +105,93 @@ public class Rules {
 
 	}
 
+	/* Checks if the given king is check */
+	private static boolean isCheck(ChessBoard cb, int team, int kingX, int kingY) {
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dy = -1; dy <= 1; dy++) {
+				if (inBounds(kingX + dx, kingY + dy) && !(dx == 0 && dy == 0)) {
+					checkDirection(cb, team, kingX, kingY, dx, dy);
+				}
+			}
+		}
+		if (doHorsesCheck(cb, team, kingX, kingY)) {
+			return true;
+		}
+		if (doPawnsCheck(cb, team, kingX, kingY)) {
+			return true;
+		}
+		return false;
+	}
+	
+	/* Checks if it is check in different directions from the king */
+	private static boolean checkDirection(ChessBoard cb, int team, int kingX,
+			int kingY, int dx, int dy) {
+		int dir = 1;
+		while (inBounds(kingX + dx * dir, kingY + dy * dir)
+				&& cb.isEmpty(new Position(kingX + dx * dir, kingY + dy * dir))) {
+			dir++;
+		}
+		if (inBounds(kingX + dx * dir, kingY + dy * dir)) {
+			Piece pi = cb.getPieceAt(kingX + dx * dir, kingY + dy * dir);
+			if (Math.abs(dx * dy) == 0
+					&& (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_ROOK)
+					&& pi.getTeam() != team) {
+				return true;
+			}
+			if (Math.abs(dx * dy) == 1
+					&& (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_BISHOP)
+					&& pi.getTeam() != team) {
+				return true;
+			}
+			if (dir == 1 && pi.getId() == C.PIECE_KING && pi.getTeam() != team) {
+				return true;
+			}
+		}
+		return false;
+	}
+	/* Checks if a horse is checking the king */
+	private static boolean doHorsesCheck(ChessBoard cb, int team, int kingX,
+			int kingY) {
+		for (int i = 0; i < HORSE_X.length; i++) {
+			int dx = HORSE_X[i];
+			int dy = HORSE_Y[i];
+			if (inBounds(kingX + dx, kingY + dy)
+					&& cb.getPieceAt(kingX + dx, kingY + dy).getId() == C.PIECE_KNIGHT
+					&& cb.getPieceAt(kingX + dx, kingY + dy).getTeam() != team) {
+				return true;
+			}
+		}
+		return false;
+	}
+	/* Check if any pawns checks the king */
+	private static boolean doPawnsCheck(ChessBoard cb, int team, int kingX,
+			int kingY) {
+		int forward = team == C.TEAM_WHITE ? -1 : 1;
+		if (inBounds(kingX + 1, kingY + forward)
+				&& cb.getPieceAt(kingX + 1, kingY + forward).getId() == C.PIECE_PAWN
+				&& cb.getPieceAt(kingX + 1, kingY + forward).getTeam() != team) {
+			return true;
+		}
+		if (inBounds(kingX - 1, kingY + forward)
+				&& cb.getPieceAt(kingX - 1, kingY + forward).getId() == C.PIECE_PAWN
+				&& cb.getPieceAt(kingX - 1, kingY + forward).getTeam() != team) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Returns true if the game is in a draw state.
 	 * 
-	 * @param cb
-	 *            , the board to be checked.
-	 * @param nextTurn
-	 *            , who is to move next time
+	 * @param cb, the board to be checked.
+	 * @param nextTurn, who is to move next time
 	 * @return true if the game is in a draw state.
 	 */
 	public static boolean isDraw(ChessBoard cb, int nextTurn) {
 		if (!isCheck(cb, nextTurn)) {
 			for (int x = 0; x < cb.getWidth(); x++) {
 				for (int y = 0; y < cb.getHeight(); y++) {
-					if (cb.getPieceAt(x, y) != null
+					if (!cb.isEmpty(new Position(x, y))
 							&& cb.getPieceAt(x, y).getTeam() == nextTurn) {
 						if (isPossibleToMove(cb, x, y)) {
 							return false;
@@ -184,10 +207,8 @@ public class Rules {
 	/**
 	 * Returns true if the game is over and someone has won.
 	 * 
-	 * @param cb
-	 *            , the board to be checked.
-	 * @param nextTurn
-	 *            , the player to move next time
+	 * @param cb, the board to be checked.
+	 * @param nextTurn, the player to move next time
 	 * @return true if it is check mate.
 	 */
 	public static boolean isCheckMate(ChessBoard cb, int nextTurn) {
@@ -208,12 +229,11 @@ public class Rules {
 	}
 
 	/**
-	 * Returns a list of possible moves for a certain piece.
+	 * Returns a list of possible moves for a certain piece. This will return a
+	 * list of position of the possible moves.
 	 * 
-	 * @param cb
-	 *            , the board it is in.
-	 * @param selected
-	 *            , the selected position of the piece
+	 * @param cb, the board it is in.
+	 * @param selected, the selected position of the piece
 	 * @return a list of positions which it can go to.
 	 */
 	public static List<Position> getPossibleMoves(ChessBoard cb,

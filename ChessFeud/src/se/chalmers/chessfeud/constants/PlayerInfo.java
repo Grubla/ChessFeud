@@ -1,16 +1,21 @@
 package se.chalmers.chessfeud.constants;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import android.content.Context;
 import android.os.Environment;
-
+/**
+ * This is a class that hold all the information about the client user.
+ * It saves data to the internal memory for automatic login.
+ * It also uses the database to see if the login is valid.
+ * @author Simon Almgren
+ * @modifiedby Henrik Alburg
+ *
+ */
 public class PlayerInfo {
 
 	private static PlayerInfo instance = null;
@@ -31,10 +36,9 @@ public class PlayerInfo {
 	}
 
 	/**
-	 * If there isnt an instance, i creates an instance and initiates it, else
-	 * it just returns the instance.
-	 * 
-	 * @return
+	 * If there isnt an instance, it creates an instance and initiates it.
+	 * else it just returns the instance.
+	 * @return the player singleton
 	 */
 	public static PlayerInfo getInstance() {
 		if (instance == null) {
@@ -47,8 +51,7 @@ public class PlayerInfo {
 
 	/**
 	 * Returns the username of the currently logged in player.
-	 * 
-	 * @return username
+	 * @return username the name of the user currently logged in
 	 */
 	public String getUserName() {
 		loadInfoFromFile();
@@ -57,8 +60,7 @@ public class PlayerInfo {
 
 	/**
 	 * Returns the encrypted password of the currently logged in player.
-	 * 
-	 * @return
+	 * @return the password for the logged in user.
 	 */
 	public String getPassword() {
 		loadInfoFromFile();
@@ -79,16 +81,12 @@ public class PlayerInfo {
 			br.close();
 		} catch (IOException e) {
 			loggedIn = false;
-		} catch (NullPointerException e) {
-			loggedIn = false;
-		}
-
+		} 
 	}
 
 	/**
 	 * Returns if the user is currently logged in.
-	 * 
-	 * @return
+	 * @return true if the user is loggedIn
 	 */
 	public boolean isLoggedIn() {
 		return loggedIn;
@@ -98,18 +96,15 @@ public class PlayerInfo {
 	 * This method checks the username and password with the database and checks
 	 * if you should be able to log in, then writes a textfile with username and
 	 * password.
-	 * 
-	 * @param userName
-	 * @param password
-	 * @return
+	 * @param userName, the name of the user
+	 * @param password, the wanted password by the user
+	 * @return true if able to login
 	 */
 	public boolean login(String userName, String password, Context c) {
 		boolean suc = DbHandler.getInstance().login(userName, password);
-		System.out.println("AAA"+suc);
 		if (suc) {
 			
 			try {
-				System.out.println("0");
 				FileOutputStream out = c.openFileOutput("hej.txt", Context.MODE_PRIVATE);
 				out.write((userName+"\n").getBytes());
 				out.write(password.getBytes());
