@@ -122,7 +122,7 @@ public class Rules {
 		}
 		return false;
 	}
-	
+
 	/* Checks if it is check in different directions from the king */
 	private static boolean checkDirection(ChessBoard cb, int team, int kingX,
 			int kingY, int dx, int dy) {
@@ -149,6 +149,7 @@ public class Rules {
 		}
 		return false;
 	}
+
 	/* Checks if a horse is checking the king */
 	private static boolean doHorsesCheck(ChessBoard cb, int team, int kingX,
 			int kingY) {
@@ -163,6 +164,7 @@ public class Rules {
 		}
 		return false;
 	}
+
 	/* Check if any pawns checks the king */
 	private static boolean doPawnsCheck(ChessBoard cb, int team, int kingX,
 			int kingY) {
@@ -183,23 +185,15 @@ public class Rules {
 	/**
 	 * Returns true if the game is in a draw state.
 	 * 
-	 * @param cb, the board to be checked.
-	 * @param nextTurn, who is to move next time
+	 * @param cb
+	 *            , the board to be checked.
+	 * @param nextTurn
+	 *            , who is to move next time
 	 * @return true if the game is in a draw state.
 	 */
 	public static boolean isDraw(ChessBoard cb, int nextTurn) {
 		if (!isCheck(cb, nextTurn)) {
-			for (int x = 0; x < cb.getWidth(); x++) {
-				for (int y = 0; y < cb.getHeight(); y++) {
-					if (!cb.isEmpty(new Position(x, y))
-							&& cb.getPieceAt(x, y).getTeam() == nextTurn) {
-						if (isPossibleToMove(cb, x, y)) {
-							return false;
-						}
-					}
-				}
-			}
-			return true;
+			return noPiecesMovable(cb, nextTurn);
 		}
 		return false;
 	}
@@ -207,101 +201,135 @@ public class Rules {
 	/**
 	 * Returns true if the game is over and someone has won.
 	 * 
-	 * @param cb, the board to be checked.
-	 * @param nextTurn, the player to move next time
+	 * @param cb
+	 *            , the board to be checked.
+	 * @param nextTurn
+	 *            , the player to move next time
 	 * @return true if it is check mate.
 	 */
 	public static boolean isCheckMate(ChessBoard cb, int nextTurn) {
 		if (isCheck(cb, nextTurn)) {
-			for (int x = 0; x < cb.getWidth(); x++) {
-				for (int y = 0; y < cb.getHeight(); y++) {
-					if (cb.getPieceAt(x, y) != null
-							&& cb.getPieceAt(x, y).getTeam() == nextTurn) {
-						if (isPossibleToMove(cb, x, y)) {
-							return false;
-						}
+			return noPiecesMovable(cb, nextTurn);
+		}
+		return false;
+	}
+
+	/* Returns true if all the pieces are stuck for the next turn player */
+	private static boolean noPiecesMovable(ChessBoard cb, int nextTurn) {
+		for (int x = 0; x < cb.getWidth(); x++) {
+			for (int y = 0; y < cb.getHeight(); y++) {
+				if (cb.getPieceAt(x, y).getTeam() == nextTurn) {
+					if (isPossibleToMove(cb, x, y)) {
+						return false;
 					}
 				}
 			}
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 	/**
 	 * Returns a list of possible moves for a certain piece. This will return a
 	 * list of position of the possible moves.
 	 * 
-	 * @param cb, the board it is in.
-	 * @param selected, the selected position of the piece
+	 * @param cb
+	 *            The current gameboard
+	 * @param selected
+	 *            the selected position of the piece
 	 * @return a list of positions which it can go to.
 	 */
 	public static List<Position> getPossibleMoves(ChessBoard cb,
 			Position selected) {
 		List<Position> pm = new LinkedList<Position>();
-		Piece piece = cb.getPieceAt(selected);
-		List<List<Position>> tempMoves = piece.theoreticalMoves(selected);
-		int team = cb.getPieceAt(selected).getTeam();
-		if (piece.getId() != C.PIECE_PAWN) {
-			for (List<Position> l : tempMoves) {
-				boolean canMove = true;
-				for (Position p : l) {
-					ChessBoard tmpBoard = new ChessBoard(cb, selected, p);
-					if (canMove && !Rules.isCheck(tmpBoard, team)) {
-						if (cb.isEmpty(p)) {
-							pm.add(p);
-						} else {
-							if (team != cb.getPieceAt(p).getTeam()) {
-								pm.add(p);
-							}
-							canMove = false;
-						}
-					} else {
-						if (!cb.isEmpty(p)) {
-							canMove = false;
-						}
-					}
-				}
-			}
+		if (cb.getPieceAt(selected).getId() != C.PIECE_PAWN) {
+			List<List<Position>> tempMoves = cb.getPieceAt(selected)
+					.theoreticalMoves(selected);
+			pm = regularMovement(cb, selected, tempMoves);
 		} else { // ID == PAWN
-			int dy = piece.getTeam() == C.TEAM_WHITE ? -1 : 1;
-			int startY = piece.getTeam() == C.TEAM_WHITE ? C.STARTING_POSITION_BLACK_PAWN
-					: 1;
-			Position tryPos = new Position(selected.getX(), selected.getY()
-					+ dy);
-			ChessBoard tmpBoard = new ChessBoard(cb, selected, tryPos);
-			if (inBounds(tryPos) && cb.isEmpty(tryPos)
-					&& !isCheck(tmpBoard, team)) {
-				pm.add(tryPos);
-				tryPos = new Position(selected.getX(), selected.getY() + 2 * dy);
-				tmpBoard = new ChessBoard(cb, selected, tryPos);
-				if (inBounds(tryPos) && cb.isEmpty(tryPos)
-						&& selected.getY() == startY
-						&& !isCheck(tmpBoard, team)) {
-					pm.add(tryPos);
-				}
-			}
+			int dy = cb.getPieceAt(selected).getTeam() == C.TEAM_WHITE ? -1 : 1;
+			pm = pawnMovementForward(cb, selected, dy);
 			// Check if there is pieces to take diagonally forward
-			tryPos = new Position(selected.getX() - 1, selected.getY() + dy);
-			if (inBounds(tryPos)) {
-				tmpBoard = new ChessBoard(cb, selected, tryPos);
-				if (!cb.isEmpty(tryPos)
-						&& cb.getPieceAt(tryPos).getTeam() != piece.getTeam()
-						&& !isCheck(tmpBoard, team)) {
-					pm.add(tryPos);
-				}
+			Position tryPos = new Position(selected.getX() - 1, selected.getY()
+					+ dy);
+			if (pawnMovableTo(cb, selected, tryPos)) {
+				pm.add(tryPos);
 			}
 			tryPos = new Position(selected.getX() + 1, selected.getY() + dy);
-			if (inBounds(tryPos)) {
-				tmpBoard = new ChessBoard(cb, selected, tryPos);
-				if (!cb.isEmpty(tryPos)
-						&& cb.getPieceAt(tryPos).getTeam() != piece.getTeam()
-						&& !isCheck(tmpBoard, team)) {
-					pm.add(tryPos);
-				}
+			if (pawnMovableTo(cb, selected, tryPos)) {
+				pm.add(tryPos);
 			}
 		}
 		return pm;
+	}
+
+	/* Returns the positions forward a pawn is able to take. */
+	private static List<Position> pawnMovementForward(ChessBoard cb,
+			Position selected, int dy) {
+		Piece piece = cb.getPieceAt(selected);
+		List<Position> moveList = new LinkedList<Position>();
+
+		int startY = piece.getTeam() == C.TEAM_WHITE ? C.STARTING_POSITION_BLACK_PAWN
+				: 1;
+
+		Position tryPos = new Position(selected.getX(), selected.getY() + dy);
+		ChessBoard tmpBoard = new ChessBoard(cb, selected, tryPos);
+		if (inBounds(tryPos) && cb.isEmpty(tryPos)
+				&& !isCheck(tmpBoard, piece.getTeam())) {
+			moveList.add(tryPos);
+			tryPos = new Position(selected.getX(), selected.getY() + 2 * dy);
+			tmpBoard = new ChessBoard(cb, selected, tryPos);
+			if (inBounds(tryPos) && cb.isEmpty(tryPos)
+					&& selected.getY() == startY
+					&& !isCheck(tmpBoard, piece.getTeam())) {
+				moveList.add(tryPos);
+			}
+		}
+		return moveList;
+	}
+
+	/* Returns true if the pawn is movable to the given position */
+	private static boolean pawnMovableTo(ChessBoard cb, Position pawnPosition,
+			Position moveTo) {
+		int team = cb.getPieceAt(pawnPosition).getTeam();
+
+		if (inBounds(moveTo)) {
+			ChessBoard tmpBoard = new ChessBoard(cb, pawnPosition, moveTo);
+			if (!cb.isEmpty(moveTo) && cb.getPieceAt(moveTo).getTeam() != team
+					&& !isCheck(tmpBoard, team)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/* Returns the moves a piece is able to do considering all rules in chess */
+	private static List<Position> regularMovement(ChessBoard cb,
+			Position piecePos, List<List<Position>> tempMoves) {
+		int team = cb.getPieceAt(piecePos).getTeam();
+		List<Position> moveList = new LinkedList<Position>();
+
+		for (List<Position> l : tempMoves) {
+			boolean canMove = true;
+			for (Position p : l) {
+				ChessBoard tmpBoard = new ChessBoard(cb, piecePos, p);
+				if (canMove && !Rules.isCheck(tmpBoard, team)) {
+					if (cb.isEmpty(p)) {
+						moveList.add(p);
+					} else {
+						if (team != cb.getPieceAt(p).getTeam()) {
+							moveList.add(p);
+						}
+						canMove = false;
+					}
+				} else {
+					if (!cb.isEmpty(p)) {
+						canMove = false;
+					}
+				}
+			}
+		}
+		return moveList;
 	}
 
 	/* Returns true if any piece on the board can moce for the currrent team */
