@@ -11,9 +11,9 @@ import se.chalmers.chessfeud.model.utils.Position;
  * doesn't have any team and only functions as a representation of an empty
  * square.
  * 
- * @author Henrik Alburg
- * @modifiedby Arvid Karlsson
+ * @author Henrik Alburg Arvid Karlsson
  * 
+ *         Copyright (c) 2012 Henrik Alburg, Arbid Karlsson
  */
 
 public class NoPiece extends Piece {
