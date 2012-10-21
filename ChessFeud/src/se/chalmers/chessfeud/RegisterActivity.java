@@ -66,7 +66,6 @@ public class RegisterActivity extends Activity {
 						}
 					}
 				}.start();
-
 			}
 		});
 	}
@@ -98,7 +97,8 @@ public class RegisterActivity extends Activity {
 			return false;
 		}
 		if (ePassword1.getText().toString().length() < C.PW_MIN_LENGHT) {
-			String msg = "Password has to be at least " + C.PW_MIN_LENGHT + "characters";
+			String msg = "Password has to be at least " + C.PW_MIN_LENGHT
+					+ "characters";
 			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
 					.show();
 		}
