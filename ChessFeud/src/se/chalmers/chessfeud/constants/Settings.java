@@ -16,7 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
-public class Settings extends Activity {
+public final class Settings extends Activity {
         private static Settings instance;
         private final CheckBox helptipSwitch = (CheckBox) findViewById(R.id.settingsHelptipCheckBox);
         private final CheckBox soundSwitch = (CheckBox) findViewById(R.id.settingsSoundCheckBox);
@@ -32,8 +32,8 @@ public class Settings extends Activity {
          * it matches the text file.
          */
         private Settings() {
-                if (new File(getExternalFilesDir(null), "chessfeud_settings.txt") == null) {
-                        String FILENAME = "chessfeud_settings";
+                if (new File(getExternalFilesDir(null), "chessfeud_settings.txt").equals(null)) {
+                        final String FILENAME = "chessfeud_settings";
                         String fileContent = "Helptip:\t1\nSound:\t1";
                         FileOutputStream fos;
                         try {
@@ -41,10 +41,10 @@ public class Settings extends Activity {
                                 fos.write(fileContent.getBytes());
                                 fos.close();
                         } catch (FileNotFoundException e) {
-                                Log.e("Settings",
+                                Log.e(C.EXCEPTION_LOCATION_SETTINGS,
                                                 "Could not find the file when trying to save new text file(?)");
                         } catch (IOException e) {
-                                Log.e("Settings",
+                                Log.e(C.EXCEPTION_LOCATION_SETTINGS,
                                                 "Error when using IO when trying to save new text file.");
                         }
 
@@ -60,7 +60,7 @@ public class Settings extends Activity {
                         // Set Sound
                         setSound(sc.nextInt() != 0);
                 } catch (IOException e) {
-                        Log.e("Settings", "Error when trying to read from text file.");
+                        Log.e(C.EXCEPTION_LOCATION_SETTINGS, "Error when trying to read from text file.");
                 }
         }
 
@@ -190,7 +190,7 @@ public class Settings extends Activity {
                                         newString += sc.nextInt() + "\n";
 
                                 } catch (IOException e) {
-                                        Log.e("Settings",
+                                        Log.e(C.EXCEPTION_LOCATION_SETTINGS,
                                                         "Error when trying to read from text file.");
                                 }
 

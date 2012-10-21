@@ -38,6 +38,8 @@ public final class C {
 
 	}
 	
+	public static final String EXCEPTION_LOCATION_SETTINGS = "Settings";
+	
 	public static final String[] SETTINGS_NAME_LIST = {"Helptip", "Sound"};
 	public static final int SETTINGS_HELPTIP = 0;
 	public static final int SETTINGS_SOUND = 1;
