@@ -69,18 +69,6 @@ public class Rules {
 	}
 
 	/**
-	 * Returns true if the board is in an state that makes the game over.
-	 * 
-	 * @param cb
-	 *            , the current chess board to be checked
-	 * @return true if game over.
-	 */
-	public boolean gameOver(ChessBoard cb) {
-		// To be fixed
-		return false;
-	}
-
-	/**
 	 * Returns true if the current board is in a check state.
 	 * 
 	 * @param cb
@@ -95,7 +83,7 @@ public class Rules {
 				Piece kingPiece = cb.getPieceAt(x, y);
 				if (kingPiece.getId() == C.PIECE_KING
 						&& kingPiece.getTeam() == team) {
-					return isCheck(cb, team, x, y); 
+					return isCheck(cb, team, x, y);
 				}
 			}
 		}
@@ -130,17 +118,13 @@ public class Rules {
 		}
 		if (inBounds(kingX + dx * dir, kingY + dy * dir)) {
 			Piece pi = cb.getPieceAt(kingX + dx * dir, kingY + dy * dir);
-			if (Math.abs(dx * dy) == 0
-					&& (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_ROOK)
-					&& pi.getTeam() != team) {
+			if (checkStraight(dx, dy, pi, team)) {
 				return true;
 			}
-			if (Math.abs(dx * dy) == 1
-					&& (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_BISHOP)
-					&& pi.getTeam() != team) {
+			if (checkDiagonally(dx, dy, pi, team)) {
 				return true;
 			}
-			if (dir == 1 && pi.getId() == C.PIECE_KING && pi.getTeam() != team) {
+			if (checkKingsDistance(dir, pi, team)) {
 				return true;
 			}
 		}
@@ -341,5 +325,24 @@ public class Rules {
 	private static boolean inBounds(Position p) {
 		return 0 <= p.getX() && p.getX() < C.BOARD_LENGTH && 0 <= p.getY()
 				&& p.getY() < C.BOARD_LENGTH;
+	}
+	
+	/*Checks the vertically and horizontally squares*/
+	private static boolean checkStraight(int dx, int dy, Piece pi, int team) {
+		return Math.abs(dx * dy) == 0
+				&& (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_ROOK)
+				&& pi.getTeam() != team;
+	}
+	
+	/*Checks the diagonally squares*/
+	private static boolean checkDiagonally(int dx, int dy, Piece pi, int team) {
+		return Math.abs(dx * dy) == 1
+				&& (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_BISHOP)
+				&& pi.getTeam() != team;
+	}
+	
+	/*Checks so there's at least one square between the kings*/
+	private static boolean checkKingsDistance(int dir, Piece pi, int team){
+		return dir == 1 && pi.getId() == C.PIECE_KING && pi.getTeam() != team;
 	}
 }
