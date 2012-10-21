@@ -32,15 +32,19 @@ public final class C {
 	public static final int[] KNIGHT_Y = { 1, 2, 2, 1, -1, -2, -2, -1 };
 	
 	public static final int PRIME = 31;
-
-	// An empty private constructor to hide utility class constructor
-	private C() {
-
-	}
+	
+	public static final int PW_MIN_LENGHT = 4;
 	
 	public static final String EXCEPTION_LOCATION_SETTINGS = "Settings";
 	
 	public static final String[] SETTINGS_NAME_LIST = {"Helptip", "Sound"};
 	public static final int SETTINGS_HELPTIP = 0;
 	public static final int SETTINGS_SOUND = 1;
+
+	// An empty private constructor to hide utility class constructor
+	private C() {
+
+	}
+	
+
 }

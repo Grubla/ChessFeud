@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.constants.DbHandler;
 import se.chalmers.chessfeud.constants.PlayerInfo;
 import android.app.Activity;
@@ -96,8 +97,8 @@ public class RegisterActivity extends Activity {
 					.show();
 			return false;
 		}
-		if (ePassword1.getText().toString().length() < 4) {
-			String msg = "Password has to be at least 4 characters";
+		if (ePassword1.getText().toString().length() < C.PW_MIN_LENGHT) {
+			String msg = "Password has to be at least " + C.PW_MIN_LENGHT + "characters";
 			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
 					.show();
 		}

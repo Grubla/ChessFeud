@@ -17,9 +17,9 @@ import se.chalmers.chessfeud.model.utils.Position;
 /**
  * A class for managing the Rules in a chessgame.
  * 
- * @author Henrik Alburg
+ * @author Henrik Alburg, Arvid Karlsson
  * 
- *         Copyright � 2012 Henrik Alburg, Arvid Karlsson
+ *         Copyright (c) 2012 Henrik Alburg, Arvid Karlsson
  * 
  */
 public class Rules {
