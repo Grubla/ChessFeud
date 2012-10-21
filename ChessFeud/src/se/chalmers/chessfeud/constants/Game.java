@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud.constants;
 
+
 /**
  * A class representing an ongoing game.
  * Will hold all the information needed by both the model and the list objects.
@@ -73,7 +74,7 @@ public class Game {
 	 * @return an int containing the team
 	 */
 	public int thisPlayersTeam(){
-		if(player.getUserName().equals(whitePlayer)){
+		if(player.getUserName().equalsIgnoreCase(whitePlayer)){
 			return C.TEAM_WHITE;
 		}else{
 			return C.TEAM_BLACK;
@@ -84,7 +85,7 @@ public class Game {
 	 * @return a string containing the username
 	 */
 	public String getOpponent(){
-		if(player.getUserName().equals(whitePlayer)){
+		if(player.getUserName().equalsIgnoreCase(whitePlayer)){
 			return blackPlayer;
 		}
 		return whitePlayer;

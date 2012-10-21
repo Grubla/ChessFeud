@@ -159,12 +159,12 @@ public class DbHandler {
 	 * @return
 	 */
 	public boolean newMove(String target, String newModel) {
-		pairs.clear();
-		pairs.add(new BasicNameValuePair(TAG, "newMove"));
-		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
-		pairs.add(new BasicNameValuePair("user2", target));
-		pairs.add(new BasicNameValuePair("board", newModel));
-		return updateDatabase();
+		List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
+		list.add(new BasicNameValuePair(TAG, "newMove"));
+		list.add(new BasicNameValuePair("user1", player.getUserName()));
+		list.add(new BasicNameValuePair("user2", target));
+		list.add(new BasicNameValuePair("board", newModel));
+		return updateDatabase(list);
 	}
 
 	/**

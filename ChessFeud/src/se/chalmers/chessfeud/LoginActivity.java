@@ -28,8 +28,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		player = PlayerInfo.getInstance();
+		Thread t = new Thread() {
+			public void run() {
+				player.tryLogin(getApplicationContext());
+			}
+		};
+		while (t.isAlive()) {
+
+		}
 		if (player.isLoggedIn()) {
-			startActivity(new Intent(this, MainActivity.class));
+			startActivity(new Intent(LoginActivity.this, MainActivity.class));
 		} else {
 			setLoginLayout();
 		}
@@ -58,19 +66,40 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if (id == R.id.login) {
 			new Thread() {
 				public void run() {
-					if (player.login(eUsername.getText().toString(), ePassword
-							.getText().toString(), getApplicationContext())) {
-						startActivity(new Intent(LoginActivity.this,
-								MainActivity.class));
-					} else {
-						String msg = "Wrong password";
-						Toast.makeText(getApplicationContext(), msg,
-								Toast.LENGTH_SHORT).show();
+					boolean hej = player.login(eUsername.getText().toString(), ePassword
+							.getText().toString(), getApplicationContext());
+					if(hej){
+						startMain();
+					}else{
+						showToaster();
 					}
+					
 				}
 			}.start();
+
 		} else {
 			startActivity(new Intent(this, RegisterActivity.class));
 		}
+	}
+	
+	private void startMain(){
+		LoginActivity.this.runOnUiThread(new Runnable(){
+			@Override
+			public void run() {
+					startActivity(new Intent(LoginActivity.this, MainActivity.class));
+			}
+		});		
+	}
+	
+	private void showToaster(){
+		LoginActivity.this.runOnUiThread(new Runnable(){
+			@Override
+			public void run() {
+				String msg = "Wrong password";
+				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
+						.show();
+			}
+		});	
+		
 	}
 }

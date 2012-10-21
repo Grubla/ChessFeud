@@ -18,7 +18,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -188,7 +187,6 @@ public class GameView extends View implements OnTouchListener {
 		int y = (int) event.getY() / chessSquareHeight;
 		gm.click(new Position(x, y));
 		if (gm.getTakenPieces() != null) {
-			Log.d("Amount:", "" + gm.getTakenPieces().size());
 		}
 		this.invalidate();
 		return false;

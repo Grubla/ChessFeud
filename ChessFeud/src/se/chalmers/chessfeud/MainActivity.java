@@ -59,16 +59,26 @@ public class MainActivity extends Activity implements OnClickListener {
 		// finishedGames = (ListView) findViewById(R.id.list_finishedGames);
 		startedGames = (ListView) findViewById(R.id.list_ongoingGames);
 		
+		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		new Thread() {
 			public void run() {
-					startedGames.setAdapter(new GameListAdapter(
-							MainActivity.this, R.id.list_ongoingGames, dbh
-									.getGames()));
+				final List<String> games = dbh.getGames();
+				MainActivity.this.runOnUiThread(new Runnable(){
+					public void run() {
+						startedGames.setAdapter(new GameListAdapter(
+								MainActivity.this, R.id.list_ongoingGames, games));
+					}
+				});
+					
 					// finishedGames.setListAdapter(this, R.id.list_finishedGames,
 					// getList());
 			}
 		}.start();
-		
 	}
 
 	/* Will launch a new activity based on what is clicked. */
@@ -94,23 +104,21 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	/* This is temporary until the view is finished. */
-	private void showPrompt(){
+	private void showPrompt() {
 		AlertDialog.Builder prompt = new AlertDialog.Builder(this);
 		prompt.setTitle("New Game");
 		prompt.setMessage("Type in the username of the person you want to challange:");
 		final EditText input = new EditText(this);
 		prompt.setView(input);
-		prompt.setPositiveButton("Done",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						DbHandler.getInstance().newGame(
-								input.getText().toString(),
-								new ChessModel(0).exportModel());
-					}
-				});
+		prompt.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				DbHandler.getInstance().newGame(input.getText().toString(),
+						new ChessModel(0).exportModel());
+			}
+		});
 		prompt.show();
 	}
-	
+
 	/*
 	 * An inner class that works as a adapter between a list och games to a list
 	 * of list_item views.
@@ -121,10 +129,15 @@ public class MainActivity extends Activity implements OnClickListener {
 		private List<String> stringList;
 
 		/**
-		 * Creates an adapter between the Strings (GameInfos) object and list items.
-		 * @param context the context of the application
-		 * @param resId the resource id for the list
-		 * @param l the list of string to be converted to GameInfos
+		 * Creates an adapter between the Strings (GameInfos) object and list
+		 * items.
+		 * 
+		 * @param context
+		 *            the context of the application
+		 * @param resId
+		 *            the resource id for the list
+		 * @param l
+		 *            the list of string to be converted to GameInfos
 		 */
 		public GameListAdapter(Context context, int resId, List<String> l) {
 			super(context, resId, l);

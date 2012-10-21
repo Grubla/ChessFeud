@@ -58,7 +58,7 @@ public class ChessModel {
 		this.gameInfo = gameInfo;
 		chessBoard = new ChessBoard(gameInfo.getGameBoard());
 		this.numberOfMoves = gameInfo.getTurns();
-		this.thisPlayer = 0; ////////////////////////////////////FIX
+		this.thisPlayer = gameInfo.thisPlayersTeam();
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
