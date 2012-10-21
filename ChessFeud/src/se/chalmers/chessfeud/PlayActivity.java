@@ -33,11 +33,9 @@ public class PlayActivity extends Activity implements PropertyChangeListener{
 		if(event.getPropertyName().equals("Model")){
 			Game gameInfo = (Game)event.getOldValue();
 			String gameBoard = (String)event.getNewValue();
-			try{
-				DbHandler dbh = DbHandler.getInstance();
-				dbh.newMove(gameInfo.getOpponent(), gameBoard);
-			}catch(Exception e){//Add exception message TODO:
-			}
+			DbHandler dbh = DbHandler.getInstance();
+			dbh.newMove(gameInfo.getOpponent(), gameBoard);
+
 		}
 	}
 }

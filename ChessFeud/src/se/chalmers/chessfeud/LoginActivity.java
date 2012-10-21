@@ -4,11 +4,11 @@ import se.chalmers.chessfeud.constants.PlayerInfo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * This is a class for managing the loginscreen and to check whether or not
@@ -63,7 +63,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 						startActivity(new Intent(LoginActivity.this,
 								MainActivity.class));
 					} else {
-						Log.d("Login: ", "Wrong password");
+						String msg = "Wrong password";
+						Toast.makeText(getApplicationContext(), msg,
+								Toast.LENGTH_SHORT).show();
 					}
 				}
 			}.start();

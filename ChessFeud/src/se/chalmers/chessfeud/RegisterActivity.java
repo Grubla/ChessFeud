@@ -5,11 +5,11 @@ import se.chalmers.chessfeud.constants.PlayerInfo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * This is the controller activity for a view to register. It uses the
@@ -54,8 +54,14 @@ public class RegisterActivity extends Activity {
 											MainActivity.class));
 								}
 							} else {
-								Log.d("Register", "Couldnt Register");
+								String msg = "Failed to register";
+								Toast.makeText(getApplicationContext(), msg,
+										Toast.LENGTH_SHORT).show();
 							}
+						} else {
+							String msg = "Failed to log in after registration";
+							Toast.makeText(getApplicationContext(), msg,
+									Toast.LENGTH_SHORT).show();
 						}
 					}
 				}.start();
@@ -79,15 +85,21 @@ public class RegisterActivity extends Activity {
 	/* Returns true if the username and passwords are ok */
 	private boolean fieldsOk() {
 		if (dbh.userExists(eUsername.getText().toString())) {
-			Log.d("Login", "User already exists");
+			String msg = "User already exists";
+			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
+					.show();
 		}
 		if (!ePassword1.getText().toString()
 				.equals(ePassword2.getText().toString())) {
-			Log.d("Login", "Passwords doesnt match");
+			String msg = "Passwords doesn't match";
+			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
+					.show();
 			return false;
 		}
 		if (ePassword1.getText().toString().length() < 4) {
-			Log.d("Login", "Password too short");
+			String msg = "Password has to be at least 4 characters";
+			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
+					.show();
 		}
 		return true;
 	}
