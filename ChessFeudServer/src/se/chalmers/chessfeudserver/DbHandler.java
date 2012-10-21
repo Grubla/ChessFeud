@@ -92,14 +92,15 @@ public class DbHandler extends HttpServlet {
 		final int intrequest = (Integer) tags.get(request.getParameter("tag"));
 		final HashMap<String, String[]> h =(HashMap<String, String[]>) request.getParameterMap();
 		
-		AsyncContext async = request.startAsync();
+		final AsyncContext async = request.startAsync();
 		async.setTimeout(TimeUnit.MINUTES.toMillis(5));
 		async.start(new Runnable() {
 			public void run() {
 				doRequest(h, intrequest, response);
+				async.complete();
 			}
 		});
-		async.complete();
+		
 	}
 	
 	private void doRequest(HashMap<String, String[]> h, int request, HttpServletResponse response){
