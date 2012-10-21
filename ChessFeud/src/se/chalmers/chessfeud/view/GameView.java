@@ -3,7 +3,6 @@ package se.chalmers.chessfeud.view;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import se.chalmers.chessfeud.R;
 import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.constants.Settings;
@@ -21,7 +20,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.TextView;
 
 /**
  * Paints out the board with squares and pieces.
