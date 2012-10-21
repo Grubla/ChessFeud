@@ -16,16 +16,17 @@ import android.widget.Toast;
 public class PlayActivity extends Activity implements PropertyChangeListener {
 	private Game g;
 	private ChessModel cm;
-	private TextView nbrOfTurns = (TextView) findViewById(R.id.nbrOfTurns);
-	private TextView playerNameWhite = (TextView) findViewById(R.id.playerNameWhite);
-	private TextView playerNameBlack = (TextView) findViewById(R.id.playerNameBlack);
-	private TextView statusTxt = (TextView) findViewById(R.id.statusTxt);
-	private TextView whoseTurnNTime = (TextView) findViewById(R.id.whoseTurnAndTime);
+	private TextView nbrOfTurns;
+	private TextView playerNameWhite;
+	private TextView playerNameBlack;
+	private TextView statusTxt;
+	private TextView whoseTurnNTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play);
+		setLayout();
 		GameView gv = (GameView) findViewById(R.id.chessBoard);
 		String gameInfo = getIntent().getStringExtra("GameString");
 		int position = getIntent().getIntExtra("Position", -1);
@@ -33,6 +34,8 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			gv.setGameModel(gameInfo, position, this);
 			g = new Game(gameInfo, 0);
 		}
+		
+		
 
 		nbrOfTurns.setText(g.getTurns());
 		playerNameWhite.setText(g.getWhitePlayer());
@@ -40,11 +43,20 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		setState();
 		setTurnNTime();
 	}
-
+	
+	@Override
 	protected void onResume() {
 		nbrOfTurns.setText(g.getTurns());
 		setState();
 		setTurnNTime();
+	}
+	
+	private void setLayout(){
+		nbrOfTurns = (TextView) findViewById(R.id.nbrOfTurns);
+		playerNameWhite = (TextView) findViewById(R.id.playerNameWhite);
+		playerNameBlack = (TextView) findViewById(R.id.playerNameBlack);
+		statusTxt = (TextView) findViewById(R.id.statusTxt);
+		whoseTurnNTime = (TextView) findViewById(R.id.whoseTurnAndTime);
 	}
 
 	/**
