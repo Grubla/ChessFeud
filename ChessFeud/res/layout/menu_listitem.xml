@@ -24,6 +24,7 @@
       <LinearLayout 
           android:layout_width="180dp" 
           android:layout_height="fill_parent" 
+          android:layout_weight="1" 
           android:orientation="vertical" 
           android:paddingLeft="10dp" 
           android:paddingTop="5dp">
@@ -44,7 +45,9 @@
               <ImageView 
                   android:id="@+id/team_white" 
                   android:layout_width="10dp" 
-                  android:layout_height="10dp" android:contentDescription="@string/dscr_list_team_white" android:src="@drawable/icon_team_white"/>
+                  android:layout_height="10dp" 
+                  android:contentDescription="@string/dscr_list_team_white" 
+                  android:src="@drawable/icon_team_white"/>
               
               <TextView 
                   android:id="@+id/player_white" 
@@ -58,7 +61,9 @@
                   android:id="@+id/team_black" 
                   android:layout_width="10dp" 
                   android:layout_height="10dp" 
-                  android:layout_marginLeft="5dp" android:contentDescription="@string/dscr_list_team_black" android:src="@drawable/icon_team_black"/>
+                  android:layout_marginLeft="5dp" 
+                  android:contentDescription="@string/dscr_list_team_black" 
+                  android:src="@drawable/icon_team_black"/>
               
               <TextView 
                   android:id="@+id/player_black" 
@@ -72,12 +77,14 @@
           <!-- White pieces -->
           <LinearLayout 
               android:layout_width="match_parent" 
-              android:layout_height="wrap_content" android:layout_marginTop="3dp">
+              android:layout_height="wrap_content" 
+              android:layout_marginTop="3dp">
               
               <ImageView 
                   android:id="@+id/img_white_piece_0" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_0" android:src="@drawable/icon_pieces_white_pawn"/>
+                  android:contentDescription="@string/dscr_list_white_piece_0" 
+                  android:src="@drawable/icon_pieces_white_pawn"
+                  style="@style/Icon_Piece_ListItem"/>
               <TextView 
                   android:id="@+id/nbr_pawn_white" 
                   android:layout_width="wrap_content" 
@@ -86,37 +93,45 @@
                   android:text="x8" 
                   android:textSize="5dp"/>
               <ImageView 
-                  android:id="@+id/img_white_piece_1" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_1" android:src="@drawable/icon_pieces_white_rook"/>
+                  android:id="@+id/img_white_piece_1"  
+                  android:contentDescription="@string/dscr_list_white_piece_1" 
+                  android:src="@drawable/icon_pieces_white_rook"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_white_piece_2" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_2" android:src="@drawable/icon_pieces_white_rook"/>
+                  android:contentDescription="@string/dscr_list_white_piece_2" 
+                  android:src="@drawable/icon_pieces_white_rook"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_white_piece_3" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_3" android:src="@drawable/icon_pieces_white_bishop"/>
+                  android:contentDescription="@string/dscr_list_white_piece_3" 
+                  android:src="@drawable/icon_pieces_white_bishop"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_white_piece_4" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_4" android:src="@drawable/icon_pieces_white_bishop"/>
+                  android:contentDescription="@string/dscr_list_white_piece_4" 
+                  android:src="@drawable/icon_pieces_white_bishop"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_white_piece_5" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_5" android:src="@drawable/icon_pieces_white_knight"/>
+                  android:contentDescription="@string/dscr_list_white_piece_5" 
+                  android:src="@drawable/icon_pieces_white_knight"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_white_piece_6" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_6" android:src="@drawable/icon_pieces_white_knight"/>
+                  android:contentDescription="@string/dscr_list_white_piece_6" 
+                  android:src="@drawable/icon_pieces_white_knight"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_white_piece_7" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_7" android:src="@drawable/icon_pieces_white_queen"/>
+                  android:contentDescription="@string/dscr_list_white_piece_7" 
+                  android:src="@drawable/icon_pieces_white_queen"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_white_piece_8" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_white_piece_8" android:src="@drawable/icon_pieces_white_king"/>
+                  android:contentDescription="@string/dscr_list_white_piece_8" 
+                  android:src="@drawable/icon_pieces_white_king"
+                  style="@style/Icon_Piece_ListItem"/>
           </LinearLayout>
           
           <!-- Black pieces -->
@@ -126,8 +141,9 @@
               
               <ImageView 
                   android:id="@+id/img_black_piece_0" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_0" android:src="@drawable/icon_pieces_black_pawn"/>
+                  android:contentDescription="@string/dscr_list_black_piece_0" 
+                  android:src="@drawable/icon_pieces_black_pawn"
+                  style="@style/Icon_Piece_ListItem"/>
               <TextView 
                   android:id="@+id/nbr_pawn_black" 
                   android:layout_width="wrap_content" 
@@ -137,57 +153,66 @@
                   android:textSize="5dp"/>
               <ImageView 
                   android:id="@+id/img_black_piece_1" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_1" android:src="@drawable/icon_pieces_black_rook"/>
+                  android:contentDescription="@string/dscr_list_black_piece_1" 
+                  android:src="@drawable/icon_pieces_black_rook"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_black_piece_2" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_2" android:src="@drawable/icon_pieces_black_rook"/>
+                  android:contentDescription="@string/dscr_list_black_piece_2" 
+                  android:src="@drawable/icon_pieces_black_rook"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_black_piece_3" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_3" android:src="@drawable/icon_pieces_black_bishop"/>
+                  android:contentDescription="@string/dscr_list_black_piece_3" 
+                  android:src="@drawable/icon_pieces_black_bishop"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_black_piece_4" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_4" android:src="@drawable/icon_pieces_black_bishop"/>
+                  android:contentDescription="@string/dscr_list_black_piece_4" 
+                  android:src="@drawable/icon_pieces_black_bishop"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_black_piece_5" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_5" android:src="@drawable/icon_pieces_black_knight"/>
+                  android:contentDescription="@string/dscr_list_black_piece_5" 
+                  android:src="@drawable/icon_pieces_black_knight"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_black_piece_6" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_6" android:src="@drawable/icon_pieces_black_knight"/>
+                  android:contentDescription="@string/dscr_list_black_piece_6" 
+                  android:src="@drawable/icon_pieces_black_knight"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_black_piece_7" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_7" android:src="@drawable/icon_pieces_black_queen"/>
+                  android:contentDescription="@string/dscr_list_black_piece_7" 
+                  android:src="@drawable/icon_pieces_black_queen"
+                  style="@style/Icon_Piece_ListItem"/>
               <ImageView 
                   android:id="@+id/img_black_piece_8" 
-                  android:layout_width="15dp" 
-                  android:layout_height="15dp" android:contentDescription="@string/dscr_list_black_piece_8" android:src="@drawable/icon_pieces_black_king"/>
+                  android:contentDescription="@string/dscr_list_black_piece_8" 
+                  android:src="@drawable/icon_pieces_black_king"
+                  style="@style/Icon_Piece_ListItem"/>
           </LinearLayout>
           
       </LinearLayout>
   <!-- Nbr of Turns -->
       <FrameLayout 
-          android:layout_width="match_parent" 
-          android:layout_height="match_parent">
+          android:layout_width="wrap_content" 
+          android:layout_height="wrap_content" 
+          android:layout_gravity="right">
           <ImageView 
               android:id="@+id/img_turns_bg" 
               android:layout_width="35dp" 
               android:layout_height="35dp" 
-              android:layout_gravity="right" android:contentDescription="@string/dscr_list_turn_bg" android:src="@drawable/icon_turns"/>
+              android:layout_gravity="right" 
+              android:contentDescription="@string/dscr_list_turn_bg" 
+              android:src="@drawable/icon_turns"/>
           
           <TextView android:id="@+id/nbr_turns" 
               android:layout_width="wrap_content" 
               android:layout_height="wrap_content" 
-              android:layout_gravity="right" 
-              android:layout_marginRight="6dp" 
-              android:layout_marginTop="5dp" 
-              android:text="99" 
-              android:textSize="20dp"/>
+              android:layout_gravity="center"  
+              android:text="999" 
+              android:textSize="18dp"/>
       </FrameLayout>
     
     
