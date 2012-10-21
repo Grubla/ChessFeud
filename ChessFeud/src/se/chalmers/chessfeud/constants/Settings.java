@@ -18,9 +18,9 @@ import android.widget.CheckBox;
 
 public class Settings extends Activity {
         private static Settings instance;
-        final CheckBox helptipSwitch = (CheckBox) findViewById(R.id.settingsHelptipCheckBox);
-        final CheckBox soundSwitch = (CheckBox) findViewById(R.id.settingsSoundCheckBox);
-        AudioManager audioManager = (AudioManager) getApplicationContext()
+        private final CheckBox helptipSwitch = (CheckBox) findViewById(R.id.settingsHelptipCheckBox);
+        private final CheckBox soundSwitch = (CheckBox) findViewById(R.id.settingsSoundCheckBox);
+        private final AudioManager audioManager = (AudioManager) getApplicationContext()
                         .getSystemService(Context.AUDIO_SERVICE);
 
         private boolean helptipStatus = true;
