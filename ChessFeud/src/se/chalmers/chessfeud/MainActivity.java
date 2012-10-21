@@ -29,6 +29,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ImageView iLogo;
 	private ListView startedGames;
 	private DbHandler dbh;
+	// private ListView finishedGames;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -107,8 +109,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		prompt.setView(input);
 		prompt.setPositiveButton("Done", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				DbHandler.getInstance().newGame(input.getText().toString(),
-						new ChessModel(0).exportModel());
+				new Thread(){
+					public void run() {
+						DbHandler.getInstance().newGame(input.getText().toString(),
+								new ChessModel(0).exportModel());
+					}
+				}.start();
 			}
 		});
 		prompt.show();
