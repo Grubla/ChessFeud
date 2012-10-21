@@ -47,8 +47,7 @@
 			    android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center" 
-				android:text="99" 
-				android:textSize="25dp"/>
+				android:text="999" android:textSize="20dp"/>
 		</FrameLayout>
 	</LinearLayout>
 	
@@ -93,12 +92,7 @@
 				     android:contentDescription="@string/dscr_icon_team_white" />
 				<!-- Data: White Player Name -->
 				<TextView 
-				    android:id="@+id/PlayerNameWhite" 
-				    android:layout_width="wrap_content" 
-				    android:layout_height="wrap_content" 
-				    android:layout_marginLeft="3dp" 
-				    android:text="White P" 
-				    android:textSize="10dp"/>
+				    android:id="@+id/playerNameWhite" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="3dp" android:text="White P" android:textSize="10dp"/>
 			</LinearLayout>
 			
 			<TextView 
@@ -126,7 +120,7 @@
                   android:id="@+id/nbr_pawn_white" 
                   android:layout_width="wrap_content" 
                   android:layout_height="wrap_content" 
-                  android:layout_gravity="bottom" android:layout_marginRight="2dp" android:text="x8" android:textSize="7dp"/>
+                  android:layout_gravity="bottom" android:layout_marginRight="2dp" android:text="x8" android:textSize="9dp"/>
               <ImageView 
                   android:id="@+id/img_white_piece_1" 
                   android:layout_width="15dp" 
@@ -213,12 +207,7 @@
 				     android:contentDescription="@string/dscr_icon_team_black" />
 				<!-- Data: Black Player Name -->
 				<TextView 
-				    android:id="@+id/PlayerNameBlack" 
-				    android:layout_width="wrap_content" 
-				    android:layout_height="wrap_content" 
-				    android:layout_marginLeft="3dp" 
-				    android:text="Black P" 
-				    android:textSize="10dp"/>
+				    android:id="@+id/playerNameBlack" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="3dp" android:text="Black P" android:textSize="10dp"/>
 			</LinearLayout>
 			
 			<TextView 
@@ -245,7 +234,7 @@
                   android:id="@+id/nbr_pawn_black" 
                   android:layout_width="wrap_content" 
                   android:layout_height="wrap_content" 
-                  android:layout_gravity="bottom" android:layout_marginRight="2dp" android:text="x8" android:textSize="7dp"/>
+                  android:layout_gravity="bottom" android:layout_marginRight="2dp" android:text="x8" android:textSize="9dp"/>
               <ImageView 
                   android:id="@+id/img_black_piece_1" 
                   android:layout_width="15dp" 

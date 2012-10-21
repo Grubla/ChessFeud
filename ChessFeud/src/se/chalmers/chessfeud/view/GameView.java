@@ -3,6 +3,7 @@ package se.chalmers.chessfeud.view;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import se.chalmers.chessfeud.R;
 import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.constants.Settings;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.TextView;
 
 /**
  * Paints out the board with squares and pieces.
@@ -31,10 +33,10 @@ import android.view.View.OnTouchListener;
  */
 public class GameView extends View implements OnTouchListener {
 	private Context context;
+	private Settings setgs = Settings.getInstance();
 	private int chessSquareHeight;
 	private int chessSquareWidth;
 	private ChessModel gm = new ChessModel(0);
-	private Settings s = Settings.getInstance();
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -46,6 +48,10 @@ public class GameView extends View implements OnTouchListener {
 		Game gameInfo = new Game(s, position);
 		gm = new ChessModel(gameInfo, pcl);
 		this.invalidate();
+	}
+	
+	protected void onCreate(Canvas canvas){
+		
 	}
 
 	@Override
@@ -80,13 +86,13 @@ public class GameView extends View implements OnTouchListener {
 		for (int y = 0; y < C.BOARD_LENGTH; y++) {
 			for (int x = 0; x < C.BOARD_LENGTH; x++) {
 				Rect r = new Rect(x * chessSquareWidth, y * chessSquareHeight,
-						(x + 1) * chessSquareWidth, (y + 1) * chessSquareWidth);
+						(x + 1) * chessSquareWidth, (y + 1) * chessSquareHeight);
 
 				if (paintWhite) {
 					if (possibleSquares.contains(new Position(x, y))) {
 						canvas.drawRect(r, wAvailable);
 					} else if (new Position(x, y).equals(gm
-							.getSelectedPosition()) && s.getHelptipStatus()) {
+							.getSelectedPosition()) && setgs.getHelptipStatus()) {
 						canvas.drawRect(r, wSelected);
 					} else {
 						canvas.drawRect(r, wMain);
@@ -96,7 +102,7 @@ public class GameView extends View implements OnTouchListener {
 					if (possibleSquares.contains(new Position(x, y))) {
 						canvas.drawRect(r, bAvailable);
 					} else if (new Position(x, y).equals(gm
-							.getSelectedPosition()) && s.getHelptipStatus()) {
+							.getSelectedPosition()) && setgs.getHelptipStatus()) {
 						canvas.drawRect(r, bSelected);
 					} else {
 						canvas.drawRect(r, bMain);
