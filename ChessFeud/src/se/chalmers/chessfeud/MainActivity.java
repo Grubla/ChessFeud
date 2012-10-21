@@ -55,25 +55,17 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// finishedGames = (ListView) findViewById(R.id.list_finishedGames);
 		startedGames = (ListView) findViewById(R.id.list_ongoingGames);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
+		
 		new Thread() {
 			public void run() {
-				try {
 					startedGames.setAdapter(new GameListAdapter(
 							MainActivity.this, R.id.list_ongoingGames, dbh
 									.getGames()));
-				} catch (Exception e) {
-
-				}
+					// finishedGames.setListAdapter(this, R.id.list_finishedGames,
+					// getList());
 			}
 		}.start();
-		// finishedGames.setListAdapter(this, R.id.list_finishedGames,
-		// getList());
-
+		
 	}
 
 	/* Will launch a new activity based on what is clicked. */
@@ -91,27 +83,31 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity(new Intent(this, PlayActivity.class));
 			break;
 		case R.id.button_newgame:
-			// This i temporary until the view is finished
-			AlertDialog.Builder prompt = new AlertDialog.Builder(this);
-			prompt.setTitle("New Game");
-			prompt.setMessage("Type in the username of the person you want to challange:");
-			final EditText input = new EditText(this);
-			prompt.setView(input);
-			prompt.setPositiveButton("Done",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							DbHandler.getInstance().newGame(
-									input.getText().toString(),
-									new ChessModel(0).exportModel());
-						}
-					});
-			prompt.show();
+			showPrompt();
 			break;
 		default:
-			Log.d("Button not binded", "Should not get here!");
+			Log.e("Button not binded", "Should not get here!");
 		}
 	}
 
+	/* This is temporary until the view is finished. */
+	private void showPrompt(){
+		AlertDialog.Builder prompt = new AlertDialog.Builder(this);
+		prompt.setTitle("New Game");
+		prompt.setMessage("Type in the username of the person you want to challange:");
+		final EditText input = new EditText(this);
+		prompt.setView(input);
+		prompt.setPositiveButton("Done",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						DbHandler.getInstance().newGame(
+								input.getText().toString(),
+								new ChessModel(0).exportModel());
+					}
+				});
+		prompt.show();
+	}
+	
 	/*
 	 * An inner class that works as a adapter between a list och games to a list
 	 * of list_item views.
