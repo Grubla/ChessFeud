@@ -30,21 +30,29 @@ public final class C {
 
 	public static final int[] KNIGHT_X = { -2, -1, 1, 2, 2, 1, -1, -2 };
 	public static final int[] KNIGHT_Y = { 1, 2, 2, 1, -1, -2, -2, -1 };
-	
+
 	public static final int PRIME = 31;
-	
+
 	public static final int PW_MIN_LENGHT = 4;
-	
+
 	public static final String EXCEPTION_LOCATION_SETTINGS = "Settings";
-	
-	public static final String[] SETTINGS_NAME_LIST = {"Helptip", "Sound"};
+
+	public static final String[] SETTINGS_NAME_LIST = { "Helptip", "Sound" };
 	public static final int SETTINGS_HELPTIP = 0;
 	public static final int SETTINGS_SOUND = 1;
+
+	public static final int[] DAYS_PER_MONTH = { 31, 28, 31, 30, 31, 30, 31,
+			31, 30, 31, 30, 31 };
+	public static final int SECONDS_PER_MINUTE = 60;
+	public static final int HOURS_PER_DAY = 24;
+	public static final int DAYS_PER_YEAR = 365;
+	public static final int DAYS_PER_LEAPYEAR = 366;
+	public static final int STARTING_YEAR = 1970;
+	public static final int YEARS_BETWEEN_LEAPYEAR = 4;
 
 	// An empty private constructor to hide utility class constructor
 	private C() {
 
 	}
-	
 
 }

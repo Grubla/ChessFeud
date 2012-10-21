@@ -9,13 +9,12 @@ package se.chalmers.chessfeud.constants;
  *         Copyright (c) Henrik Alburg 2012
  */
 public class TimeStamp {
-	private static int[] daysPerMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30,
-			31, 30, 31 };
-	private static int secondsPerMinute = 60;
-	private static int secondsPerHour = secondsPerMinute * 60;
-	private static int secondsPerDay = secondsPerHour * 24;
-	private static int daysPerYear = 365;
-	private static int daysPerLeapYear = 366;
+	private static int[] daysPerMonth = C.DAYS_PER_MONTH;
+	private static int secondsPerMinute = C.SECONDS_PER_MINUTE;
+	private static int secondsPerHour = secondsPerMinute * C.SECONDS_PER_MINUTE;
+	private static int secondsPerDay = secondsPerHour * C.HOURS_PER_DAY;
+	private static int daysPerYear = C.DAYS_PER_YEAR;
+	private static int daysPerLeapYear = C.DAYS_PER_YEAR;
 
 	private long timeSeconds;
 
@@ -83,8 +82,8 @@ public class TimeStamp {
 	/* Returns the number of seconds between 1970 and this year */
 	private int getYearSeconds(int year) {
 		int seconds = 0;
-		for (int i = 1970; i < year; i++) {
-			if (i % 4 == 0) {
+		for (int i = C.STARTING_YEAR; i < year; i++) {
+			if (i % C.YEARS_BETWEEN_LEAPYEAR == 0) {
 				seconds += daysPerLeapYear * secondsPerDay;
 			} else {
 				seconds += daysPerYear * secondsPerDay;
