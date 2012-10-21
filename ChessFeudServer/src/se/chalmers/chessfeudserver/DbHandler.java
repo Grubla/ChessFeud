@@ -396,6 +396,9 @@ public class DbHandler extends HttpServlet {
 	 */
 	private void newMove(String user1, String user2, String newModel)
 			throws SQLException {
+		System.out.println(newModel+"hej1");
+		System.out.println(user1+"hej2");
+		System.out.println(user2+"hej3");
 		String[] boardandturns = newModel.split("/");
 		String newBoard = boardandturns[0];
 		int turns = Integer.parseInt(boardandturns[1]);
