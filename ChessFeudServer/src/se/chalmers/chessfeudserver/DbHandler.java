@@ -155,7 +155,7 @@ public class DbHandler extends HttpServlet {
 				out.print(userExists(((String[])h.get("username"))[0]));
 				break;
 			case 12:
-				List<String> finishedGames = getGamesInProgress(((String[])h.get("username"))[0]);
+				List<String> finishedGames = getFinishedGames(((String[])h.get("username"))[0]);
 				StringBuilder strbuilder = new StringBuilder();
 				for (String s : finishedGames) {
 					strbuilder.append(s);
@@ -188,14 +188,6 @@ public class DbHandler extends HttpServlet {
 
 	}
 
-	private void writeResultSet(ResultSet resultSet) throws SQLException {
-		while (resultSet.next()) {
-
-			System.out.println(resultSet.getString(1));
-			System.out.println(resultSet.getString(2));
-			System.out.println(resultSet.getString(3));
-		}
-	}
 
 	private boolean authenticate(String userName, String password)
 			throws SQLException {
