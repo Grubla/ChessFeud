@@ -50,24 +50,23 @@ public class RegisterActivity extends Activity {
 						if (fieldsOk()) {
 							if (addUser()) {
 								if (login()) {
-									startActivity(new Intent(
-											RegisterActivity.this,
-											MainActivity.class));
+									startMain();
 								}
 							} else {
-								String msg = "Failed to register";
-								Toast.makeText(getApplicationContext(), msg,
-										Toast.LENGTH_SHORT).show();
+								makeToast("Failed to register");
 							}
 						} else {
-							String msg = "Failed to log in after registration";
-							Toast.makeText(getApplicationContext(), msg,
-									Toast.LENGTH_SHORT).show();
+							makeToast("Failed to log in after registration");
 						}
 					}
 				}.start();
 			}
 		});
+	}
+
+	/* Starts the MainActivity */
+	private void startMain() {
+		startActivity(new Intent(RegisterActivity.this, MainActivity.class));
 	}
 
 	/* Returns true if the user was successfully added */
@@ -85,23 +84,30 @@ public class RegisterActivity extends Activity {
 	/* Returns true if the username and passwords are ok */
 	private boolean fieldsOk() {
 		if (dbh.userExists(eUsername.getText().toString())) {
-			String msg = "User already exists";
-			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
-					.show();
+			makeToast("User already exists");
+			return false;
 		}
 		if (!ePassword1.getText().toString()
 				.equals(ePassword2.getText().toString())) {
-			String msg = "Passwords doesn't match";
-			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
-					.show();
+			makeToast("Passwords doesn't match");
 			return false;
 		}
 		if (ePassword1.getText().toString().length() < C.PW_MIN_LENGHT) {
-			String msg = "Password has to be at least " + C.PW_MIN_LENGHT
-					+ "characters";
-			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
-					.show();
+			makeToast("Password has to be at least " + C.PW_MIN_LENGHT + " characters");
+			return false;
 		}
 		return true;
+	}
+
+	/* A method for making a toast, a message to the user */
+	private void makeToast(final String msg) {
+		RegisterActivity.this.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
+						.show();
+			}
+		});
+
 	}
 }
