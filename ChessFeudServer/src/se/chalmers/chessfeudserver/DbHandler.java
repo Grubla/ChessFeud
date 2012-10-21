@@ -9,7 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -89,20 +91,22 @@ public class DbHandler extends HttpServlet {
 			final HttpServletResponse response) throws ServletException, IOException {
 		final int intrequest = (Integer) tags.get(request.getParameter("tag"));
 		final HashMap<String, String[]> h =(HashMap<String, String[]>) request.getParameterMap();
-		new Thread() {
-			@Override
+		
+		AsyncContext async = request.startAsync();
+		async.setTimeout(TimeUnit.MINUTES.toMillis(5));
+		async.start(new Runnable() {
 			public void run() {
 				doRequest(h, intrequest, response);
 			}
-		
-		}.start();
+		});
+		async.complete();
 	}
 	
 	private void doRequest(HashMap<String, String[]> h, int request, HttpServletResponse response){
 
 		try {
 			response.setContentType("text");
-			final ServletOutputStream out = response.getOutputStream();
+			ServletOutputStream out = response.getOutputStream();
 			switch (request) {
 			case 0:
 				out.print(authenticate(((String[])h.get("username"))[0],
@@ -199,7 +203,6 @@ public class DbHandler extends HttpServlet {
 			rs = s.executeQuery("select password from auth where userName='"
 					+ userName + "'");
 			rs.first();
-			
 			if (rs.getString(1).equals(password)) {
 				return true;
 			}			 			
