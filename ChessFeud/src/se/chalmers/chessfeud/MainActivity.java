@@ -5,6 +5,7 @@ import java.util.List;
 
 import se.chalmers.chessfeud.constants.DbHandler;
 import se.chalmers.chessfeud.constants.Game;
+import se.chalmers.chessfeud.constants.Settings;
 import se.chalmers.chessfeud.model.ChessModel;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,6 +30,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ImageView iLogo;
 	private ListView startedGames;
 	private DbHandler dbh;
+	private Settings setgs;
 
 	// private ListView finishedGames;
 
@@ -38,6 +40,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.menu_main);
 
 		dbh = DbHandler.getInstance();
+		setgs = Settings.getInstance();
 
 		bStats = (Button) findViewById(R.id.button_stats);
 		bSettings = (Button) findViewById(R.id.button_settings);
