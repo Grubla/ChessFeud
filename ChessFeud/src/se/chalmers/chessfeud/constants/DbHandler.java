@@ -39,7 +39,7 @@ public class DbHandler {
 	protected DbHandler() {
 	}
 	/**
-	 * Returns a new instance of DbHandler if there isnt already an instance, otherwise returns the instance.
+	 * Returns a new instance of DbHandler if there isn't already an instance, otherwise returns the instance.
 	 * @return an instance of the DbHandler
 	 */
 	public static DbHandler getInstance() {
@@ -117,6 +117,18 @@ public class DbHandler {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair(TAG, "userExists"));
 		pairs.add(new BasicNameValuePair(USERNAME, userName));
+		return updateDatabase();
+	}
+	/**
+	 * Sets moves a finished game from the gamedatabase to finishedgames.
+	 * @param target the one you lost or won against.
+	 * @return if everyhting went as expected.
+	 */
+	public boolean setGameFinished(String target) {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair(TAG, "setGameFinished"));
+		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
+		pairs.add(new BasicNameValuePair("user2", target));
 		return updateDatabase();
 	}
 
@@ -206,6 +218,28 @@ public class DbHandler {
 			games.add(i);
 		}
 		return games;
+	}
+	/**
+	 * Contacts the database and request a list of all finished games played in the closest 72 hours.
+	 * @return a list of the finished games.
+	 */
+	public List<String> getFinishedGames() {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair(TAG, "getFinishedGames"));
+		pairs.add(new BasicNameValuePair(USERNAME, player.getUserName()));
+		String s = getFromDatabase();
+		if (s == null) {
+			return null;
+		} else if (s.equals("")) { // If something went wrong when contacting
+									// the database.
+			return new ArrayList<String>();
+		}
+		List<String> finishedgames = new ArrayList<String>();
+		String[] dbFinishedGames = s.split(";");
+		for (String i : dbFinishedGames) {
+			finishedgames.add(i);
+		}
+		return finishedgames;
 	}
 
 	/**

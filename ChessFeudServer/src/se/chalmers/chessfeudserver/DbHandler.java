@@ -77,6 +77,7 @@ public class DbHandler extends HttpServlet {
 		tags.put("newInquirie", 10);
 		tags.put("userExists", 11);
 		tags.put("getFinishedGames", 12);
+		tags.put("setGameFinished", 13);
 
 	}
 
@@ -163,6 +164,9 @@ public class DbHandler extends HttpServlet {
 				}
 				out.print(strbuilder.toString());
 				break;
+			case 13:
+				setGameFinished(((String[])h.get("user1"))[0],
+						((String[])h.get("user2"))[0]);
 			}
 
 		} catch (NumberFormatException e) {
@@ -249,6 +253,7 @@ public class DbHandler extends HttpServlet {
 	 * @throws SQLException
 	 */
 	private List<String> getFinishedGames(String userName) throws SQLException {
+		removeOutdatedGames();
 		List<String> games = new ArrayList<String>();
 		rs = s.executeQuery("select * from finishedgames where user1='"
 				+ userName + "' or user2='" + userName + "'");
@@ -258,6 +263,20 @@ public class DbHandler extends HttpServlet {
 					+ rs.getString(5));
 		}
 		return games;
+	}
+	/**
+	 * Contacts the database and removes all outdated games.
+	 * @throws SQLException
+	 */
+	private void removeOutdatedGames() throws SQLException {
+		s.executeUpdate("delete from finishedGames where DATE('timestamp') < CURDATE() - 2 DAY");	
+	}
+	
+	private void setGameFinished(String user1, String user2) throws SQLException {
+		rs = s.executeQuery("select * from game where user1='"+user1+"' and user2='"+user2+"' or user1='"+user2+"' and user2='"+user1);
+		s.executeUpdate("insert into finishedgames(user1,user2,board,turns) values('"+rs.getString(1)+"','"+rs.getString(2)+"','"+rs.getString(3)+"','"+rs.getString(4)+"'");
+		s.executeUpdate("delete from game where user1='"+user1+"' and user2='"+user2+"' or user1='"+user2+"' and user2='"+user1);
+		
 	}
 
 	/**
