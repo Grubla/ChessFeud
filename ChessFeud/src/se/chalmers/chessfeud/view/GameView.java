@@ -36,6 +36,12 @@ public class GameView extends View implements OnTouchListener {
 	private int chessSquareHeight;
 	private int chessSquareWidth;
 	private ChessModel gm = new ChessModel(0);
+	Paint wMain = new Paint();
+	Paint wSelected = new Paint();
+	Paint wAvailable = new Paint();
+	Paint bMain = new Paint();
+	Paint bSelected = new Paint();
+	Paint bAvailable = new Paint();
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -48,9 +54,9 @@ public class GameView extends View implements OnTouchListener {
 		gm = new ChessModel(gameInfo, pcl);
 		this.invalidate();
 	}
-	
-	protected void onCreate(Canvas canvas){
-		
+
+	protected void onCreate(Canvas canvas) {
+
 	}
 
 	@Override
@@ -59,24 +65,13 @@ public class GameView extends View implements OnTouchListener {
 
 		chessSquareHeight = this.getHeight() / C.BOARD_LENGTH;
 		chessSquareWidth = this.getWidth() / C.BOARD_LENGTH;
-		// White square main
-		Paint wMain = new Paint();
+
 		wMain.setColor(C.SQUARE_WHITE);
-		// White square selected
-		Paint wSelected = new Paint();
 		wSelected.setColor(C.SQUARE_WHITE_SELECTED);
-		// White square available
-		Paint wAvailable = new Paint();
 		wAvailable.setColor(C.SQUARE_WHITE_POSSIBLE_MOVES);
 
-		// Black square main
-		Paint bMain = new Paint();
 		bMain.setColor(C.SQUARE_BLACK);
-		// Black square selected
-		Paint bSelected = new Paint();
 		bSelected.setColor(C.SQUARE_BLACK_SELECTED);
-		// Black square available
-		Paint bAvailable = new Paint();
 		bAvailable.setColor(C.SQUARE_BLACK_POSSIBLE_MOVES);
 
 		List<Position> possibleSquares = gm.getPossibleMoves();
@@ -88,24 +83,10 @@ public class GameView extends View implements OnTouchListener {
 						(x + 1) * chessSquareWidth, (y + 1) * chessSquareHeight);
 
 				if (paintWhite) {
-					if (possibleSquares.contains(new Position(x, y))) {
-						canvas.drawRect(r, wAvailable);
-					} else if (new Position(x, y).equals(gm
-							.getSelectedPosition()) && setgs.getHelptipStatus()) {
-						canvas.drawRect(r, wSelected);
-					} else {
-						canvas.drawRect(r, wMain);
-					}
+					paintWhiteSquare(possibleSquares, canvas, r, x, y);
 
 				} else {
-					if (possibleSquares.contains(new Position(x, y))) {
-						canvas.drawRect(r, bAvailable);
-					} else if (new Position(x, y).equals(gm
-							.getSelectedPosition()) && setgs.getHelptipStatus()) {
-						canvas.drawRect(r, bSelected);
-					} else {
-						canvas.drawRect(r, bMain);
-					}
+					paintBlackSquare(possibleSquares, canvas, r, x, y);
 				}
 
 				Piece p = gm.getPieceAt(new Position(x, y));
@@ -128,6 +109,58 @@ public class GameView extends View implements OnTouchListener {
 			}
 			// Change the color after each row so the board i checked.
 			paintWhite = !paintWhite;
+		}
+	}
+
+	/**
+	 * A method to paint out the brighter square.
+	 * 
+	 * @param possibleSquares
+	 *            List of squares where the selected piece can go to.
+	 * @param canvas
+	 *            is the canvas
+	 * @param r
+	 *            is the rectangle to be painted
+	 * @param x
+	 *            is the x-pos
+	 * @param y
+	 *            is the y-pos
+	 */
+	private void paintWhiteSquare(List<Position> possibleSquares,
+			Canvas canvas, Rect r, int x, int y) {
+		if (possibleSquares.contains(new Position(x, y))) {
+			canvas.drawRect(r, wAvailable);
+		} else if (new Position(x, y).equals(gm.getSelectedPosition())
+				&& setgs.getHelptipStatus()) {
+			canvas.drawRect(r, wSelected);
+		} else {
+			canvas.drawRect(r, wMain);
+		}
+	}
+
+	/**
+	 * A method to paint out the darker square.
+	 * 
+	 * @param possibleSquares
+	 *            List of squares where the selected piece can go to.
+	 * @param canvas
+	 *            is the canvas
+	 * @param r
+	 *            is the rectangle to be painted
+	 * @param x
+	 *            is the x-pos
+	 * @param y
+	 *            is the y-pos
+	 */
+	private void paintBlackSquare(List<Position> possibleSquares,
+			Canvas canvas, Rect r, int x, int y) {
+		if (possibleSquares.contains(new Position(x, y))) {
+			canvas.drawRect(r, bAvailable);
+		} else if (new Position(x, y).equals(gm.getSelectedPosition())
+				&& setgs.getHelptipStatus()) {
+			canvas.drawRect(r, bSelected);
+		} else {
+			canvas.drawRect(r, bMain);
 		}
 	}
 
