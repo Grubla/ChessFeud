@@ -5,7 +5,7 @@ import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.constants.Game;
-import se.chalmers.chessfeud.constants.Settings;
+import se.chalmers.chessfeud.constants.PlayerInfo;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
@@ -30,7 +30,7 @@ import android.view.View.OnTouchListener;
  */
 public class GameView extends View implements OnTouchListener {
 	private Context context;
-	private Settings setgs = Settings.getInstance();
+	private PlayerInfo pi = PlayerInfo.getInstance();
 	private int chessSquareHeight;
 	private int chessSquareWidth;
 	private ChessModel gm = new ChessModel(0);
@@ -129,7 +129,7 @@ public class GameView extends View implements OnTouchListener {
 		if (possibleSquares.contains(new Position(x, y))) {
 			canvas.drawRect(r, wAvailable);
 		} else if (new Position(x, y).equals(gm.getSelectedPosition())
-				&& setgs.getHelptipStatus()) {
+				&& pi.getHelptipStatus(context)) {
 			canvas.drawRect(r, wSelected);
 		} else {
 			canvas.drawRect(r, wMain);
@@ -155,7 +155,7 @@ public class GameView extends View implements OnTouchListener {
 		if (possibleSquares.contains(new Position(x, y))) {
 			canvas.drawRect(r, bAvailable);
 		} else if (new Position(x, y).equals(gm.getSelectedPosition())
-				&& setgs.getHelptipStatus()) {
+				&& pi.getHelptipStatus(context)) {
 			canvas.drawRect(r, bSelected);
 		} else {
 			canvas.drawRect(r, bMain);

@@ -35,6 +35,7 @@ public final class C {
 
 	public static final int PW_MIN_LENGHT = 4;
 
+	public static final String FILENAME_SETTINGS = "chessfeud_settings";
 	public static final String EXCEPTION_LOCATION_SETTINGS = "Settings";
 
 	public static final String[] SETTINGS_NAME_LIST = { "Helptip", "Sound" };

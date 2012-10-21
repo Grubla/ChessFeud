@@ -1,9 +1,11 @@
 package se.chalmers.chessfeud.constants;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -26,7 +28,6 @@ public class PlayerInfo {
 	private String userName;
 	private String password;
 	private boolean loggedIn;
-
 
 	/**
 	 * A singleton class for handling info about the player currently logged in.
@@ -65,6 +66,20 @@ public class PlayerInfo {
 		return password;
 	}
 
+	public boolean getHelptipStatus(Context c) {
+		BufferedReader inputReader;
+		try {
+			inputReader = new BufferedReader(new InputStreamReader(
+					c.openFileInput(C.FILENAME_SETTINGS)));
+			Scanner sc = new Scanner(inputReader);
+			return (sc.nextInt() != 0);
+		} catch (FileNotFoundException e) {
+			Log.e(C.EXCEPTION_LOCATION_SETTINGS,
+					"Could not find the file when trying to save new text file(?)");
+		}
+		return true;
+	}
+
 	/**
 	 * Loads the username and the password from a textfile, if there isnt any,
 	 * sets loggedIn to false.
@@ -81,15 +96,16 @@ public class PlayerInfo {
 		} catch (NoSuchElementException e) {
 			Log.e("PlayerInfo", "File empty");
 		}
-		if(userName == null || password == null){
+		if (userName == null || password == null) {
 			userName = "";
 			password = "";
 		}
 	}
+
 	/**
 	 * 
 	 */
-	public void tryLogin(Context c){
+	public void tryLogin(Context c) {
 		loadInfoFromFile(c);
 		loggedIn = DbHandler.getInstance().login(userName, password);
 	}
