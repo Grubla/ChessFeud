@@ -88,7 +88,7 @@ public class DbHandler extends HttpServlet {
 	protected void doGet(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException, IOException {
 		final int intrequest = (Integer) tags.get(request.getParameter("tag"));
-		final HashMap h =(HashMap) request.getParameterMap();
+		final HashMap<String, String[]> h =(HashMap<String, String[]>) request.getParameterMap();
 		new Thread() {
 			@Override
 			public void run() {
@@ -98,7 +98,7 @@ public class DbHandler extends HttpServlet {
 		}.start();
 	}
 	
-	private void doRequest(HashMap h, int request, HttpServletResponse response){
+	private void doRequest(HashMap<String, String[]> h, int request, HttpServletResponse response){
 
 		try {
 			response.setContentType("text");
@@ -199,6 +199,7 @@ public class DbHandler extends HttpServlet {
 			rs = s.executeQuery("select password from auth where userName='"
 					+ userName + "'");
 			rs.first();
+			
 			if (rs.getString(1).equals(password)) {
 				return true;
 			}			 			
