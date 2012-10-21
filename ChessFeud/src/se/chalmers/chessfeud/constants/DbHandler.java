@@ -109,6 +109,17 @@ public class DbHandler {
 		return (updateDatabase());
 	}
 	/**
+	 * Deletes a user from the database.
+	 * @param userName the name of the user to be deleted.
+	 * @return
+	 */
+	public boolean deleteUser(String userName) {
+		pairs.clear();
+		pairs.add(new BasicNameValuePair(TAG, "deleteUser"));
+		pairs.add(new BasicNameValuePair(USERNAME, userName));
+		return (updateDatabase());
+	}
+	/**
 	 * Contacts the server and checks if the specified username exists in the database.
 	 * @param userName
 	 * @return
