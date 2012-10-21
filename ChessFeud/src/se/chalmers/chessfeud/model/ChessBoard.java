@@ -29,14 +29,16 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Creates a clone of board given with the piece from oldPos moved to newPos
+	 * Creates a clone of board given with the piece from oldPos moved to newPos.
+	 * This is a good way to test new scenarios which may happen if a piece is
+	 * moved like this.
 	 * 
 	 * @param cb
 	 *            , the old board given
 	 * @param oldPos
-	 *            , the position of the piece that should be moved
+	 *            The position of the piece that should be moved
 	 * @param newPos
-	 *            , where the piece will be moved
+	 *            Where the piece will be moved
 	 */
 	public ChessBoard(ChessBoard cb, Position oldPos, Position newPos) {
 		board = new Piece[C.BOARD_LENGTH][C.BOARD_LENGTH];

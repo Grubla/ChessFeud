@@ -3,7 +3,10 @@ package se.chalmers.chessfeud.model.utils;
 import se.chalmers.chessfeud.constants.C;
 
 /**
- * A class to keep track of the position.
+ * A class representing 2D positions.
+ * The positions basically only have x and y values,
+ * though they are adapted to the chess game by adding 
+ * methods to check if the positions are inbounds.
  * 
  * @author Arvid modifiedby Henrik Alburg
  * 
@@ -14,24 +17,34 @@ import se.chalmers.chessfeud.constants.C;
 public class Position {
 	private int x, y;
 
-	// Constructor
+	/**
+	 * Creates a new position with the given x and y values.
+	 * 
+	 * @param x
+	 *            The x value of the position
+	 * @param y
+	 *            The y value of the position
+	 */
 	public Position(int x, int y) {
 		this.x = x;
 		this.y = y;
-	} // End Constructor
+	}
 
-	// Constructor
+	/**
+	 * Creates a new position with the x and y values from the given position.
+	 * @param p
+	 * 			The position to copy. 
+	 */
 	public Position(Position p) {
 		this.x = p.x;
 		this.y = p.y;
-	} // End Constructor
+	}
 
 	/**
 	 * A function to get the x-value from a position.
 	 * 
 	 * @return the x-value in the position
 	 */
-
 	public int getX() {
 		return this.x;
 	}
