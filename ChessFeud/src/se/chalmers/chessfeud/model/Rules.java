@@ -95,14 +95,11 @@ public class Rules {
 				Piece kingPiece = cb.getPieceAt(x, y);
 				if (kingPiece.getId() == C.PIECE_KING
 						&& kingPiece.getTeam() == team) {
-					if (isCheck(cb, team, x, y)) {
-						return true;
-					}
+					return isCheck(cb, team, x, y); 
 				}
 			}
 		}
 		return false;
-
 	}
 
 	/* Checks if the given king is check */
@@ -219,9 +216,7 @@ public class Rules {
 		for (int x = 0; x < cb.getWidth(); x++) {
 			for (int y = 0; y < cb.getHeight(); y++) {
 				if (cb.getPieceAt(x, y).getTeam() == nextTurn) {
-					if (isPossibleToMove(cb, x, y)) {
-						return false;
-					}
+					return isPossibleToMove(cb, x, y);
 				}
 			}
 		}
