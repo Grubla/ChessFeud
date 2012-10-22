@@ -18,6 +18,12 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public class NoPiece extends Piece {
 
+	/**
+	 * Creates a new no piece with the team -1. This is to fill the board with
+	 * pieces, even where there is no pieces. The team -1 showt that this piece
+	 * is neither black or white.
+	 * 
+	 */
 	public NoPiece() {
 		super(-1, C.PIECE_NOPIECE);
 	}

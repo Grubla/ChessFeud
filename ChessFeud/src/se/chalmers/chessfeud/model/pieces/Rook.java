@@ -17,6 +17,12 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public class Rook extends Piece {
 
+	/**
+	 * Creates a new rook with the selected team.
+	 * 
+	 * @param team
+	 *            what team the rook shall belong to.
+	 */
 	public Rook(int team) {
 		super(team, C.PIECE_ROOK);
 	}

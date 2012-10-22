@@ -18,6 +18,12 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public class Knight extends Piece {
 
+	/**
+	 * Creates a new knight with the selected team.
+	 * 
+	 * @param team
+	 *            what team the knight shall belong to.
+	 */
 	public Knight(int team) {
 		super(team, C.PIECE_KNIGHT);
 	}

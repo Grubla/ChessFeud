@@ -18,6 +18,12 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public class Queen extends Piece {
 
+	/**
+	 * Creates a new queen with the selected team.
+	 * 
+	 * @param team
+	 *            what team the queen shall belong to.
+	 */
 	public Queen(int team) {
 		super(team, C.PIECE_QUEEN);
 	}

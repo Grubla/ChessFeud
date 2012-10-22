@@ -16,10 +16,16 @@ import se.chalmers.chessfeud.model.utils.Position;
  */
 
 public class Pawn extends Piece {
-
+	
 	private boolean hasMoved = false;
 	private int team;
-
+	
+	/**
+	 * Creates a new pawn with the selected team.
+	 * 
+	 * @param team
+	 *            what team the pawn shall belong to.
+	 */
 	public Pawn(int team) {
 		super(team, C.PIECE_PAWN);
 		this.team = team;

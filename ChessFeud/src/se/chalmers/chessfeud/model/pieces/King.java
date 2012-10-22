@@ -18,6 +18,12 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public class King extends Piece {
 
+	/**
+	 * Creates a new king with the selected team.
+	 * 
+	 * @param team
+	 *            what team the king shall belong to.
+	 */
 	public King(int team) {
 		super(team, C.PIECE_KING);
 	}
@@ -46,18 +52,18 @@ public class King extends Piece {
 		}
 		return posList;
 	}
-	
-	/*Checks so the positions is inside the game board*/
-	private boolean inBounds(int x, int y, Position p){
+
+	/* Checks so the positions is inside the game board */
+	private boolean inBounds(int x, int y, Position p) {
 		return xInBounds(x, p) && yInBounds(y, p);
 	}
-	
-	/*Checks so the x-coordinate is inside the game board*/
+
+	/* Checks so the x-coordinate is inside the game board */
 	private boolean xInBounds(int x, Position p) {
 		return p.getX() + x < C.BOARD_LENGTH && 0 <= p.getX() + x;
 	}
-	
-	/*Checks so the y coordinate is inside the game board*/
+
+	/* Checks so the y coordinate is inside the game board */
 	private boolean yInBounds(int y, Position p) {
 		return p.getY() + y < C.BOARD_LENGTH && 0 <= p.getY() + y;
 	}

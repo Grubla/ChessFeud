@@ -17,6 +17,12 @@ import se.chalmers.chessfeud.model.utils.Position;
 
 public class Bishop extends Piece {
 
+	/**
+	 * Creates a new bishop with the selected team.
+	 * 
+	 * @param team
+	 *            what team the bishop shall belong to.
+	 */
 	public Bishop(int team) {
 		super(team, C.PIECE_BISHOP);
 	}
