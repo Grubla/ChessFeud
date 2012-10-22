@@ -44,7 +44,7 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			g = new Game(gameInfo, position);
 			cm = new ChessModel(g, this);
 			gv.setGameModel(cm);
-			ts = new TimeStamp(g.getTimestamp());;
+			ts = new TimeStamp(g.getTimestamp());
 		}
 
 		nbrOfTurns.setText("" + g.getTurns());

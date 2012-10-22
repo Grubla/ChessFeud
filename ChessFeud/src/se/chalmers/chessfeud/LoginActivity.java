@@ -23,7 +23,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private PlayerInfo player;
 	private EditText eUsername;
 	private EditText ePassword;
-	private Button bLogin;
 	private Button bRegister;
 
 	@Override
@@ -55,7 +54,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 		eUsername = (EditText) findViewById(R.id.inputUsername);
 		ePassword = (EditText) findViewById(R.id.inputPassword);
-		bLogin = (Button) findViewById(R.id.login);
+		Button bLogin = (Button) findViewById(R.id.login);
 		bRegister = (Button) findViewById(R.id.register);
 
 		bLogin.setOnClickListener(this);

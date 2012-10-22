@@ -23,7 +23,6 @@ import android.widget.CheckBox;
 public class SettingsActivity extends Activity implements OnClickListener{
 	private CheckBox helptipSwitch;
 	private CheckBox soundSwitch;
-	private AudioManager audioManager;
 	private PlayerInfo pi;
 	private Button bAbout;
 
@@ -31,7 +30,7 @@ public class SettingsActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		audioManager = (AudioManager) getApplicationContext().getSystemService(
+		AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(
 				Context.AUDIO_SERVICE);
 		pi = PlayerInfo.getInstance();
 		setLayout();
