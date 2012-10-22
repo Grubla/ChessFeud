@@ -11,7 +11,7 @@ import se.chalmers.chessfeud.constants.C;
  * @author Arvid modifiedby Henrik Alburg
  * 
  * 
- *         Copyright © 2012 Arvid Karlsson, Henrik Alburg
+ *         Copyright (c) 2012 Arvid Karlsson, Henrik Alburg
  */
 
 public class Position {
@@ -72,9 +72,9 @@ public class Position {
 	 * A function to check if two coordinates is inside of the board.
 	 * 
 	 * @param x
-	 *            the x-value of the position.
+	 *            The x-value of the position.
 	 * @param y
-	 *            the y-value of the position.
+	 *            The y-value of the position.
 	 * @return true if the position is inside the board, otherwise false.
 	 */
 	public static boolean inBounds(int x, int y) {

@@ -4,6 +4,7 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
+import android.util.Log;
 
 /**
  * A class for representing a chessboard.
@@ -149,10 +150,10 @@ public class ChessBoard {
 	 * @return The former piece at newPos (got taken).
 	 */
 	public Piece movePiece(Position oldPos, Position newPos) {
-		Piece piece = getPieceAt(newPos);
-		board[newPos.getX()][newPos.getY()] = getPieceAt(oldPos);
+		Piece oldPiece = PieceFactory.createNewPiece(getPieceAt(newPos));
+		board[newPos.getX()][newPos.getY()] = PieceFactory.createNewPiece(getPieceAt(oldPos));
 		board[oldPos.getX()][oldPos.getY()] = new NoPiece();
-		return piece;
+		return oldPiece;
 	}
 
 	/**

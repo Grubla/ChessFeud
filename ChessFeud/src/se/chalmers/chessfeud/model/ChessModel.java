@@ -135,10 +135,10 @@ public class ChessModel {
 	 */
 	private void movePiece(Position p) {
 		Piece pi = chessBoard.movePiece(selected, p);
-		deselectPiece();
-		if (!(pi instanceof NoPiece)) {
+		if(pi.getId() != C.PIECE_NOPIECE){
 			takenPieces.add(pi);
 		}
+		deselectPiece();
 		changeTurn();
 		sendModel();
 		checkState();
@@ -262,6 +262,9 @@ public class ChessModel {
 	 * player trying to move it and it is his or hers turn.
 	 */
 	private boolean isMoveable(Position p) {
+	if(gameInfo == null){
+		return true;
+	}
 		int activePlayer = numberOfMoves % 2;
 		if (activePlayer == this.thisPlayer) {
 			return chessBoard.getPieceAt(p).getTeam() == activePlayer;
@@ -280,10 +283,11 @@ public class ChessModel {
 	}
 
 	/* Sends the model to the given PropertyChangeListener */
-	private void sendModel() {
-		PropertyChangeEvent event = new PropertyChangeEvent(this, "Model",
-				gameInfo, this.exportModel());
-		this.listener.propertyChange(event);
+	private void sendModel(){
+		if(listener != null){
+			PropertyChangeEvent event = new PropertyChangeEvent(this, "Model", gameInfo, this.exportModel());
+			this.listener.propertyChange(event);
+		}
 	}
 
 }
