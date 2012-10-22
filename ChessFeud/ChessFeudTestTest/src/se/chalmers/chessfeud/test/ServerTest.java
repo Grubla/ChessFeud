@@ -74,7 +74,7 @@ public class ServerTest extends InstrumentationTestCase {
 		c.click(new Position(0, 6));
 		c.click(new Position(0,5));
 		dbh.newMove("newmovetest2", c.exportModel());
-		assertEquals(new Game(dbh.getGames().get(0),0).getGameBoard(), c.exportModel());
+		assertEquals(new Game(dbh.getGames().get(0),0).getGameBoard(), c.exportModel().split("/")[0]);
 		dbh.setGameFinished("newmovetest2");
 		dbh.deleteUser("newmovetest");
 		dbh.deleteUser("newmovetest2");
