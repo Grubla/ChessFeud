@@ -236,7 +236,6 @@ public class DbHandler {
 		List<String> games = new ArrayList<String>();
 		String[] dbGames = s.split(";");
 		for (String i : dbGames) {
-			System.out.println(i);
 			games.add(i);
 		}
 		return games;
