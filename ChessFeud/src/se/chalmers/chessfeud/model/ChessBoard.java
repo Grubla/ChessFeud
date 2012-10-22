@@ -98,7 +98,7 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Returns the piece at the given position
+	 * Returns the piece at the given position.
 	 * 
 	 * @param p
 	 *            The given position 0 <= x, y < 8
@@ -109,7 +109,7 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Returns the piece at the given position
+	 * Returns the piece at the given position.
 	 * 
 	 * @param x
 	 *            The positions x value, 0 <= x < 8
@@ -122,7 +122,8 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Returns the width of the chessboard
+	 * Returns the width of the chessboard.
+	 * 
 	 * @return An int representing the width
 	 */
 	public int getWidth() {
@@ -130,7 +131,8 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Returns the height of the chessboard
+	 * Returns the height of the chessboard.
+	 * 
 	 * @return An int representing the height
 	 */
 	public int getHeight() {
@@ -138,13 +140,13 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Moves a piece from oldPos to newPos
+	 * Moves a piece from oldPos to newPos.
 	 * 
 	 * @param oldPos
-	 *            The current position of the piece
+	 *            The current position of the piece.
 	 * @param newPos
-	 *            The new position of the piece
-	 * @return The former piece at newPos (got taken)
+	 *            The new position of the piece.
+	 * @return The former piece at newPos (got taken).
 	 */
 	public Piece movePiece(Position oldPos, Position newPos) {
 		Piece piece = getPieceAt(newPos);
@@ -154,11 +156,11 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Check whether a position is empty or not
+	 * Check whether a position is empty or not.
 	 * 
 	 * @param pos
-	 *            The pos to be checked
-	 * @return true if their is no piece at the given pos
+	 *            , the pos to be checked.
+	 * @return true if their is no piece at the given pos.
 	 */
 	public boolean isEmpty(Position pos) {
 		return getPieceAt(pos) instanceof NoPiece;
