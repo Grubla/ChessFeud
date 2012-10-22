@@ -34,12 +34,12 @@ public class GameView extends View implements OnTouchListener {
 	private int chessSquareHeight;
 	private int chessSquareWidth;
 	private ChessModel gm = new ChessModel(0);
-	Paint wMain = new Paint();
-	Paint wSelected = new Paint();
-	Paint wAvailable = new Paint();
-	Paint bMain = new Paint();
-	Paint bSelected = new Paint();
-	Paint bAvailable = new Paint();
+	private Paint wMain = new Paint();
+	private Paint wSelected = new Paint();
+	private Paint wAvailable = new Paint();
+	private Paint bMain = new Paint();
+	private Paint bSelected = new Paint();
+	private Paint bAvailable = new Paint();
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
