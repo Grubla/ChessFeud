@@ -29,12 +29,12 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Creates a clone of board given with the piece from oldPos moved to newPos.
-	 * This is a good way to test new scenarios which may happen if a piece is
-	 * moved like this.
+	 * Creates a clone of board given with the piece from oldPos moved to
+	 * newPos. This is a good way to test new scenarios which may happen if a
+	 * piece is moved like this.
 	 * 
 	 * @param cb
-	 *            , the old board given
+	 *            The old board given
 	 * @param oldPos
 	 *            The position of the piece that should be moved
 	 * @param newPos
@@ -61,6 +61,7 @@ public class ChessBoard {
 	 * <------------------------------------>
 	 * 
 	 * @param s
+	 *            The string which is gotten by using exportString()
 	 */
 	public ChessBoard(String s) {
 		String pieces[] = s.split(",");
@@ -81,7 +82,8 @@ public class ChessBoard {
 	 * Returns a string representing a board. The String holds the position of
 	 * every Piece where a pos is between 0-63 and 65 is removed.
 	 * 
-	 * @return
+	 * @return The String able to create a new ChessBoard with the String
+	 *         constructor.
 	 */
 	public String exportBoard() {
 		StringBuilder export = new StringBuilder();
@@ -99,8 +101,8 @@ public class ChessBoard {
 	 * Returns the piece at the given position
 	 * 
 	 * @param p
-	 *            , the given position 0 <= x, y < 8
-	 * @return a piece object
+	 *            The given position 0 <= x, y < 8
+	 * @return A piece object, which is at the given position
 	 */
 	public Piece getPieceAt(Position p) {
 		return getPieceAt(p.getX(), p.getY());
@@ -110,10 +112,10 @@ public class ChessBoard {
 	 * Returns the piece at the given position
 	 * 
 	 * @param x
-	 *            , the positions x value, 0 <= x < 8
+	 *            The positions x value, 0 <= x < 8
 	 * @param y
-	 *            , the positions y value, 0 <= y < 8
-	 * @return a piece objet from the position
+	 *            The positions y value, 0 <= y < 8
+	 * @return A piece object from the position
 	 */
 	public Piece getPieceAt(int x, int y) {
 		return board[x][y];
@@ -121,6 +123,7 @@ public class ChessBoard {
 
 	/**
 	 * Returns the width of the chessboard
+	 * @return An int representing the width
 	 */
 	public int getWidth() {
 		return board.length;
@@ -128,6 +131,7 @@ public class ChessBoard {
 
 	/**
 	 * Returns the height of the chessboard
+	 * @return An int representing the height
 	 */
 	public int getHeight() {
 		return board[0].length;
@@ -137,10 +141,10 @@ public class ChessBoard {
 	 * Moves a piece from oldPos to newPos
 	 * 
 	 * @param oldPos
-	 *            , the current position of the piece
+	 *            The current position of the piece
 	 * @param newPos
-	 *            , the new position of the piece
-	 * @return, the former piece at newPos
+	 *            The new position of the piece
+	 * @return The former piece at newPos (got taken)
 	 */
 	public Piece movePiece(Position oldPos, Position newPos) {
 		Piece piece = getPieceAt(newPos);
@@ -153,7 +157,7 @@ public class ChessBoard {
 	 * Check whether a position is empty or not
 	 * 
 	 * @param pos
-	 *            , the pos to be checked
+	 *            The pos to be checked
 	 * @return true if their is no piece at the given pos
 	 */
 	public boolean isEmpty(Position pos) {

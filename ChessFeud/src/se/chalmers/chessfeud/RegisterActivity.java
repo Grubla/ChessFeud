@@ -18,6 +18,8 @@ import android.widget.Toast;
  * 
  * @author Henrik Alburg
  * 
+ *         Copyright (c) Henrik Alburg 2012
+ * 
  */
 public class RegisterActivity extends Activity {
 	private Button bRegister;
@@ -93,7 +95,8 @@ public class RegisterActivity extends Activity {
 			return false;
 		}
 		if (ePassword1.getText().toString().length() < C.PW_MIN_LENGHT) {
-			makeToast("Password has to be at least " + C.PW_MIN_LENGHT + " characters");
+			makeToast("Password has to be at least " + C.PW_MIN_LENGHT
+					+ " characters");
 			return false;
 		}
 		return true;

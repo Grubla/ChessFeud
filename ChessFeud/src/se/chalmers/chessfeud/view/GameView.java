@@ -214,8 +214,6 @@ public class GameView extends View implements OnTouchListener {
 		int x = (int) event.getX() / chessSquareWidth;
 		int y = (int) event.getY() / chessSquareHeight;
 		gm.click(new Position(x, y));
-		if (gm.getTakenPieces() != null) {
-		}
 		this.invalidate();
 		return false;
 	}

@@ -19,7 +19,7 @@ import se.chalmers.chessfeud.model.utils.Position;
  *  piece or deselect it).
  * @author Henrik Alburg
  *
- * Copyright � 2012 Henrik Alburg, Arvid Karlsson
+ * Copyright (c) 2012 Henrik Alburg, Arvid Karlsson
  *
  */
 public class ChessModel {
@@ -147,14 +147,14 @@ public class ChessModel {
 	/**
 	 * Returns the piece at the given position
 	 * @param p, a position on the board 0 <= x,y < 8 
-	 * @return a Piece object
+	 * @return a Piece object, which is at the given pos
 	 */
 	public Piece getPieceAt(Position p){
 		return chessBoard.getPieceAt(p.getX(), p.getY());
 	}
 	/**
 	 * Returns a list with all the taken pieces
-	 * @return
+	 * @return All the taken Pieces in a list.
 	 */
 	public List<Piece> getTakenPieces(){
 		return takenPieces;
@@ -238,7 +238,7 @@ public class ChessModel {
 		return false;
 	}
 	
-	/* Returns whos turn it is next (opposite of activePlayer) */
+	/* Returns whom's turn it is next (opposite of activePlayer) */
 	private int nextTurn(){
 		int next = numberOfMoves%2 == 0 ? 1 : 0;
 		if(next == 1){
@@ -247,7 +247,7 @@ public class ChessModel {
 			return 1;
 		}
 	}
-	/* Sends the model to the chosen PropertyChangeListener */
+	/* Sends the model to the given PropertyChangeListener */
 	private void sendModel(){
 		PropertyChangeEvent event = new PropertyChangeEvent(this, "Model", gameInfo, this.exportModel());
 		this.listener.propertyChange(event);

@@ -54,14 +54,22 @@ public class Rules {
 					new King(C.TEAM_WHITE), new Bishop(C.TEAM_WHITE),
 					new Knight(C.TEAM_WHITE), new Rook(C.TEAM_WHITE) } };
 
+	/*
+	 * A private constructor since you don't have to create an instance of this
+	 * class.
+	 */
+	private Rules() {
+
+	}
+
 	/**
 	 * Returns the piece at the given position when a game of chess is
 	 * initiated. The black Rook is on (0,0) The white king is on (4,7)
 	 * 
 	 * @param x
-	 *            , the x position of the piece.
+	 *            The x position of the piece.
 	 * @param y
-	 *            , the y position of the piece
+	 *            The y position of the piece
 	 * @return a new Piece-object, at the start position.
 	 */
 	public static Piece startBoard(int x, int y) {
@@ -72,9 +80,9 @@ public class Rules {
 	 * Returns true if the current board is in a check state.
 	 * 
 	 * @param cb
-	 *            , the board to be checked
+	 *            The board to be checked
 	 * @param team
-	 *            , the currentPlayer (C.TEAM_WHITE)
+	 *            The currentPlayer (C.TEAM_WHITE)
 	 * @return true if it is check
 	 */
 	public static boolean isCheck(ChessBoard cb, int team) {
@@ -167,9 +175,9 @@ public class Rules {
 	 * Returns true if the game is in a draw state.
 	 * 
 	 * @param cb
-	 *            , the board to be checked.
+	 *            The board to be checked.
 	 * @param nextTurn
-	 *            , who is to move next time
+	 *            Who is to move next time
 	 * @return true if the game is in a draw state.
 	 */
 	public static boolean isDraw(ChessBoard cb, int nextTurn) {
@@ -183,9 +191,9 @@ public class Rules {
 	 * Returns true if the game is over and someone has won.
 	 * 
 	 * @param cb
-	 *            , the board to be checked.
+	 *            The board to be checked.
 	 * @param nextTurn
-	 *            , the player to move next time
+	 *            The player to move next time
 	 * @return true if it is check mate.
 	 */
 	public static boolean isCheckMate(ChessBoard cb, int nextTurn) {
@@ -214,7 +222,7 @@ public class Rules {
 	 * @param cb
 	 *            The current gameboard
 	 * @param selected
-	 *            the selected position of the piece
+	 *            The selected position of the piece
 	 * @return a list of positions which it can go to.
 	 */
 	public static List<Position> getPossibleMoves(ChessBoard cb,
@@ -326,23 +334,23 @@ public class Rules {
 		return 0 <= p.getX() && p.getX() < C.BOARD_LENGTH && 0 <= p.getY()
 				&& p.getY() < C.BOARD_LENGTH;
 	}
-	
-	/*Checks the vertically and horizontally squares*/
+
+	/* Checks the vertically and horizontally squares */
 	private static boolean checkStraight(int dx, int dy, Piece pi, int team) {
 		return Math.abs(dx * dy) == 0
 				&& (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_ROOK)
 				&& pi.getTeam() != team;
 	}
-	
-	/*Checks the diagonally squares*/
+
+	/* Checks the diagonally squares */
 	private static boolean checkDiagonally(int dx, int dy, Piece pi, int team) {
 		return Math.abs(dx * dy) == 1
 				&& (pi.getId() == C.PIECE_QUEEN || pi.getId() == C.PIECE_BISHOP)
 				&& pi.getTeam() != team;
 	}
-	
-	/*Checks so there's at least one square between the kings*/
-	private static boolean checkKingsDistance(int dir, Piece pi, int team){
+
+	/* Checks so there's at least one square between the kings */
+	private static boolean checkKingsDistance(int dir, Piece pi, int team) {
 		return dir == 1 && pi.getId() == C.PIECE_KING && pi.getTeam() != team;
 	}
 }

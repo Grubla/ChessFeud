@@ -17,6 +17,7 @@ import android.widget.Toast;
  * 
  * @author Henrik Alburg
  * 
+ *         Copyright (c) Henrik Alburg 2012
  */
 public class LoginActivity extends Activity implements OnClickListener {
 	private PlayerInfo player;
@@ -30,13 +31,15 @@ public class LoginActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		player = PlayerInfo.getInstance();
 		player.tryLogin(getApplicationContext());
-		new Thread(){
+		new Thread() {
 			public void run() {
-				final boolean loggedIn = DbHandler.getInstance().login(player.getUserName(), player.getPassword());
-				LoginActivity.this.runOnUiThread(new Runnable(){
+				final boolean loggedIn = DbHandler.getInstance().login(
+						player.getUserName(), player.getPassword());
+				LoginActivity.this.runOnUiThread(new Runnable() {
 					public void run() {
 						if (loggedIn) {
-							startActivity(new Intent(LoginActivity.this, MainActivity.class));
+							startActivity(new Intent(LoginActivity.this,
+									MainActivity.class));
 						} else {
 							setLoginLayout();
 						}
@@ -44,8 +47,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 				});
 			}
 		}.start();
-		
-		
 
 	}
 
@@ -71,14 +72,15 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if (id == R.id.login) {
 			new Thread() {
 				public void run() {
-					boolean hej = player.login(eUsername.getText().toString(), ePassword
-							.getText().toString(), getApplicationContext());
-					if(hej){
+					boolean hej = player.login(eUsername.getText().toString(),
+							ePassword.getText().toString(),
+							getApplicationContext());
+					if (hej) {
 						startMain();
-					}else{
+					} else {
 						showToaster();
 					}
-					
+
 				}
 			}.start();
 
@@ -86,23 +88,27 @@ public class LoginActivity extends Activity implements OnClickListener {
 			startActivity(new Intent(this, RegisterActivity.class));
 		}
 	}
-	
-	private void startMain(){
-		LoginActivity.this.runOnUiThread(new Runnable(){
+
+	/* Starts the mainactivity in the UI-thread. */
+	private void startMain() {
+		LoginActivity.this.runOnUiThread(new Runnable() {
 			public void run() {
-					startActivity(new Intent(LoginActivity.this, MainActivity.class));
+				startActivity(new Intent(LoginActivity.this, MainActivity.class));
 			}
-		});		
+		});
 	}
-	
-	private void showToaster(){
-		LoginActivity.this.runOnUiThread(new Runnable(){
+
+	/*
+	 * Shows a toaster with the given message. This is done in the UI-thread.
+	 */
+	private void showToaster() {
+		LoginActivity.this.runOnUiThread(new Runnable() {
 			public void run() {
 				String msg = "Wrong password";
 				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
 						.show();
 			}
-		});	
-		
+		});
+
 	}
 }

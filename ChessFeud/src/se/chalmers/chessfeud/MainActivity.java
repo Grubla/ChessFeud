@@ -24,13 +24,23 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * This is the activity that handles the overview of games. It binds the
+ * menu_main.xml file and sets an adapter to its list objects. From here you can
+ * reach the settings and statistics as well as a certain game in the list.
+ * 
+ * @author Henrik Alburg
+ * 
+ *         Copyright (c) Henrik Alburg 2012
+ * 
+ */
 public class MainActivity extends Activity implements OnClickListener {
 	private Button bStats, bSettings, bNewGame;
 	private ImageView iLogo;
 	private ListView startedGames;
 	private DbHandler dbh;
-	// private ListView finishedGames;
 
+	// private ListView finishedGames;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,25 +65,25 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// finishedGames = (ListView) findViewById(R.id.list_finishedGames);
 		startedGames = (ListView) findViewById(R.id.list_ongoingGames);
-		
-		
+
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		new Thread() {
 			public void run() {
 				final List<String> games = dbh.getGames();
-				MainActivity.this.runOnUiThread(new Runnable(){
+				MainActivity.this.runOnUiThread(new Runnable() {
 					public void run() {
 						startedGames.setAdapter(new GameListAdapter(
-								MainActivity.this, R.id.list_ongoingGames, games));
+								MainActivity.this, R.id.list_ongoingGames,
+								games));
 					}
 				});
-					
-					// finishedGames.setListAdapter(this, R.id.list_finishedGames,
-					// getList());
+
+				// finishedGames.setListAdapter(this, R.id.list_finishedGames,
+				// getList());
 			}
 		}.start();
 	}
@@ -109,9 +119,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		prompt.setView(input);
 		prompt.setPositiveButton("Done", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				new Thread(){
+				new Thread() {
 					public void run() {
-						DbHandler.getInstance().newGame(input.getText().toString(),
+						DbHandler.getInstance().newGame(
+								input.getText().toString(),
 								new ChessModel(0).exportModel());
 					}
 				}.start();
