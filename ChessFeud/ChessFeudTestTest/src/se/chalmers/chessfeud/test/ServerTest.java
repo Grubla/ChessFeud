@@ -55,12 +55,10 @@ public class ServerTest extends InstrumentationTestCase {
 		PlayerInfo player = PlayerInfo.getInstance();
 		player.tryLogin(getInstrumentation().getContext());
 		player.login("newgametest", "pass", getInstrumentation().getContext());
-		dbh.newGame("newgametest2", new ChessModel(0).exportModel());
-		boolean b = (dbh.getGames().size() == 1);
+		assertTrue(dbh.newGame("newgametest2", new ChessModel(0).exportModel()));
 		dbh.setGameFinished("newgametest2");
 		dbh.deleteUser("newgametest");
 		dbh.deleteUser("newgametest2");
-		assertTrue(b);
 	}
 	/**
 	 * Makes a move with an existing game and then checks if the move is saved to the database.
