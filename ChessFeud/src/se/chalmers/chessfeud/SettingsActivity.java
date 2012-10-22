@@ -4,9 +4,12 @@ import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.constants.PlayerInfo;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 /**
@@ -17,11 +20,12 @@ import android.widget.CheckBox;
  *         Copyright (c) Sean Pavlov, Henrik Alburg 2012
  * 
  */
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends Activity implements OnClickListener{
 	private CheckBox helptipSwitch;
 	private CheckBox soundSwitch;
 	private AudioManager audioManager;
 	private PlayerInfo pi;
+	private Button bAbout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class SettingsActivity extends Activity {
 				Context.AUDIO_SERVICE);
 		pi = PlayerInfo.getInstance();
 		setLayout();
+		bAbout.setOnClickListener(this);
 		helptipSwitch.setChecked(pi.getHelpTip());
 		audioManager.setStreamMute(AudioManager.STREAM_MUSIC,
 				!pi.getSoundEnabled());
@@ -48,6 +53,9 @@ public class SettingsActivity extends Activity {
 		int id = v.getId();
 
 		switch (id) {
+		case R.id.settingsAboutButton:
+			startActivity(new Intent(this, AboutActivity.class));
+			break;
 		case R.id.settingsHelptipCheckBox:
 			if (helptipSwitch.isChecked()) {
 				setHelptip(false);
@@ -117,6 +125,7 @@ public class SettingsActivity extends Activity {
 	}
 
 	private void setLayout() {
+		bAbout = (Button) findViewById(R.id.settingsAboutButton);
 		helptipSwitch = (CheckBox) findViewById(R.id.settingsHelptipCheckBox);
 		soundSwitch = (CheckBox) findViewById(R.id.settingsSoundCheckBox);
 	}
