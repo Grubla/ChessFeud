@@ -102,7 +102,6 @@ public class RegisterActivity extends Activity {
 	/* A method for making a toast, a message to the user */
 	private void makeToast(final String msg) {
 		RegisterActivity.this.runOnUiThread(new Runnable() {
-			@Override
 			public void run() {
 				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
 						.show();

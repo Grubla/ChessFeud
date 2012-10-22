@@ -5,7 +5,6 @@ import se.chalmers.chessfeud.constants.PlayerInfo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -90,7 +89,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 	
 	private void startMain(){
 		LoginActivity.this.runOnUiThread(new Runnable(){
-			@Override
 			public void run() {
 					startActivity(new Intent(LoginActivity.this, MainActivity.class));
 			}
@@ -99,7 +97,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 	
 	private void showToaster(){
 		LoginActivity.this.runOnUiThread(new Runnable(){
-			@Override
 			public void run() {
 				String msg = "Wrong password";
 				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
