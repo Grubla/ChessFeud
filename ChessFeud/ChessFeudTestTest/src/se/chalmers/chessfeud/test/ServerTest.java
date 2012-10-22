@@ -9,22 +9,33 @@ import android.test.InstrumentationTestCase;
 public class ServerTest extends InstrumentationTestCase {
 	
 	private DbHandler dbh = DbHandler.getInstance();
-	
+	/**
+	 * Tests the login.
+	 */
 	public void testLogin() {
 		assertTrue(dbh.login("grubla", "lol"));
 	}
+	/**
+	 * Adds a user to the db and checks if its there.
+	 */
 	public void testAddUser() {
 		dbh.addUser("foo@bar.com", "test", "testpw");
 		boolean b = dbh.login("test", "testpw");
 		dbh.deleteUser("test");
 		assertTrue(b);
 	}
+	/**
+	 * Adds a user and then deletes in and checks if its still there.
+	 */
 	public void testDeleteUser() {
 		dbh.addUser("foo@bar.com","delete","delete");
 		boolean b = dbh.userExists("delete");
 		dbh.deleteUser("delete");
 		assertTrue(b && !dbh.userExists("delete"));
 	}
+	/**
+	 * Adds two users to the database and checks if they exist.
+	 */
 	public void testUserExists() {
 		dbh.addUser("foo@bar.com", "exists", "exists");
 		dbh.addUser("hej", "exists2", "exists2");
@@ -34,6 +45,9 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.deleteUser("exists2");
 		assertTrue(b&&b2);
 	}
+	/**
+	 * Adds a new game to the db between two players, and then checks if the getGames returns 1 game, then sets the game finished.
+	 */
 	public void testNewGame() {
 		dbh.addUser("asd", "newgametest", "pass");
 		dbh.addUser("asd", "newgametest2", "pass");
@@ -47,6 +61,9 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.deleteUser("newgametest2");
 		assertTrue(b);
 	}
+	/**
+	 * Makes a move with an existing game and then checks if the move is saved to the database.
+	 */
 	public void testNewMove() {
 		dbh.addUser("asd", "newmovetest", "pass");
 		dbh.addUser("asd", "newmovetest2", "pass");
@@ -64,6 +81,9 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.deleteUser("newmovetest2");
 		assertTrue(b);
 	}
+	/**
+	 * Tests the method getStats().
+	 */
 	public void testGetStats() {
 		dbh.addUser("asd", "getstatstest", "pass");
 		PlayerInfo player = PlayerInfo.getInstance();
@@ -80,6 +100,9 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.deleteUser("getstatstest");
 		assertTrue(b && b2);
 	}
+	/**
+	 * Adds two games and checks if the are saved and can be found with getgames.
+	 */
 	public void testGetGames() {
 		dbh.addUser("asd", "ggtest", "pass");
 		dbh.addUser("asd", "ggtest2", "pass");
@@ -97,6 +120,9 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.deleteUser("ggtest3");
 		assertTrue(b);
 	}
+	/**
+	 * Test getFinishedGames.
+	 */
 	public void testGetFinishedGames() {
 		dbh.addUser("asd", "gfgtest", "pass");
 		dbh.addUser("asd", "gfgtest2", "pass");
@@ -114,6 +140,9 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.deleteUser("gfgtest3");
 		assertTrue(b);
 	}
+	/**
+	 * Tests the methods incDraws, incLosses and incWins.
+	 */
 	public void testIncMethods() {
 		dbh.addUser("asd", "inctest", "pass");
 		PlayerInfo player = PlayerInfo.getInstance();
