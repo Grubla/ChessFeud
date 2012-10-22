@@ -34,27 +34,25 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			g = new Game(gameInfo, position);
 			cm = new ChessModel(g, this);
 			gv.setGameModel(cm);
-			
-		}
-		
-		
 
-		nbrOfTurns.setText(""+g.getTurns());
-		playerNameWhite.setText(""+g.getWhitePlayer());
-		playerNameBlack.setText(""+g.getBlackPlayer());
+		}
+
+		nbrOfTurns.setText("" + g.getTurns());
+		playerNameWhite.setText("" + g.getWhitePlayer());
+		playerNameBlack.setText("" + g.getBlackPlayer());
 		setState();
 		setTurnNTime();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		nbrOfTurns.setText(""+g.getTurns());
+		nbrOfTurns.setText("" + g.getTurns());
 		setState();
 		setTurnNTime();
 	}
-	
-	private void setLayout(){
+
+	private void setLayout() {
 		nbrOfTurns = (TextView) findViewById(R.id.nbrOfTurns);
 		playerNameWhite = (TextView) findViewById(R.id.playerNameWhite);
 		playerNameBlack = (TextView) findViewById(R.id.playerNameBlack);
@@ -106,25 +104,26 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			break;
 		}
 	}
-	
+
 	private void setTurnNTime() {
 		String s = "";
-		if(g.getCurrentColor() == C.TEAM_WHITE){
+		if (g.getCurrentColor() == C.TEAM_WHITE) {
 			s += "White";
-		}else{
+		} else {
 			s += "Black";
 		}
-		//TODO: Fix turns when Grubla has fixed a Timestamp-class
+		// TODO: Fix turns when Grubla has fixed a Timestamp-class
 		s += "'s Turn()";
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {
-		if(event.getPropertyName().equals("Model")){
-			final Game gameInfo = (Game)event.getOldValue();
-			final String gameBoard = (String)event.getNewValue();
-			new Thread(){
+		if (event.getPropertyName().equals("Model")) {
+			final Game gameInfo = (Game) event.getOldValue();
+			final String gameBoard = (String) event.getNewValue();
+			new Thread() {
 				public void run() {
-					DbHandler.getInstance().newMove(gameInfo.getOpponent(), gameBoard);
+					DbHandler.getInstance().newMove(gameInfo.getOpponent(),
+							gameBoard);
 				}
 			}.start();
 		}

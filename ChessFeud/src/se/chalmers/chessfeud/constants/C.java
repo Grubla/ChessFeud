@@ -1,5 +1,16 @@
 package se.chalmers.chessfeud.constants;
 
+/**
+ * A class that contains all the constants. Makes it easier if we want to change
+ * a number. Then we only need to change in one place.
+ * 
+ * 
+ * @author Arvid Karlsson, Henrik Alburg, Sean Pavlov, Simon Almgren
+ * 
+ *         copyright (c) 2012 Arvid Karlsson, Henrik Alburg, Sean Pavlov, Simon
+ *         Almgren
+ * 
+ */
 public final class C {
 
 	public static final int PIECE_PAWN = 8;

@@ -17,9 +17,9 @@ import android.util.Log;
  * data to the internal memory for automatic login. It also uses the database to
  * see if the login is valid.
  * 
- * @author Simon Almgren
- * @modifiedby Henrik Alburg
+ * @author Simon Almgren Henrik Alburg
  * 
+ *         Copyright (c) 2012 Simon Almgren Henrik Alburg
  */
 public class PlayerInfo {
 
@@ -108,6 +108,7 @@ public class PlayerInfo {
 		soundSettings = true;
 		saveSettingsFile(c, fileContent);
 	}
+
 	/* Saves the given string to the settingsfile */
 	private void saveSettingsFile(Context c, String text) {
 		FileOutputStream fos;
@@ -125,32 +126,32 @@ public class PlayerInfo {
 	}
 
 	/**
-	 * Returns the state of sound settings
+	 * Returns the state of sound settings.
 	 * 
-	 * @return true if sound is enabled
+	 * @return true if sound is enabled.
 	 */
 	public boolean getSoundEnabled() {
 		return soundSettings;
 	}
 
 	/**
-	 * Returns the state of helptip
+	 * Returns the state of helptip.
 	 * 
-	 * @return true if helptip is enabled
+	 * @return true if helptip is enabled.
 	 */
 	public boolean getHelpTip() {
 		return helpTip;
 	}
 
 	/**
-	 * Sets the string for the settings
+	 * Sets the string for the settings.
 	 * 
 	 * @param settingsId
-	 *            The constant id of the setting to be changed
+	 *            The constant id of the setting to be changed.
 	 * @param newValue
-	 *            The value to change it to
+	 *            The value to change it to.
 	 * @param c
-	 *            The context allowing files to be written to
+	 *            The context allowing files to be written to.
 	 */
 	public void setString(int settingsId, int newValue, Context c) {
 		String newString = "";
@@ -189,7 +190,7 @@ public class PlayerInfo {
 	/**
 	 * Returns if the user is currently logged in.
 	 * 
-	 * @return true if the user is loggedIn
+	 * @return true if the user is loggedIn.
 	 */
 	public boolean isLoggedIn() {
 		return loggedIn;
@@ -201,10 +202,10 @@ public class PlayerInfo {
 	 * password.
 	 * 
 	 * @param userName
-	 *            , the name of the user
+	 *            , the name of the user.
 	 * @param password
-	 *            , the wanted password by the user
-	 * @return true if able to login
+	 *            , the wanted password by the user.
+	 * @return true if able to login.
 	 */
 	public boolean login(String username, String password, Context c) {
 		boolean suc = DbHandler.getInstance().login(username, password);

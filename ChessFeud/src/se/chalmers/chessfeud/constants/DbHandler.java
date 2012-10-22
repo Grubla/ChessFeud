@@ -19,6 +19,16 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+/**
+ * A class to handle the communication between the phone and the server. Handles
+ * all the logic like login, register new user and the status of the games.
+ * 
+ * @author Simon Almgren Henrik Alburg
+ * 
+ *         Copyright (c) 2012 Simon Almgren, Henrik Alburg
+ * 
+ */
+
 public class DbHandler {
 
 	private HttpClient client;
@@ -179,8 +189,8 @@ public class DbHandler {
 	}
 
 	/**
-	 * Contacts the server and tells it to save a new inquirie, returns false if
-	 * it couldnt be saved or if something went wrong.
+	 * Contacts the server and tells it to save a new inquire, returns false if
+	 * it couldn't be saved or if something went wrong.
 	 * @param target
 	 * @return boolean true if it worked false otherwise.
 	 */
@@ -193,7 +203,7 @@ public class DbHandler {
 	}
 
 	/**
-	 * Gives the server a username and returns the current statistics from that
+	 * Gives the server a user name and returns the current statistics from that
 	 * user in a String with / between all the different stats, which is
 	 * w/l/d/numberofmoves. Returns null of something went wrong when contacting
 	 * the database.

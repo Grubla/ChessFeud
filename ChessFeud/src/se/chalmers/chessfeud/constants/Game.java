@@ -4,9 +4,9 @@ package se.chalmers.chessfeud.constants;
  * A class representing an ongoing game. Will hold all the information needed by
  * both the model and the list objects.
  * 
- * @author Simon Almgren
- * @modifiedby Henrik Alburg
+ * @author Simon Almgren Henrik Alburg
  * 
+ *         Copyright (c) 2012 Simon Almgren Henrik Alburg
  */
 public class Game {
 
