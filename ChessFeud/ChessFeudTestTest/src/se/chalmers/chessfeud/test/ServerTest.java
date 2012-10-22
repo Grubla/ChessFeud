@@ -5,7 +5,7 @@ import android.test.AndroidTestCase;
 
 public class ServerTest extends AndroidTestCase {
 	
-	DbHandler dbh = DbHandler.getInstance();
+	private DbHandler dbh = DbHandler.getInstance();
 	
 	public void testLogin() {
 		assertTrue(dbh.login("grubla", "lol"));
