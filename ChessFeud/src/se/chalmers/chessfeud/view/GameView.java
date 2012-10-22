@@ -3,7 +3,7 @@ package se.chalmers.chessfeud.view;
 import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
-import se.chalmers.chessfeud.constants.PlayerInfo;
+import se.chalmers.chessfeud.constants.PlayerInfo;	
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
@@ -38,6 +38,7 @@ public class GameView extends View implements OnTouchListener {
 	private Paint bMain = new Paint();
 	private Paint bSelected = new Paint();
 	private Paint bAvailable = new Paint();
+	private Rect r = new Rect();
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -70,11 +71,12 @@ public class GameView extends View implements OnTouchListener {
 		bAvailable.setColor(C.SQUARE_BLACK_POSSIBLE_MOVES);
 
 		List<Position> possibleSquares = gm.getPossibleMoves();
+		
 		// Draw every square
 		boolean paintWhite = true;
 		for (int y = 0; y < C.BOARD_LENGTH; y++) {
 			for (int x = 0; x < C.BOARD_LENGTH; x++) {
-				Rect r = new Rect(x * chessSquareWidth, y * chessSquareHeight,
+				r.set(x * chessSquareWidth, y * chessSquareHeight,
 						(x + 1) * chessSquareWidth, (y + 1) * chessSquareHeight);
 
 				if (paintWhite) {
@@ -83,20 +85,11 @@ public class GameView extends View implements OnTouchListener {
 				} else {
 					paintBlackSquare(possibleSquares, canvas, r, x, y);
 				}
-
 				Piece p = gm.getPieceAt(new Position(x, y));
 				p.toString();
 				// Paint piece at position is there is any
 				if (!(p instanceof NoPiece)) {
-					String uri = getPieceFileName(p.getTeam(), p.getId());
-					uri = "drawable/pieces_" + uri;
-					int imageResource = getResources().getIdentifier(uri, null,
-							context.getPackageName());
-					Bitmap bm = BitmapFactory.decodeResource(getResources(),
-							imageResource);
-					bm = Bitmap.createScaledBitmap(bm, chessSquareWidth,
-							chessSquareHeight, false);
-					canvas.drawBitmap(bm, x * chessSquareWidth, y
+					canvas.drawBitmap(getPieceBitmap(p.getTeam(), p.getId()), x * chessSquareWidth, y
 							* chessSquareHeight, null);
 				}
 				// Change the color that is going to be painted for each square
@@ -160,16 +153,15 @@ public class GameView extends View implements OnTouchListener {
 	}
 
 	/**
-	 * Returning the filename of a certain piece without directory and file
-	 * extension.
+	 * Returning the bitmap of a certain piece.
 	 * 
 	 * @param team
 	 *            is the id of the team.
 	 * @param id
 	 *            is the piece id.
-	 * @return A String with the filename.
+	 * @return A bitmap of the piece
 	 */
-	private String getPieceFileName(int team, int id) {
+	private Bitmap getPieceBitmap(int team, int id) {
 		String s = "";
 		if (team == 0) {
 			s = "" + "white";
@@ -207,7 +199,14 @@ public class GameView extends View implements OnTouchListener {
 			s = "notfound";
 			break;
 		}
-		return s;
+		s = "drawable/pieces_" + s;
+		int imageResource = getResources().getIdentifier(s, null,
+				context.getPackageName());
+		Bitmap bm = BitmapFactory.decodeResource(getResources(),
+				imageResource);
+		bm = Bitmap.createScaledBitmap(bm, chessSquareWidth,
+				chessSquareHeight, false);
+		return bm;
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
