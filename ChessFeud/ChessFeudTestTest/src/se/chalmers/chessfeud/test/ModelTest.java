@@ -46,9 +46,9 @@ public class ModelTest extends AndroidTestCase {
 				assertTrue(cm.getState() == C.STATE_CHECK);
 				// Only king can move
 			}
-			if (i == 31) {
-				// Only 36, 37, 56 can move
-			}
+			//i is 31
+			// Only 36, 37, 56 can move
+			
 			if (i == 42) {
 				assertTrue(cm.getState() == C.STATE_VICTORY_WHITE);
 			}
