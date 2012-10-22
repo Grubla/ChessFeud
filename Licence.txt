@@ -1,0 +1,5 @@
+This code is currently unlicensed.
+
+It will later on use the Google Play license but that license isn't available to us until we actually upload the app to Google Play, which we intend to do. 
+
+All code files has "Copyright (c) Name of Author 2012" written to them.
