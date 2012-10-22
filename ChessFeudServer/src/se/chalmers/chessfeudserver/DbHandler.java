@@ -460,13 +460,13 @@ public class DbHandler extends HttpServlet {
 		rs = s.executeQuery("select moves from statistics where username='"
 				+ user1 + "'");
 		rs.first();
-		int moves = rs.getInt(1);
+		int moves = Integer.parseInt(rs.getString(1));
 		s.executeUpdate("update statistics set moves='" + (moves + 1)
 				+ "' where username='" + user1 + "'");
 		s.executeUpdate("update game set board='" + newBoard
 				+ "' where user1='" + user1 + "' and user2='" + user2 + "'");
 		s.executeUpdate("update game set board='" + newBoard
-				+ "' where user2='" + user1 + "' and user2='" + user1 + "'");
+				+ "' where user1='" + user2 + "' and user2='" + user1 + "'");
 		s.executeUpdate("update game set turns='" + turns + "' where user1='"
 				+ user1 + "' and user2='" + user2 + "'");
 		s.executeUpdate("update game set turns='" + turns + "' where user2='"
