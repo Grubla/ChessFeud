@@ -31,22 +31,25 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		String gameInfo = getIntent().getStringExtra("GameString");
 		int position = getIntent().getIntExtra("Position", -1);
 		if (gameInfo != null) {
-			gv.setGameModel(gameInfo, position, this);
-			g = new Game(gameInfo, 0);
+			g = new Game(gameInfo, position);
+			cm = new ChessModel(g, this);
+			gv.setGameModel(cm);
+			
 		}
 		
 		
 
-		nbrOfTurns.setText(g.getTurns());
-		playerNameWhite.setText(g.getWhitePlayer());
-		playerNameBlack.setText(g.getBlackPlayer());
+		nbrOfTurns.setText(""+g.getTurns());
+		playerNameWhite.setText(""+g.getWhitePlayer());
+		playerNameBlack.setText(""+g.getBlackPlayer());
 		setState();
 		setTurnNTime();
 	}
 	
 	@Override
 	protected void onResume() {
-		nbrOfTurns.setText(g.getTurns());
+		super.onResume();
+		nbrOfTurns.setText(""+g.getTurns());
 		setState();
 		setTurnNTime();
 	}

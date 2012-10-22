@@ -1,10 +1,8 @@
 package se.chalmers.chessfeud.view;
 
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
-import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.constants.PlayerInfo;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
@@ -47,9 +45,8 @@ public class GameView extends View implements OnTouchListener {
 		this.setOnTouchListener(this);
 	}
 
-	public void setGameModel(String s, int position, PropertyChangeListener pcl) {
-		Game gameInfo = new Game(s, position);
-		gm = new ChessModel(gameInfo, pcl);
+	public void setGameModel(ChessModel cm) {
+		gm = cm;
 		this.invalidate();
 	}
 
@@ -129,7 +126,7 @@ public class GameView extends View implements OnTouchListener {
 		if (possibleSquares.contains(new Position(x, y))) {
 			canvas.drawRect(r, wAvailable);
 		} else if (new Position(x, y).equals(gm.getSelectedPosition())
-				&& pi.getHelptipStatus(context)) {
+				&& pi.getHelpTip()) {
 			canvas.drawRect(r, wSelected);
 		} else {
 			canvas.drawRect(r, wMain);
@@ -155,7 +152,7 @@ public class GameView extends View implements OnTouchListener {
 		if (possibleSquares.contains(new Position(x, y))) {
 			canvas.drawRect(r, bAvailable);
 		} else if (new Position(x, y).equals(gm.getSelectedPosition())
-				&& pi.getHelptipStatus(context)) {
+				&& pi.getHelpTip()) {
 			canvas.drawRect(r, bSelected);
 		} else {
 			canvas.drawRect(r, bMain);

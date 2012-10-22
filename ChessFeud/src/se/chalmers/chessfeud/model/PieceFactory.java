@@ -62,6 +62,7 @@ public class PieceFactory {
 			break;
 		case C.PIECE_QUEEN:
 			p = new Queen(team);
+			break;
 		case C.PIECE_ROOK:
 			p = new Rook(team);
 			break;

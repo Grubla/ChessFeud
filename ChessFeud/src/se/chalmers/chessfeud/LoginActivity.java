@@ -1,9 +1,11 @@
 package se.chalmers.chessfeud;
 
+import se.chalmers.chessfeud.constants.DbHandler;
 import se.chalmers.chessfeud.constants.PlayerInfo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,19 +30,23 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		player = PlayerInfo.getInstance();
-		Thread t = new Thread() {
+		player.tryLogin(getApplicationContext());
+		new Thread(){
 			public void run() {
-				player.tryLogin(getApplicationContext());
+				final boolean loggedIn = DbHandler.getInstance().login(player.getUserName(), player.getPassword());
+				LoginActivity.this.runOnUiThread(new Runnable(){
+					public void run() {
+						if (loggedIn) {
+							startActivity(new Intent(LoginActivity.this, MainActivity.class));
+						} else {
+							setLoginLayout();
+						}
+					}
+				});
 			}
-		};
-		while (t.isAlive()) {
-
-		}
-		if (player.isLoggedIn()) {
-			startActivity(new Intent(LoginActivity.this, MainActivity.class));
-		} else {
-			setLoginLayout();
-		}
+		}.start();
+		
+		
 
 	}
 
