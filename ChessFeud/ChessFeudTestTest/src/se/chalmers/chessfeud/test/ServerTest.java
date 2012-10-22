@@ -1,6 +1,7 @@
 package se.chalmers.chessfeud.test;
 
 import se.chalmers.chessfeud.constants.DbHandler;
+import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.constants.PlayerInfo;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.utils.Position;
@@ -75,7 +76,7 @@ public class ServerTest extends InstrumentationTestCase {
 		c.click(new Position(0, 6));
 		c.click(new Position(0,5));
 		dbh.newMove("newmovetest2", c.exportModel());
-		boolean b = dbh.getGames().get(0).equals(c.exportModel());
+		boolean b = new Game(dbh.getGames().get(0),0).getGameBoard().equals(c.exportModel());
 		dbh.setGameFinished("newmovetest2");
 		dbh.deleteUser("newmovetest");
 		dbh.deleteUser("newmovetest2");
