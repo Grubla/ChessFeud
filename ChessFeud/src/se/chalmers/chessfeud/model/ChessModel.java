@@ -11,16 +11,18 @@ import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
+
 /**
- * A class that implements the model of a chessgame.
- * Basically it is run by the method click(Position p), where every call 
- * for the method symbolizes a click on the board. The first click should choose a valid piece
- *  and the second click should be where to move the piece. (If it is not it might select another
- *  piece or deselect it).
+ * A class that implements the model of a chessgame. Basically it is run by the
+ * method click(Position p), where every call for the method symbolizes a click
+ * on the board. The first click should choose a valid piece and the second
+ * click should be where to move the piece. (If it is not it might select
+ * another piece or deselect it).
+ * 
  * @author Henrik Alburg
- *
- * Copyright (c) 2012 Henrik Alburg, Arvid Karlsson
- *
+ * 
+ *         Copyright (c) 2012 Henrik Alburg, Arvid Karlsson
+ * 
  */
 public class ChessModel {
 	private ChessBoard chessBoard;
@@ -32,12 +34,15 @@ public class ChessModel {
 	private final int thisPlayer;
 	private Game gameInfo;
 	private PropertyChangeListener listener;
-	
+
 	/**
-	 * Creates an instance of chess with a new starting board. 
-	 * @param thisPlayer, this is the player who is on the current client. C.TEAM_WHITE or C.TEAM_BLACK
+	 * Creates an instance of chess with a new starting board.
+	 * 
+	 * @param thisPlayer
+	 *            , this is the player who is on the current client.
+	 *            C.TEAM_WHITE or C.TEAM_BLACK
 	 */
-	public ChessModel(int thisPlayer){
+	public ChessModel(int thisPlayer) {
 		gameInfo = null;
 		chessBoard = new ChessBoard();
 		numberOfMoves = 0;
@@ -47,12 +52,16 @@ public class ChessModel {
 		takenPieces = new ArrayList<Piece>();
 		state = C.STATE_NORMAL;
 	}
-	
+
 	/**
-	 * Creates a model from the gameInfo object. 
-	 * This model will also be able to send its changes. 
-	 * @param gameInfo, information about the game.
-	 * @param pcl, the proportychangelistener to whom a changed model shall be sent
+	 * Creates a model from the gameInfo object. This model will also be able to
+	 * send its changes.
+	 * 
+	 * @param gameInfo
+	 *            , information about the game.
+	 * @param pcl
+	 *            , the proportychangelistener to whom a changed model shall be
+	 *            sent.
 	 */
 	public ChessModel(Game gameInfo, PropertyChangeListener pcl) {
 		this.gameInfo = gameInfo;
@@ -67,60 +76,67 @@ public class ChessModel {
 	}
 
 	/**
-	 * Exports the model on the format chessboard/numberOfMoves
-	 * Where chessboard is the way to use the ChessBoard(String s) 
-	 * constructor and numberOfMoves is an int (as a string) 
+	 * Exports the model on the format chessboard/numberOfMoves. Where
+	 * chessboard is the way to use the ChessBoard(String s) constructor and
+	 * numberOfMoves is an int (as a string).
+	 * 
 	 * @return a string representation of the model.
 	 */
-	public String exportModel(){
+	public String exportModel() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(chessBoard.exportBoard());
 		sb.append("/");
-		sb.append(""+numberOfMoves);
+		sb.append("" + numberOfMoves);
 		return sb.toString();
 	}
-	
+
 	/**
-	 * Represents a click on the board.
-	 * The first click being choosing a piece 
+	 * Represents a click on the board. The first click being choosing a piece.
 	 * and when somthing is selected the click is where it shall go.
-	 * @param p, the position clicked
+	 * 
+	 * @param p
+	 *            , the position clicked.
 	 */
-	public void click(Position p){
-		if(selected != null){ //Some piece is selected
+	public void click(Position p) {
+		if (selected != null) { // Some piece is selected
 			clickSelected(p);
-		}else{
-			if(isMoveable(p)){ //Clicked on a new valid piece
+		} else {
+			if (isMoveable(p)) { // Clicked on a new valid piece
 				setSelected(p);
 			}
 		}
 	}
-	
+
 	/* Makes a click when a position already is selected */
 	private void clickSelected(Position p) {
-		if(possibleMoves.contains(p)){ //A valid move has been clicked
+		if (possibleMoves.contains(p)) { // A valid move has been clicked
 			movePiece(p);
-		}else{ //Clicked on a place the piece cannot go
+		} else { // Clicked on a place the piece cannot go
 			selectNewPiece(p);
 		}
 	}
+
 	/* Makes a click when no position is currently selected */
 	private void selectNewPiece(Position p) {
-		if(isMoveable(p)){ 
-			if(p.equals(selected)){ //Clicked on the same piece twice
+		if (isMoveable(p)) {
+			if (p.equals(selected)) { // Clicked on the same piece twice
 				deselectPiece();
-			}else{ //Clicked on a new piece in its team
+			} else { // Clicked on a new piece in its team
 				setSelected(p);
 			}
-		}else{ //Clicked on an enemy piece where it cannot go
+		} else { // Clicked on an enemy piece where it cannot go
 			deselectPiece();
 		}
 	}
-	/* Moves a piece from one position to another, changing turn, updating state and tries to send the model. */
+
+	/*
+	 * Moves a piece from one position to another, changing turn, updating state
+	 * and tries to send the model.
+	 */
 	private void movePiece(Position p) {
 		Piece pi = chessBoard.movePiece(selected, p);
 		deselectPiece();
-		if(!(pi instanceof NoPiece)){
+		if (!(pi instanceof NoPiece)) {
 			takenPieces.add(pi);
 		}
 		changeTurn();
@@ -129,128 +145,145 @@ public class ChessModel {
 	}
 
 	/*
-	 * Sets the possibleMoves list with the moves the current selected piece is able to do. 
+	 * Sets the possibleMoves list with the moves the current selected piece is
+	 * able to do.
 	 */
-	private void setPossibleMoves(){
+	private void setPossibleMoves() {
 		possibleMoves.clear();
 		possibleMoves = Rules.getPossibleMoves(chessBoard, selected);
 	}
 
 	/**
 	 * Gets the possible moves for the currently selected piece.
-	 * @return a list of poisition (The moves)
+	 * 
+	 * @return a list of poisition (The moves).
 	 */
-	public List<Position> getPossibleMoves(){
+	public List<Position> getPossibleMoves() {
 		return possibleMoves;
 	}
-	
+
 	/**
-	 * Returns the piece at the given position
-	 * @param p, a position on the board 0 <= x,y < 8 
-	 * @return a Piece object, which is at the given pos
+	 * Returns the piece at the given position.
+	 * 
+	 * @param p
+	 *            , a position on the board 0 <= x,y < 8.
+	 * @return a Piece object, which is at the given pos.
 	 */
-	public Piece getPieceAt(Position p){
+	public Piece getPieceAt(Position p) {
 		return chessBoard.getPieceAt(p.getX(), p.getY());
 	}
+
 	/**
-	 * Returns a list with all the taken pieces
+	 * Returns a list with all the taken pieces.
+	 * 
 	 * @return All the taken Pieces in a list.
 	 */
-	public List<Piece> getTakenPieces(){
+	public List<Piece> getTakenPieces() {
 		return takenPieces;
 	}
-	
+
 	/* Sets the current position as the selected one */
-	private void setSelected(Position p){
+	private void setSelected(Position p) {
 		selected = p;
 		setPossibleMoves();
 	}
-	
+
 	/* Deselects the current selected piece (if any) */
-	private void deselectPiece(){
+	private void deselectPiece() {
 		selected = null;
 		possibleMoves.clear();
 	}
-	
+
 	/**
-	 * Returns the status of the game, one of the following;
+	 * Returns the status of the game. It will be one of the following;
 	 * C.STATE_NORMAL, C.STATE_CHECK, C.STATE_CHECKMATE, C.STATE_DRAW
+	 * 
 	 * @return a state from the class C.
 	 */
-	public int getState(){
+	public int getState() {
 		return this.state;
 	}
-	/* Manually checks and updates the state.
-	 * Also all the elses are needed to make sure it will only get into on if/else.*/
-	private void checkState(){
-		if(Rules.isCheck(chessBoard, activePlayer())){
-			if(Rules.isCheckMate(chessBoard, nextTurn())){
-				if(activePlayer() == C.TEAM_WHITE){
+
+	/*
+	 * Manually checks and updates the state. Also all the elses are needed to
+	 * make sure it will only get into on if/else.
+	 */
+	private void checkState() {
+		if (Rules.isCheck(chessBoard, activePlayer())) {
+			if (Rules.isCheckMate(chessBoard, nextTurn())) {
+				if (activePlayer() == C.TEAM_WHITE) {
 					setState(C.STATE_VICTORY_WHITE);
-				}else{
+				} else {
 					setState(C.STATE_VICTORY_BLACK);
 				}
-			}else{
+			} else {
 				setState(C.STATE_CHECK);
 			}
-		}else{
-				if(Rules.isDraw(chessBoard, nextTurn())){
-					setState(C.STATE_DRAW);
-				}else{
-					setState(C.STATE_NORMAL);
-				}
+		} else {
+			if (Rules.isDraw(chessBoard, nextTurn())) {
+				setState(C.STATE_DRAW);
+			} else {
+				setState(C.STATE_NORMAL);
+			}
 		}
 	}
-	
+
 	/* Sets the state of the game */
-	private void setState(int newState){
+	private void setState(int newState) {
 		this.state = newState;
 	}
-	
+
 	/**
-	 * Return the selected position or null if not any selected
-	 * @return the currently selected position
+	 * Return the selected position or null if not any selected.
+	 * 
+	 * @return the currently selected position.
 	 */
-	public Position getSelectedPosition(){
+	public Position getSelectedPosition() {
 		return selected;
 	}
-	
+
 	/* Changes the turn (the active player) */
-	private void changeTurn(){
+	private void changeTurn() {
 		numberOfMoves++;
 	}
-	
+
 	/**
-	 * Returns the active player where 0 is "white" and 1 is "black"
-	 * Will return -1 if the 
-	 * @return the player who's turn it is to move
+	 * Returns the active player where 0 is "white" and 1 is "black". Will
+	 * return -1 if the piece doesn't have any team (noPiece).
+	 * 
+	 * @return the player who's turn it is to move.
 	 */
-	public int activePlayer(){
-			return numberOfMoves%2;
+	public int activePlayer() {
+		return numberOfMoves % 2;
 	}
-	/* Returns true if the piece at the given position is 
-	 * the same team as the player trying to move it and it is his or hers turn. */
-	private boolean isMoveable(Position p){
-		int activePlayer = numberOfMoves%2;
-		if(activePlayer == this.thisPlayer){
+
+	/*
+	 * Returns true if the piece at the given position is the same team as the
+	 * player trying to move it and it is his or hers turn.
+	 */
+	private boolean isMoveable(Position p) {
+		int activePlayer = numberOfMoves % 2;
+		if (activePlayer == this.thisPlayer) {
 			return chessBoard.getPieceAt(p).getTeam() == activePlayer;
 		}
 		return false;
 	}
-	
+
 	/* Returns whom's turn it is next (opposite of activePlayer) */
-	private int nextTurn(){
-		int next = numberOfMoves%2 == 0 ? 1 : 0;
-		if(next == 1){
+	private int nextTurn() {
+		int next = numberOfMoves % 2 == 0 ? 1 : 0;
+		if (next == 1) {
 			return 0;
-		} else{
+		} else {
 			return 1;
 		}
 	}
+
 	/* Sends the model to the given PropertyChangeListener */
-	private void sendModel(){
-		PropertyChangeEvent event = new PropertyChangeEvent(this, "Model", gameInfo, this.exportModel());
+	private void sendModel() {
+		PropertyChangeEvent event = new PropertyChangeEvent(this, "Model",
+				gameInfo, this.exportModel());
 		this.listener.propertyChange(event);
 	}
-	
+
 }
