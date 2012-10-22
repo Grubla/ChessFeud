@@ -3,7 +3,7 @@ package se.chalmers.chessfeud.view;
 import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
-import se.chalmers.chessfeud.constants.PlayerInfo;	
+import se.chalmers.chessfeud.constants.PlayerInfo;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
@@ -71,13 +71,13 @@ public class GameView extends View implements OnTouchListener {
 		bAvailable.setColor(C.SQUARE_BLACK_POSSIBLE_MOVES);
 
 		List<Position> possibleSquares = gm.getPossibleMoves();
-		
+
 		// Draw every square
 		boolean paintWhite = true;
 		for (int y = 0; y < C.BOARD_LENGTH; y++) {
 			for (int x = 0; x < C.BOARD_LENGTH; x++) {
-				r.set(x * chessSquareWidth, y * chessSquareHeight,
-						(x + 1) * chessSquareWidth, (y + 1) * chessSquareHeight);
+				r.set(x * chessSquareWidth, y * chessSquareHeight, (x + 1)
+						* chessSquareWidth, (y + 1) * chessSquareHeight);
 
 				if (paintWhite) {
 					paintWhiteSquare(possibleSquares, canvas, r, x, y);
@@ -89,8 +89,8 @@ public class GameView extends View implements OnTouchListener {
 				p.toString();
 				// Paint piece at position is there is any
 				if (!(p instanceof NoPiece)) {
-					canvas.drawBitmap(getPieceBitmap(p.getTeam(), p.getId()), x * chessSquareWidth, y
-							* chessSquareHeight, null);
+					canvas.drawBitmap(getPieceBitmap(p.getTeam(), p.getId()), x
+							* chessSquareWidth, y * chessSquareHeight, null);
 				}
 				// Change the color that is going to be painted for each square
 				paintWhite = !paintWhite;
@@ -202,10 +202,9 @@ public class GameView extends View implements OnTouchListener {
 		s = "drawable/pieces_" + s;
 		int imageResource = getResources().getIdentifier(s, null,
 				context.getPackageName());
-		Bitmap bm = BitmapFactory.decodeResource(getResources(),
-				imageResource);
-		bm = Bitmap.createScaledBitmap(bm, chessSquareWidth,
-				chessSquareHeight, false);
+		Bitmap bm = BitmapFactory.decodeResource(getResources(), imageResource);
+		bm = Bitmap.createScaledBitmap(bm, chessSquareWidth, chessSquareHeight,
+				false);
 		return bm;
 	}
 

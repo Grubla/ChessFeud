@@ -202,9 +202,9 @@ public class PlayerInfo {
 	 * password.
 	 * 
 	 * @param userName
-	 *            , the name of the user.
+	 *            The name of the user.
 	 * @param password
-	 *            , the wanted password by the user.
+	 *            The wanted password by the user.
 	 * @return true if able to login.
 	 */
 	public boolean login(String username, String password, Context c) {

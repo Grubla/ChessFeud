@@ -35,36 +35,42 @@ public class DbHandler {
 	private HttpPost httpPost;
 	private InputStream is;
 	private List<BasicNameValuePair> pairs;
-	
+
 	private static final String TAG = "tag";
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 	private static final String EMAIL = "email";
-	
+
 	private static DbHandler instance;
 	private PlayerInfo player;
+
 	/**
 	 * Empty constructor following the Singleton-pattern.
 	 */
 	protected DbHandler() {
 	}
+
 	/**
-	 * Returns a new instance of DbHandler if there isn't already an instance, otherwise returns the instance.
+	 * Returns a new instance of DbHandler if there isn't already an instance,
+	 * otherwise returns the instance.
+	 * 
 	 * @return an instance of the DbHandler
 	 */
 	public static DbHandler getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new DbHandler();
 			instance.init();
 		}
 		return instance;
 	}
+
 	/**
 	 * Initiates the DbHandler and connects it to the database.
 	 */
 	private void init() {
 		client = new DefaultHttpClient();
-		httpPost = new HttpPost("http://46.239.101.108:8080/ChessFeudServer/DbHandler/*");
+		httpPost = new HttpPost(
+				"http://46.239.101.108:8080/ChessFeudServer/DbHandler/*");
 		is = null;
 		pairs = new ArrayList<BasicNameValuePair>();
 		player = PlayerInfo.getInstance();
@@ -76,10 +82,12 @@ public class DbHandler {
 	 * something went wrong otherwise true.
 	 * 
 	 * @param userName
+	 *            The username to try and log in
 	 * @param password
+	 *            The password to try and log in
 	 * @return boolean is login sucseeded
 	 */
-	public boolean login(String userName, String password){
+	public boolean login(String userName, String password) {
 		pairs.clear();
 		List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
 		String enc;
@@ -99,10 +107,14 @@ public class DbHandler {
 	 * player couldnt be added.
 	 * 
 	 * @param email
+	 *            The email of the new user
 	 * @param userName
+	 *            The username of the new user
 	 * @param password
-	 * @return
-	 * @throws NoSuchAlgorithmException 
+	 *            The password of the new user
+	 * @return true if the server was successful when creating the user
+	 * @throws NoSuchAlgorithmException
+	 *             If the MD5 fails to crypt.
 	 */
 	public boolean addUser(String email, String userName, String password) {
 		pairs.clear();
@@ -118,10 +130,13 @@ public class DbHandler {
 		}
 		return (updateDatabase());
 	}
+
 	/**
 	 * Deletes a user from the database.
-	 * @param userName the name of the user to be deleted.
-	 * @return
+	 * 
+	 * @param userName
+	 *            The name of the user to be deleted.
+	 * @return true if the server operation was successful
 	 */
 	public boolean deleteUser(String userName) {
 		pairs.clear();
@@ -129,10 +144,14 @@ public class DbHandler {
 		pairs.add(new BasicNameValuePair(USERNAME, userName));
 		return (updateDatabase());
 	}
+
 	/**
-	 * Contacts the server and checks if the specified username exists in the database.
+	 * Contacts the server and checks if the specified username exists in the
+	 * database.
+	 * 
 	 * @param userName
-	 * @return
+	 *            The username to check
+	 * @return true if the server operation was successful
 	 */
 	public boolean userExists(String userName) {
 		pairs.clear();
@@ -140,9 +159,12 @@ public class DbHandler {
 		pairs.add(new BasicNameValuePair(USERNAME, userName));
 		return updateDatabase();
 	}
+
 	/**
 	 * Sets moves a finished game from the gamedatabase to finishedgames.
-	 * @param target the one you lost or won against.
+	 * 
+	 * @param target
+	 *            The one you lost or won against.
 	 * @return if everyhting went as expected.
 	 */
 	public boolean setGameFinished(String target) {
@@ -158,9 +180,12 @@ public class DbHandler {
 	 * it failed.
 	 * 
 	 * @param user1
+	 *            The username of the white player
 	 * @param user2
+	 *            The username of the black player
 	 * @param board
-	 * @return
+	 *            The starting board for this game
+	 * @return true if the server operation was successful
 	 */
 	public boolean newGame(String target, String board) {
 		pairs.clear();
@@ -176,8 +201,10 @@ public class DbHandler {
 	 * two players.
 	 * 
 	 * @param target
+	 *            The opponents username
 	 * @param newBoard
-	 * @return
+	 *            The new chess board
+	 * @return true if the server operation was successful
 	 */
 	public boolean newMove(String target, String newModel) {
 		List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
@@ -191,8 +218,10 @@ public class DbHandler {
 	/**
 	 * Contacts the server and tells it to save a new inquire, returns false if
 	 * it couldn't be saved or if something went wrong.
+	 * 
 	 * @param target
-	 * @return boolean true if it worked false otherwise.
+	 *            The username of the opponent who has been challanged
+	 * @return boolean true if the server operation was successful
 	 */
 	public boolean addInquirie(String target) {
 		pairs.clear();
@@ -207,6 +236,7 @@ public class DbHandler {
 	 * user in a String with / between all the different stats, which is
 	 * w/l/d/numberofmoves. Returns null of something went wrong when contacting
 	 * the database.
+	 * 
 	 * @return returns the stats of that user.
 	 */
 	public String getStats() {
@@ -220,6 +250,7 @@ public class DbHandler {
 	 * Contacts the database and request a list of all ongoing games, returns a
 	 * list of all the games, an empty list if there are no games and null if
 	 * something went wrong.
+	 * 
 	 * @return a list of games of the currently logged in player.
 	 */
 	public List<String> getGames() {
@@ -240,8 +271,11 @@ public class DbHandler {
 		}
 		return games;
 	}
+
 	/**
-	 * Contacts the database and request a list of all finished games played in the closest 72 hours.
+	 * Contacts the database and request a list of all finished games played in
+	 * the closest 72 hours.
+	 * 
 	 * @return a list of the finished games.
 	 */
 	public List<String> getFinishedGames() {
@@ -266,12 +300,13 @@ public class DbHandler {
 	/**
 	 * Increments the wins for a user in the database, returns false if
 	 * something went wrong.
-	 * @return boolean if it worked.
+	 * 
+	 * @return true if the server operation was successful
 	 */
 	public boolean incWins() {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair(TAG, "incWins"));
-		pairs.add(new BasicNameValuePair(USERNAME,player.getUserName()));
+		pairs.add(new BasicNameValuePair(USERNAME, player.getUserName()));
 		return updateDatabase();
 
 	}
@@ -279,7 +314,8 @@ public class DbHandler {
 	/**
 	 * Increments the draws for a user in the databse, returns false if
 	 * something went wrong.
-	 * @return boolean if sucsessful.
+	 * 
+	 * @return true if the server operation was successful
 	 */
 	public boolean incDraws() {
 		pairs.clear();
@@ -291,7 +327,8 @@ public class DbHandler {
 	/**
 	 * Increments the losses for a user in the database, returns false if
 	 * something went wrong.
-	 * @return boolean the losses were incremented.
+	 * 
+	 * @return true if the server operation was successful
 	 */
 	public boolean incLosses() {
 		pairs.clear();
@@ -304,6 +341,7 @@ public class DbHandler {
 	/**
 	 * Contacts the database with an update and returns true if it sucseeded or
 	 * false if something went wrong along the way.
+	 * 
 	 * @return true if nothing went wrong, true otherwise.
 	 */
 	public boolean updateDatabase() {
@@ -313,9 +351,9 @@ public class DbHandler {
 			HttpEntity entity = response.getEntity();
 			InputStream iStream = entity.getContent();
 			Scanner sc = new Scanner(iStream);
-			if(sc.hasNext()){
+			if (sc.hasNext()) {
 				String s = sc.next();
-				if(s.equals("true")){
+				if (s.equals("true")) {
 					return true;
 				}
 			}
@@ -326,11 +364,13 @@ public class DbHandler {
 			return false;
 		} catch (IOException e) {
 			return false;
-		} 
+		}
 	}
+
 	/**
 	 * Contacts the database with an update and returns true if it sucseeded or
 	 * false if something went wrong along the way.
+	 * 
 	 * @return true if nothing went wrong, true otherwise.
 	 */
 	public boolean updateDatabase(List<BasicNameValuePair> l) {
@@ -340,9 +380,9 @@ public class DbHandler {
 			HttpEntity entity = response.getEntity();
 			InputStream iStream = entity.getContent();
 			Scanner sc = new Scanner(iStream);
-			if(sc.hasNext()){
+			if (sc.hasNext()) {
 				String s = sc.next();
-				if(s.equals("true")){
+				if (s.equals("true")) {
 					return true;
 				}
 			}
@@ -353,11 +393,13 @@ public class DbHandler {
 			return false;
 		} catch (IOException e) {
 			return false;
-		} 
+		}
 	}
+
 	/**
 	 * Requests a String from the database, returns null if something went
 	 * wrong.
+	 * 
 	 * @return The String requested from the database.
 	 */
 	public String getFromDatabase() {
@@ -382,14 +424,17 @@ public class DbHandler {
 			return null;
 		}
 	}
+
 	/**
 	 * A method for encrypting a string using the common md5-encryption pattern.
+	 * 
 	 * @param s
+	 *            The String to encrypt
 	 * @return The encrypted string.
 	 */
 	public String encrypt(String s) throws NoSuchAlgorithmException {
 		MessageDigest md5enc = MessageDigest.getInstance("MD5");
-		md5enc.update(s.getBytes(),0,s.length());
+		md5enc.update(s.getBytes(), 0, s.length());
 		return new BigInteger(1, md5enc.digest()).toString(16);
 	}
 
