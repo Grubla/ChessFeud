@@ -106,18 +106,19 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.addUser("asd", "ggtest", "pass");
 		dbh.addUser("asd", "ggtest2", "pass");
 		dbh.addUser("asd", "ggtest3", "pass");
+		ChessModel cm = new ChessModel(0);
 		PlayerInfo player = PlayerInfo.getInstance();
 		player.tryLogin(getInstrumentation().getContext());
 		player.login("ggtest", "pass", getInstrumentation().getContext());
-		dbh.newGame("ggtest2", new ChessModel(0).exportModel());
-		dbh.newGame("ggtest3", new ChessModel(0).exportModel());
-		boolean b = dbh.getGames().size() == 2;
+		dbh.newGame("ggtest2", cm.exportModel());
+		dbh.newGame("ggtest3", cm.exportModel());
+		assertEquals(new Game(dbh.getGames().get(0),0).getGameBoard(), cm.exportModel());
+		assertEquals(new Game(dbh.getGames().get(1),0).getGameBoard(), cm.exportModel());
 		dbh.setGameFinished("ggtest2");
 		dbh.setGameFinished("ggtest3");
 		dbh.deleteUser("ggtest");
 		dbh.deleteUser("ggtest2");
 		dbh.deleteUser("ggtest3");
-		assertTrue(b);
 	}
 	/**
 	 * Test getFinishedGames.
@@ -132,12 +133,11 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.newGame("gfgtest2", new ChessModel(0).exportModel());
 		dbh.newGame("gfgtest3", new ChessModel(0).exportModel());
 		dbh.setGameFinished("gfgtest3");
-		boolean b = dbh.getFinishedGames().size() == 1;
+		assertEquals(new Game(dbh.getFinishedGames().get(0),0).getGameBoard(), new ChessModel(0).exportModel());
 		dbh.setGameFinished("gfgtest2");
 		dbh.deleteUser("gfgtest");
 		dbh.deleteUser("gfgtest2");
 		dbh.deleteUser("gfgtest3");
-		assertTrue(b);
 	}
 	/**
 	 * Tests the methods incDraws, incLosses and incWins.
