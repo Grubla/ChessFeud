@@ -2,15 +2,17 @@ package se.chalmers.chessfeud.test;
 
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.King;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 import android.test.AndroidTestCase;
 
 public class KingTest extends AndroidTestCase {
+	private Piece king = new King(C.TEAM_WHITE);
 
 	public void testKing() {
-		Piece king = new King(0);
+
 		Position[] pos = { new Position(7, 7), new Position(3, 3) };
 		for (int i = 0; i < pos.length; i++) {
 			List<List<Position>> testList = king.theoreticalMoves(pos[i]);
@@ -46,5 +48,13 @@ public class KingTest extends AndroidTestCase {
 				}
 			}
 		}
+	}
+
+	public void testGetTeam() {
+		assertTrue(king.getTeam() == C.TEAM_WHITE);
+	}
+
+	public void testGetId() {
+		assertTrue(king.getId() == C.PIECE_KING);
 	}
 }

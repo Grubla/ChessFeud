@@ -10,8 +10,9 @@ import android.test.AndroidTestCase;
 
 public class BishopTest extends AndroidTestCase {
 
+	private Piece bishop = new Bishop(C.TEAM_WHITE);
+
 	public void testBishop() {
-		Piece bishop = new Bishop(0);
 		Position[] pos = { new Position(7, 7), new Position(3, 3) };
 		for (int i = 0; i < pos.length; i++) {
 			List<List<Position>> testList = bishop.theoreticalMoves(pos[i]);
@@ -43,5 +44,13 @@ public class BishopTest extends AndroidTestCase {
 				}
 			}
 		}
+	}
+
+	public void testGetTeam() {
+		assertTrue(bishop.getTeam() == C.TEAM_WHITE);
+	}
+
+	public void testGetId() {
+		assertTrue(bishop.getId() == C.PIECE_BISHOP);
 	}
 }

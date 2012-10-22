@@ -2,6 +2,7 @@ package se.chalmers.chessfeud.test;
 
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.Knight;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
@@ -9,8 +10,9 @@ import android.test.AndroidTestCase;
 
 public class KnightTest extends AndroidTestCase {
 
+	private Piece knight = new Knight(C.TEAM_WHITE);
+
 	public void testKnight() {
-		Piece knight = new Knight(0);
 		Position[] pos = { new Position(7, 7), new Position(3, 3) };
 		for (int i = 0; i < pos.length; i++) {
 			List<List<Position>> testList = knight.theoreticalMoves(pos[i]);
@@ -41,4 +43,13 @@ public class KnightTest extends AndroidTestCase {
 			}
 		}
 	}
+
+	public void testGetTeam() {
+		assertTrue(knight.getTeam() == C.TEAM_WHITE);
+	}
+
+	public void testGetId() {
+		assertTrue(knight.getId() == C.PIECE_KNIGHT);
+	}
+
 }

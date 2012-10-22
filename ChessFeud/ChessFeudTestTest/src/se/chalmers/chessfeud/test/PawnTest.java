@@ -2,6 +2,7 @@ package se.chalmers.chessfeud.test;
 
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.Pawn;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
@@ -9,9 +10,11 @@ import android.test.AndroidTestCase;
 
 public class PawnTest extends AndroidTestCase {
 
+	private Piece whitePawn = new Pawn(C.TEAM_WHITE);
+	private Piece blackPawn = new Pawn(C.TEAM_BLACK);
+
 	public void testPawn() {
-		Piece whitePawn = new Pawn(0);
-		Piece blackPawn = new Pawn(1);
+
 		Position[] pos = { new Position(6, 6), new Position(1, 1) };
 		for (int i = 0; i < pos.length; i++) {
 			if (i == 0) { // Test the white pawn
@@ -39,5 +42,15 @@ public class PawnTest extends AndroidTestCase {
 				}
 			}
 		}
+	}
+
+	public void testGetTeam() {
+		assertTrue(whitePawn.getTeam() == C.TEAM_WHITE
+				&& blackPawn.getTeam() == C.TEAM_BLACK);
+	}
+
+	public void testGetId() {
+		assertTrue(whitePawn.getId() == C.PIECE_PAWN
+				&& blackPawn.getId() == C.PIECE_PAWN);
 	}
 }

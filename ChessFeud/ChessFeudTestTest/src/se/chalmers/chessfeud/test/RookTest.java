@@ -2,6 +2,7 @@ package se.chalmers.chessfeud.test;
 
 import java.util.List;
 
+import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.pieces.Rook;
 import se.chalmers.chessfeud.model.utils.Position;
@@ -9,8 +10,9 @@ import android.test.AndroidTestCase;
 
 public class RookTest extends AndroidTestCase {
 
+	private Piece rook = new Rook(C.TEAM_WHITE);
+
 	public void testRook() {
-		Piece rook = new Rook(0);
 		Position[] pos = { new Position(7, 7), new Position(3, 3) };
 		for (int i = 0; i < pos.length; i++) {
 			List<List<Position>> testList = rook.theoreticalMoves(pos[i]);
@@ -27,8 +29,10 @@ public class RookTest extends AndroidTestCase {
 						assertTrue(!p.equals(new Position(6, 6)));
 						// Checks so the Rooks position is inside the gameboard
 						// and also only verically or horizontally
-						assertTrue((p.getX() >= 0 && p.getX() <= 7 && p.getY() == 7) //Checks vertically
-								|| (p.getY() >= 0 && p.getY() <= 7 && p.getX() == 7));//Checks horizontally
+						assertTrue((p.getX() >= 0 && p.getX() <= 7 && p.getY() == 7) // Checks
+																						// vertically
+								|| (p.getY() >= 0 && p.getY() <= 7 && p.getX() == 7));// Checks
+																						// horizontally
 					}
 					if (i == 1) {
 						// Checks so the Rooks position is inside the gameboard
@@ -46,5 +50,13 @@ public class RookTest extends AndroidTestCase {
 				}
 			}
 		}
+	}
+
+	public void testGetTeam() {
+		assertTrue(rook.getTeam() == C.TEAM_WHITE);
+	}
+
+	public void testGetId() {
+		assertTrue(rook.getId() == C.PIECE_ROOK);
 	}
 }

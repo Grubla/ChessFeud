@@ -9,9 +9,10 @@ import se.chalmers.chessfeud.model.utils.Position;
 import android.test.AndroidTestCase;
 
 public class QueenTest extends AndroidTestCase {
+	private Piece queen = new Queen(C.TEAM_WHITE);
 
 	public void testQueen() {
-		Piece queen = new Queen(0);
+
 		Position[] pos = { new Position(7, 7), new Position(3, 3) };
 		for (int i = 0; i < pos.length; i++) {
 			List<List<Position>> testList = queen.theoreticalMoves(pos[i]);
@@ -32,7 +33,8 @@ public class QueenTest extends AndroidTestCase {
 								|| (p.getX() >= 0 && p.getX() < C.BOARD_LENGTH
 										&& p.getY() >= 0
 										&& p.getY() < C.BOARD_LENGTH && (p
-										.getX() == p.getY()))); // Checks diagonally
+										.getX() == p.getY()))); // Checks
+																// diagonally
 					}
 					if (i == 1) {
 						// Checks so the Queen doesn't have any possible
@@ -51,5 +53,13 @@ public class QueenTest extends AndroidTestCase {
 				}
 			}
 		}
+	}
+
+	public void testGetTeam() {
+		assertTrue(queen.getTeam() == C.TEAM_WHITE);
+	}
+
+	public void testGetId() {
+		assertTrue(queen.getId() == C.PIECE_QUEEN);
 	}
 }
