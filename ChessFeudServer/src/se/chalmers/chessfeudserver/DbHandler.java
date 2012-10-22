@@ -15,12 +15,17 @@ import javax.servlet.AsyncContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation for handling request from the andriod-app.
+ * 
+ *@author Simon Almgren 
+ * 
+ *         Copyright (c) 2012 Simon Almgren
  */
 public class DbHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,7 +44,6 @@ public class DbHandler extends HttpServlet {
 		try {
 			this.init();
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -52,17 +56,14 @@ public class DbHandler extends HttpServlet {
 		String loginUser = "root";
 		String loginPw = "awesomeness";
 		String loginURL = "jdbc:mysql://localhost/cfdb";
-
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			dbConnection = DriverManager.getConnection(loginURL, loginUser,
 					loginPw);
 			s = dbConnection.createStatement();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		tags = new HashMap();
@@ -80,6 +81,7 @@ public class DbHandler extends HttpServlet {
 		tags.put("userExists", 11);
 		tags.put("getFinishedGames", 12);
 		tags.put("setGameFinished", 13);
+		tags.put("deleteUser", 14);
 
 	}
 
@@ -91,7 +93,6 @@ public class DbHandler extends HttpServlet {
 			final HttpServletResponse response) throws ServletException, IOException {
 		final int intrequest = (Integer) tags.get(request.getParameter("tag"));
 		final HashMap<String, String[]> h =(HashMap<String, String[]>) request.getParameterMap();
-		
 		final AsyncContext async = request.startAsync();
 		async.setTimeout(TimeUnit.MINUTES.toMillis(5));
 		async.start(new Runnable() {
@@ -100,9 +101,7 @@ public class DbHandler extends HttpServlet {
 				async.complete();
 			}
 		});
-		
 	}
-	
 	private void doRequest(HashMap<String, String[]> h, int request, HttpServletResponse response){
 
 		try {
@@ -116,7 +115,7 @@ public class DbHandler extends HttpServlet {
 			case 1:
 				newMove(((String[])h.get("user1"))[0],
 						((String[])h.get("user2"))[0],
-						((String[])h.get("gameBoard"))[0]);
+						((String[])h.get("board"))[0]);
 				break;
 			case 2:
 				List<String> games = getGamesInProgress(((String[])h.get("username"))[0]);
@@ -147,7 +146,7 @@ public class DbHandler extends HttpServlet {
 			case 8:
 				out.print(newGame(((String[])h.get("user1"))[0],
 						((String[])h.get("user2"))[0],
-						((String[])h.get("gameBoard"))[0]));
+						((String[])h.get("board"))[0]));
 				break;
 			case 9:
 				deleteGame(((String[])h.get("user1"))[0],
@@ -172,6 +171,9 @@ public class DbHandler extends HttpServlet {
 			case 13:
 				setGameFinished(((String[])h.get("user1"))[0],
 						((String[])h.get("user2"))[0]);
+				break;
+			case 14:
+				out.print(deleteUser(((String[])h.get("username"))[0]));
 			}
 
 		} catch (NumberFormatException e) {
@@ -183,10 +185,7 @@ public class DbHandler extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -194,10 +193,14 @@ public class DbHandler extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
-
 	}
-
-
+	/**
+	 * Checks if the user exists in the database and the two passwordhashes match.
+	 * @param userName the player logging in
+	 * @param password the password hash.
+	 * @return a boolean true if login sucseeded or false otherwise.
+	 * @throws SQLException
+	 */
 	private boolean authenticate(String userName, String password)
 			throws SQLException {
 		if(userExists(userName)) {
@@ -227,6 +230,15 @@ public class DbHandler extends HttpServlet {
 		}
 		return false;
 	}
+	/**
+	 * Deletes a user from the database, returns false if it didnt work.
+	 * @param userName
+	 * @throws SQLException
+	 */
+	private boolean deleteUser(String userName) throws SQLException {
+		s.executeUpdate("delete from auth where userName='"+userName+"'");
+		return !userExists(userName);
+	}
 
 	/**
 	 * Checks for games in the database where the user is participating and adds
@@ -241,6 +253,7 @@ public class DbHandler extends HttpServlet {
 		List<String> games = new ArrayList<String>();
 		rs = s.executeQuery("select * from game where user1='" + userName
 				+ "' or user2='" + userName + "'");
+		rs.first();
 		while (rs.next()) {
 			games.add(rs.getString(1) + "/" + rs.getString(2) + "/"
 					+ rs.getString(3) + "/" + rs.getString(4) + "/"
@@ -262,6 +275,7 @@ public class DbHandler extends HttpServlet {
 		List<String> games = new ArrayList<String>();
 		rs = s.executeQuery("select * from finishedgames where user1='"
 				+ userName + "' or user2='" + userName + "'");
+		rs.first();
 		while (rs.next()) {
 			games.add(rs.getString(1) + "/" + rs.getString(2) + "/"
 					+ rs.getString(3) + "/" + rs.getString(4) + "/"
@@ -276,9 +290,15 @@ public class DbHandler extends HttpServlet {
 	private void removeOutdatedGames() throws SQLException {
 		s.executeUpdate("delete from finishedGames where DATE('timestamp') < CURDATE() - 2 DAY");	
 	}
-	
+	/**
+	 * Moves a game from the game-database to the finishedgames-db.
+	 * @param user1 one of the players.
+	 * @param user2 the other player.
+	 * @throws SQLException
+	 */
 	private void setGameFinished(String user1, String user2) throws SQLException {
-		rs = s.executeQuery("select * from game where user1='"+user1+"' and user2='"+user2+"' or user1='"+user2+"' and user2='"+user1);
+		rs = s.executeQuery("select * from game where (user1='"+user1+"' and user2='"+user2+"') or (user1='"+user2+"' and user2='"+user1+"')");
+		rs.first();
 		s.executeUpdate("insert into finishedgames(user1,user2,board,turns) values('"+rs.getString(1)+"','"+rs.getString(2)+"','"+rs.getString(3)+"','"+rs.getString(4)+"'");
 		s.executeUpdate("delete from game where user1='"+user1+"' and user2='"+user2+"' or user1='"+user2+"' and user2='"+user1);
 		
@@ -295,6 +315,7 @@ public class DbHandler extends HttpServlet {
 	private String getStatistics(String userName) throws SQLException {
 		rs = s.executeQuery("select * from statistics where username='"
 				+ userName + "'");
+		rs.first();
 		return (rs.getString(2) + "/" + rs.getString(3));
 	}
 
@@ -309,8 +330,9 @@ public class DbHandler extends HttpServlet {
 	private boolean addUser(String email, String userName, String password)
 			throws SQLException {
 		if(!userExists(userName)) {
-			int i = s.executeUpdate("insert into auth(email, username, password) values('"
+			s.executeUpdate("insert into auth(email, username, password) values('"
 					+ email + "','" + userName + "','" + password + "')");
+			s.executeUpdate("insert into statistics(username, wld, moves) values('"+userName+"','0/0/0','0')");
 			return true;
 		}
 		return false;
@@ -325,6 +347,7 @@ public class DbHandler extends HttpServlet {
 	private void incWins(String userName) throws SQLException {
 		rs = s.executeQuery("select wld from statistics where username='"
 				+ userName + "'");
+		rs.first();
 		String[] wld = rs.getString(1).split("/");
 		int w = Integer.parseInt(wld[0]) + 1;
 		s.executeUpdate("update statistics set wld='" + w + wld[1] + wld[2]
@@ -340,6 +363,7 @@ public class DbHandler extends HttpServlet {
 	private void incLosses(String userName) throws SQLException {
 		rs = s.executeQuery("select wld from statistics where username='"
 				+ userName + "'");
+		rs.first();
 		String[] wld = rs.getString(1).split("/");
 		int l = Integer.parseInt(wld[1]) + 1;
 		s.executeUpdate("update statistics set wld='" + wld[0] + l + wld[2]
@@ -355,6 +379,7 @@ public class DbHandler extends HttpServlet {
 	private void incDraws(String userName) throws SQLException {
 		rs = s.executeQuery("select wld from statistics where username='"
 				+ userName + "'");
+		rs.first();
 		String[] wld = rs.getString(1).split("/");
 		int d = Integer.parseInt(wld[2]) + 1;
 		s.executeUpdate("update statistics set wld='" + wld[0] + wld[1] + d
@@ -371,16 +396,15 @@ public class DbHandler extends HttpServlet {
 	 */
 	private boolean newGame(String user1, String user2, String gameBoard)
 			throws SQLException {
-		System.out.println(""+ user1+ " " + user2);
-		if(userExists(user2)) {	
+		if(userExists(user2)) {
 			s.executeUpdate("insert into game(user1, user2, board, turns) values('"
 					+ user1
 					+ "','"
 					+ user2
 					+ "','"
-					+ gameBoard
+					+ gameBoard.split("/")[0]
 					+ "','"
-					+ "'0')");
+					+ "0')");
 			return true;
 		}
 		return false;
@@ -396,12 +420,13 @@ public class DbHandler extends HttpServlet {
 	 */
 	private void newMove(String user1, String user2, String newModel)
 			throws SQLException {
-		System.out.println(newModel+"hej1");
-		System.out.println(user1+"hej2");
-		System.out.println(user2+"hej3");
 		String[] boardandturns = newModel.split("/");
 		String newBoard = boardandturns[0];
 		int turns = Integer.parseInt(boardandturns[1]);
+		rs = s.executeQuery("select moves from statistics where username='"+user1+"'");
+		rs.first();
+		int moves = rs.getInt(1);
+		s.executeUpdate("update statistics set moves='"+(moves+1)+"where username='"+user1+"'");
 		s.executeUpdate("update game set board='" + newBoard + "'where user1='"
 				+ user1 + "' and user2='" + user2 + "'");
 		s.executeUpdate("update game set board='" + newBoard + "'where user2='"
@@ -439,3 +464,4 @@ public class DbHandler extends HttpServlet {
 	}
 
 }
+
