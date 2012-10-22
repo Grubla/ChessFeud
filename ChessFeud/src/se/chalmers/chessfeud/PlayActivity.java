@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.constants.DbHandler;
 import se.chalmers.chessfeud.constants.Game;
+import se.chalmers.chessfeud.constants.TimeStamp;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.view.GameView;
 import android.app.Activity;
@@ -13,9 +14,18 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Is a class that will update all data that is shown in Activity Play.
+ * 
+ * @author Sean Pavlov
+ * 
+ *         Copyright (c) Sean Pavlov 2012
+ * 
+ */
 public class PlayActivity extends Activity implements PropertyChangeListener {
 	private Game g;
 	private ChessModel cm;
+	private TimeStamp ts;
 	private TextView nbrOfTurns;
 	private TextView playerNameWhite;
 	private TextView playerNameBlack;
@@ -52,6 +62,9 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		setTurnNTime();
 	}
 
+	/**
+	 * Sets all the layouts that is in use in PlayActivity.
+	 */
 	private void setLayout() {
 		nbrOfTurns = (TextView) findViewById(R.id.nbrOfTurns);
 		playerNameWhite = (TextView) findViewById(R.id.playerNameWhite);
@@ -61,7 +74,7 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 	}
 
 	/**
-	 * A method to set the state of the game; Check, Win, Loss or Draw.
+	 * Set the state of the game; Check, Win, Loss or Draw.
 	 */
 	private void setState() {
 		switch (cm.getState()) {
@@ -75,7 +88,7 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		case C.STATE_DRAW:
 			statusTxt.setTextColor(0xFF666666);
 			statusTxt.setText("Draw");
-			// TODO: Add pop-up
+			Toast.makeText(this, "Draw!", Toast.LENGTH_SHORT).show();
 			break;
 		case C.STATE_VICTORY_WHITE:
 			if (g.thisPlayersTeam() == C.TEAM_WHITE) {
@@ -105,6 +118,10 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		}
 	}
 
+	/**
+	 * Sets the TextView that show whose turn it is and how long it has been
+	 * since it was the players turn.
+	 */
 	private void setTurnNTime() {
 		String s = "";
 		if (g.getCurrentColor() == C.TEAM_WHITE) {
@@ -112,10 +129,22 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		} else {
 			s += "Black";
 		}
-		// TODO: Fix turns when Grubla has fixed a Timestamp-class
-		s += "'s Turn()";
+		s += "'s Turn(";
+		if (ts.getMinutesSinceStamp() < 60) {
+			s += "" + ts.getMinutesSinceStamp();
+		} else {
+			s += "" + (int) ts.getMinutesSinceStamp() / 60;
+		}
+		s += ")";
+		whoseTurnNTime.setText(s);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.
+	 * PropertyChangeEvent)
+	 */
 	public void propertyChange(PropertyChangeEvent event) {
 		if (event.getPropertyName().equals("Model")) {
 			final Game gameInfo = (Game) event.getOldValue();

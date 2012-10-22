@@ -9,6 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 
+/**
+ * Is the class that save all settings specific for the user.
+ * 
+ * @author Sean Pavlov, Henrik Alburg
+ * 
+ *         Copyright (c) Sean Pavlov, Henrik Alburg 2012
+ * 
+ */
 public class SettingsActivity extends Activity {
 	private CheckBox helptipSwitch;
 	private CheckBox soundSwitch;
@@ -24,10 +32,18 @@ public class SettingsActivity extends Activity {
 		pi = PlayerInfo.getInstance();
 		setLayout();
 		helptipSwitch.setChecked(pi.getHelpTip());
-		audioManager.setStreamMute(AudioManager.STREAM_MUSIC, !pi.getSoundEnabled());
+		audioManager.setStreamMute(AudioManager.STREAM_MUSIC,
+				!pi.getSoundEnabled());
 		soundSwitch.setChecked(pi.getSoundEnabled());
 	}
 
+	/**
+	 * Will perform an action when player click on a component that will make
+	 * any changes, e.g. checkboxes.
+	 * 
+	 * @param v
+	 *            is the view.
+	 */
 	public void onClick(View v) {
 		int id = v.getId();
 
