@@ -24,6 +24,7 @@
     <string name ="about_descr">ChessFeud is made by Simon Almgren, Arvid Karlsson, Henrik Alburg and Sean Pavlov.</string>
     <string name ="about_copy">Copyright © 2012 - All Rights Reserved</string>
     <string name ="about_group_photo_descr">Image of the project members.</string>
+    <string name ="about_avatars_copy">Avatars from Androidify.com</string>
     
     <string name ="dscr_register">Fill in the fields below, hit the register button and have fun!</string>
     <string name ="hint_email">E-Mail</string>
