@@ -81,31 +81,35 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			statusTxt.setText("");
 			break;
 		case C.STATE_CHECK:
-			statusTxt.setTextColor(0xFFDD0000);
+			statusTxt.setTextColor(C.STATE_TEXT_COLOR_RED);
 			statusTxt.setText("Check");
 			break;
 		case C.STATE_DRAW:
-			statusTxt.setTextColor(0xFF666666);
+			statusTxt.setTextColor(C.STATE_TEXT_COLOR_GREY);
 			statusTxt.setText("Draw");
 			Toast.makeText(this, "Draw!", Toast.LENGTH_SHORT).show();
 			break;
 		case C.STATE_VICTORY_WHITE:
 			if (g.thisPlayersTeam() == C.TEAM_WHITE) {
-				statusTxt.setTextColor(0xFF00DD00);
-				statusTxt.setText("Winner");
-			} else {
-				statusTxt.setTextColor(0xFFDD0000);
-				statusTxt.setText("Loser");
-			}
-			break;
-		case C.STATE_VICTORY_BLACK:
-			if (g.thisPlayersTeam() == C.TEAM_BLACK) {
-				statusTxt.setTextColor(0xFF00DD00);
+				statusTxt.setTextColor(C.STATE_TEXT_COLOR_GREEN);
 				statusTxt.setText("Winner");
 				Toast.makeText(this, "Congratulations! You won the game!",
 						Toast.LENGTH_SHORT).show();
 			} else {
-				statusTxt.setTextColor(0xFFDD0000);
+				statusTxt.setTextColor(C.STATE_TEXT_COLOR_RED);
+				statusTxt.setText("Loser");
+				Toast.makeText(this, "Ouch! You lost the game!",
+						Toast.LENGTH_SHORT).show();
+			}
+			break;
+		case C.STATE_VICTORY_BLACK:
+			if (g.thisPlayersTeam() == C.TEAM_BLACK) {
+				statusTxt.setTextColor(C.STATE_TEXT_COLOR_GREEN);
+				statusTxt.setText("Winner");
+				Toast.makeText(this, "Congratulations! You won the game!",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				statusTxt.setTextColor(C.STATE_TEXT_COLOR_RED);
 				statusTxt.setText("Loser");
 				Toast.makeText(this, "Ouch! You lost the game!",
 						Toast.LENGTH_SHORT).show();
@@ -129,10 +133,10 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			s += "Black";
 		}
 		s += "'s Turn(";
-		if (ts.getMinutesSinceStamp() < 60) {
+		if (ts.getMinutesSinceStamp() < C.MINUTES_PER_HOUR) {
 			s += "" + ts.getMinutesSinceStamp() + "m";
 		} else {
-			s += "" + (int) ts.getMinutesSinceStamp() / 60 + "h";
+			s += "" + (int) ts.getMinutesSinceStamp() / C.MINUTES_PER_HOUR + "h";
 		}
 		s += ")";
 		whoseTurnNTime.setText(s);

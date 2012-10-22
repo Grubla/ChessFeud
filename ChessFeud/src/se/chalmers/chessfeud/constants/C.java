@@ -35,6 +35,10 @@ public final class C {
 	public static final int STATE_VICTORY_WHITE = 22;
 	public static final int STATE_VICTORY_BLACK = 23;
 	public static final int STATE_DRAW = 24;
+	
+	public static final int STATE_TEXT_COLOR_GREEN = 0xFF00DD00;
+	public static final int STATE_TEXT_COLOR_RED = 0xFFDD0000;
+	public static final int STATE_TEXT_COLOR_GREY = 0xFF666666;
 
 	public static final int BOARD_LENGTH = 8;
 	public static final int STARTING_POSITION_BLACK_PAWN = 6;
@@ -56,6 +60,7 @@ public final class C {
 	public static final int[] DAYS_PER_MONTH = { 31, 28, 31, 30, 31, 30, 31,
 			31, 30, 31, 30, 31 };
 	public static final int SECONDS_PER_MINUTE = 60;
+	public static final int MINUTES_PER_HOUR = 60;
 	public static final int HOURS_PER_DAY = 24;
 	public static final int DAYS_PER_YEAR = 365;
 	public static final int DAYS_PER_LEAPYEAR = 366;

@@ -35,18 +35,17 @@ import android.widget.TextView;
  * 
  */
 public class MainActivity extends Activity implements OnClickListener {
-	private Button bStats, bSettings, bNewGame;
 	private ImageView iLogo;
 	private ListView startedGames;
 	private DbHandler dbh;
-
-	// private ListView finishedGames;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_main);
 
+		Button bStats, bSettings, bNewGame;
+		
 		dbh = DbHandler.getInstance();
 
 		bStats = (Button) findViewById(R.id.button_stats);
@@ -56,14 +55,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		iLogo = (ImageView) findViewById(R.id.imageView1);
 		iLogo.setOnClickListener(this);
 
-		// finishedGames = (ListView) findViewById(R.id.list_finishedGames);
 		startedGames = (ListView) findViewById(R.id.list_ongoingGames);
 
 		bStats.setOnClickListener(this);
 		bSettings.setOnClickListener(this);
 		bNewGame.setOnClickListener(this);
 
-		// finishedGames = (ListView) findViewById(R.id.list_finishedGames);
 		startedGames = (ListView) findViewById(R.id.list_ongoingGames);
 
 	}
@@ -82,8 +79,6 @@ public class MainActivity extends Activity implements OnClickListener {
 					}
 				});
 
-				// finishedGames.setListAdapter(this, R.id.list_finishedGames,
-				// getList());
 			}
 		}.start();
 	}
