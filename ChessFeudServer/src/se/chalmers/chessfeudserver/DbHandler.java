@@ -237,6 +237,7 @@ public class DbHandler extends HttpServlet {
 	 */
 	private boolean deleteUser(String userName) throws SQLException {
 		s.executeUpdate("delete from auth where userName='"+userName+"'");
+		s.executeUpdate("delete from statistics where userName='" + userName +"'");
 		return !userExists(userName);
 	}
 
@@ -288,7 +289,7 @@ public class DbHandler extends HttpServlet {
 	 * @throws SQLException
 	 */
 	private void removeOutdatedGames() throws SQLException {
-		s.executeUpdate("delete from finishedGames where DATE('timestamp') < CURDATE() - 2 DAY");	
+		s.executeUpdate("delete from finishedgames where timestamp < (NOW() - 2 DAY)");	
 	}
 	/**
 	 * Moves a game from the game-database to the finishedgames-db.
@@ -299,8 +300,8 @@ public class DbHandler extends HttpServlet {
 	private void setGameFinished(String user1, String user2) throws SQLException {
 		rs = s.executeQuery("select * from game where (user1='"+user1+"' and user2='"+user2+"') or (user1='"+user2+"' and user2='"+user1+"')");
 		rs.first();
-		s.executeUpdate("insert into finishedgames(user1,user2,board,turns) values('"+rs.getString(1)+"','"+rs.getString(2)+"','"+rs.getString(3)+"','"+rs.getString(4)+"'");
-		s.executeUpdate("delete from game where user1='"+user1+"' and user2='"+user2+"' or user1='"+user2+"' and user2='"+user1);
+		s.executeUpdate("insert into finishedgames(user1,user2,board,turns) values('"+rs.getString(1)+"','"+rs.getString(2)+"','"+rs.getString(3)+"','"+rs.getString(4)+"')");
+		s.executeUpdate("delete from game where user1='"+user1+"' and user2='"+user2+"' or user1='"+user2+"' and user2='"+user1+"'");
 		
 	}
 
@@ -350,7 +351,7 @@ public class DbHandler extends HttpServlet {
 		rs.first();
 		String[] wld = rs.getString(1).split("/");
 		int w = Integer.parseInt(wld[0]) + 1;
-		s.executeUpdate("update statistics set wld='" + w + wld[1] + wld[2]
+		s.executeUpdate("update statistics set wld='" + w +"/"+ wld[1]+ "/" + wld[2]
 				+ "' where username='" + userName + "'");
 	}
 
@@ -366,7 +367,7 @@ public class DbHandler extends HttpServlet {
 		rs.first();
 		String[] wld = rs.getString(1).split("/");
 		int l = Integer.parseInt(wld[1]) + 1;
-		s.executeUpdate("update statistics set wld='" + wld[0] + l + wld[2]
+		s.executeUpdate("update statistics set wld='" + wld[0] + "/" + l + "/" + wld[2]
 				+ "' where username='" + userName + "'");
 	}
 
@@ -382,7 +383,7 @@ public class DbHandler extends HttpServlet {
 		rs.first();
 		String[] wld = rs.getString(1).split("/");
 		int d = Integer.parseInt(wld[2]) + 1;
-		s.executeUpdate("update statistics set wld='" + wld[0] + wld[1] + d
+		s.executeUpdate("update statistics set wld='" + wld[0]+"/" + wld[1]+ "/" + d
 				+ "' where username='" + userName + "'");
 	}
 
@@ -426,14 +427,14 @@ public class DbHandler extends HttpServlet {
 		rs = s.executeQuery("select moves from statistics where username='"+user1+"'");
 		rs.first();
 		int moves = rs.getInt(1);
-		s.executeUpdate("update statistics set moves='"+(moves+1)+"where username='"+user1+"'");
-		s.executeUpdate("update game set board='" + newBoard + "'where user1='"
+		s.executeUpdate("update statistics set moves='"+(moves+1)+"' where username='"+user1+"'");
+		s.executeUpdate("update game set board='" + newBoard + "' where user1='"
 				+ user1 + "' and user2='" + user2 + "'");
-		s.executeUpdate("update game set board='" + newBoard + "'where user2='"
+		s.executeUpdate("update game set board='" + newBoard + "' where user2='"
 				+ user1 + "' and user2='" + user1 + "'");
-		s.executeUpdate("update game set turns='" + turns + "'where user1='"
+		s.executeUpdate("update game set turns='" + turns + "' where user1='"
 				+ user1 + "' and user2='" + user2 + "'");
-		s.executeUpdate("update game set turns='" + turns + "'where user2='"
+		s.executeUpdate("update game set turns='" + turns + "' where user2='"
 				+ user1 + "' and user2='" + user1 + "'");
 	}
 
