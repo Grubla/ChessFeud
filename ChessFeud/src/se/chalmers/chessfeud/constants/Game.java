@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud.constants;
 
+
 /**
  * A class representing an ongoing game. Will hold all the information needed by
  * both the model and the list objects.
@@ -39,7 +40,6 @@ public class Game {
 		turns = Integer.parseInt(s[3]);
 		timestamp = s[4];
 		this.position = position;
-
 	}
 
 	/**

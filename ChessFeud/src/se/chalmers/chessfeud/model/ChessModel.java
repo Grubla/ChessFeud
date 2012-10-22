@@ -8,7 +8,6 @@ import java.util.List;
 
 import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.constants.Game;
-import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 
@@ -180,14 +179,6 @@ public class ChessModel {
 	 */
 	public List<Piece> getTakenPieces() {
 		//Continue this
-		int piecesLeft = 0; 
-		for(int x = 0; x < chessBoard.getWidth(); x++){
-			for(int y = 0; y < chessBoard.getHeight(); y++){
-				if(chessBoard.getPieceAt(x, y).getId() != C.PIECE_NOPIECE){
-					piecesLeft++;
-				}
-			}
-		}
 		return takenPieces;
 	}
 
@@ -283,7 +274,7 @@ public class ChessModel {
 
 	/* Returns whom's turn it is next (opposite of activePlayer) */
 	private int nextTurn() {
-		int next = numberOfMoves % 2 == 0 ? 1 : 0;
+		int next = numberOfMoves % 2;
 		if (next == 1) {
 			return 0;
 		} else {

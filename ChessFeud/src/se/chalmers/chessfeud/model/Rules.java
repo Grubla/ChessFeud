@@ -208,7 +208,9 @@ public final class Rules {
 		for (int x = 0; x < cb.getWidth(); x++) {
 			for (int y = 0; y < cb.getHeight(); y++) {
 				if (cb.getPieceAt(x, y).getTeam() == nextTurn) {
-					return isPossibleToMove(cb, x, y);
+					if( isPossibleToMove(cb, x, y)){
+						return false;
+					}
 				}
 			}
 		}

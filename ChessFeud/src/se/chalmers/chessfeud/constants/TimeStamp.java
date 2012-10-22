@@ -14,7 +14,7 @@ public class TimeStamp {
 	private static int secondsPerHour = secondsPerMinute * C.SECONDS_PER_MINUTE;
 	private static int secondsPerDay = secondsPerHour * C.HOURS_PER_DAY;
 	private static int daysPerYear = C.DAYS_PER_YEAR;
-	private static int daysPerLeapYear = C.DAYS_PER_YEAR;
+	private static int daysPerLeapYear = C.DAYS_PER_LEAPYEAR;
 
 	private long timeSeconds;
 
@@ -26,9 +26,11 @@ public class TimeStamp {
 	 *            The string representing a date
 	 */
 	public TimeStamp(String s) {
-		String[] split = s.split(" ");
-		String[] ymd = split[0].split("-");
-		String[] hms = split[1].split(":");
+		String[] ymd = s.split("-");
+		String[] hms = ymd[2].split(":");
+		
+		ymd[2] = ymd[2].substring(0, 2);
+		hms[0] = hms[0].substring(2);
 
 		this.timeSeconds = 0;
 
@@ -38,15 +40,19 @@ public class TimeStamp {
 
 		int hour = Integer.parseInt(hms[0]);
 		int minute = Integer.parseInt(hms[1]);
-		int seconds = Integer.parseInt(hms[2]);
+		int seconds = (int)Double.parseDouble(hms[2]);
 
 		timeSeconds += getYearSeconds(year);
 		timeSeconds += getMonthSeconds(month);
 		timeSeconds += getDaySeconds(day);
 
 		timeSeconds += getHourSeconds(hour);
-		timeSeconds += getMinuteSeconds(minute + 1);
+		timeSeconds += getMinuteSeconds(minute);
 		timeSeconds += seconds;
+		
+		if(year%C.YEARS_BETWEEN_LEAPYEAR == 0 && month > 2){
+			timeSeconds += secondsPerDay;
+		}
 
 	}
 
@@ -72,9 +78,8 @@ public class TimeStamp {
 	/* Returns the number of seconds that have passed for all the months */
 	private int getMonthSeconds(int month) {
 		int seconds = 0;
-
-		for (int i = 0; i < month - 1; i++) {
-			seconds += daysPerMonth[i] * secondsPerDay;
+		for (int i = 1; i < month; i++) {
+			seconds += daysPerMonth[i-1] * secondsPerDay;
 		}
 		return seconds;
 	}
@@ -98,7 +103,7 @@ public class TimeStamp {
 	 */
 	private int getDaySeconds(int day) {
 		int seconds = 0;
-		for (int i = 0; i < day; i++) {
+		for (int i = 1; i < day; i++) {
 			seconds += secondsPerDay;
 		}
 		return seconds;
@@ -107,7 +112,7 @@ public class TimeStamp {
 	/* Returns the number of seconds between the days first hour and this hour */
 	private int getHourSeconds(int hour) {
 		int seconds = 0;
-		for (int i = 1; i < hour - 1; i++) {
+		for (int i = 1; i < hour-1; i++) {
 			seconds += secondsPerHour;
 		}
 		return seconds;
@@ -118,6 +123,6 @@ public class TimeStamp {
 	 * the hour
 	 */
 	private int getMinuteSeconds(int minute) {
-		return secondsPerMinute * (minute);
+		return secondsPerMinute * minute;
 	}
 }
