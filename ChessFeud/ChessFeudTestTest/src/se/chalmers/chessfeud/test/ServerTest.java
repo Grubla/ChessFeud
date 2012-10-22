@@ -31,4 +31,8 @@ public class ServerTest extends AndroidTestCase {
 		dbh.deleteUser("exists2");
 		assertTrue(b&&b2);
 	}
+	public void testNewGame() {
+		dbh.addUser("asd", "newTest", "pass");
+		
+	}
 }
