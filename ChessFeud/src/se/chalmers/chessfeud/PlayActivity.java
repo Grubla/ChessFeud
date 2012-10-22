@@ -131,9 +131,9 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		}
 		s += "'s Turn(";
 		if (ts.getMinutesSinceStamp() < 60) {
-			s += "" + ts.getMinutesSinceStamp();
+			s += "" + ts.getMinutesSinceStamp() + "m";
 		} else {
-			s += "" + (int) ts.getMinutesSinceStamp() / 60;
+			s += "" + (int) ts.getMinutesSinceStamp() / 60 + "h";
 		}
 		s += ")";
 		whoseTurnNTime.setText(s);
