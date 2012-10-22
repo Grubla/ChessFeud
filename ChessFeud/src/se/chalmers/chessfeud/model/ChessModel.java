@@ -179,6 +179,15 @@ public class ChessModel {
 	 * @return All the taken Pieces in a list.
 	 */
 	public List<Piece> getTakenPieces() {
+		//Continue this
+		int piecesLeft = 0; 
+		for(int x = 0; x < chessBoard.getWidth(); x++){
+			for(int y = 0; y < chessBoard.getHeight(); y++){
+				if(chessBoard.getPieceAt(x, y).getId() != C.PIECE_NOPIECE){
+					piecesLeft++;
+				}
+			}
+		}
 		return takenPieces;
 	}
 
@@ -282,7 +291,7 @@ public class ChessModel {
 		}
 	}
 
-	/* Sends the model to the given PropertyChangeListener */
+	/* Sends the model to the given PropertyChangeListener  */
 	private void sendModel(){
 		if(listener != null){
 			PropertyChangeEvent event = new PropertyChangeEvent(this, "Model", gameInfo, this.exportModel());
