@@ -13,7 +13,7 @@ import se.chalmers.chessfeud.model.utils.Position;
  * 
  * @author Henrik Alburg Arvid Karlsson
  * 
- *         Copyright (c) 2012 Henrik Alburg, Arbid Karlsson
+ *         Copyright (c) 2012 Henrik Alburg, Arvid Karlsson
  */
 
 public class NoPiece extends Piece {
