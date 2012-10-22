@@ -38,7 +38,7 @@
                 android:id="@+id/settingsCurrentAvatar" 
                 android:layout_width="50dp" 
                 android:layout_height="50dp" 
-                android:src="@drawable/avatar_stina"
+                android:src="@drawable/avatar_chessdroid"
                 android:contentDescription="@string/settings_cdscr_avatar"/>
         </FrameLayout>
         <LinearLayout 

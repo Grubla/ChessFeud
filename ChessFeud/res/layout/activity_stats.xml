@@ -41,7 +41,7 @@
                android:id="@+id/statsCurrentAvatar" 
                android:layout_width="50dp" 
                android:layout_height="50dp" 
-               android:src="@drawable/avatar_stina"
+               android:src="@drawable/avatar_chessdroid"
                android:contentDescription="AFTERMERGE"/>
        </FrameLayout>
        <TextView 

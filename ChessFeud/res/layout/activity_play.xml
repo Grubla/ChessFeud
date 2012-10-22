@@ -81,7 +81,7 @@
 					    android:id="@+id/imgAvatarWhite" 
 					    android:layout_width="39dp" 
 					    android:layout_height="39dp" 
-					    android:src="@drawable/avatar_stina"
+					    android:src="@drawable/avatar_chessdroid"
 					    android:contentDescription="@string/dscr_avatar_white" />
 				</FrameLayout>
 				<ImageView 
@@ -93,7 +93,12 @@
 				     android:contentDescription="@string/dscr_icon_team_white" />
 				<!-- Data: White Player Name -->
 				<TextView 
-				    android:id="@+id/playerNameWhite" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="3dp" android:text="White P" android:textSize="10dp"/>
+				    android:id="@+id/playerNameWhite" 
+				    android:layout_width="wrap_content" 
+				    android:layout_height="wrap_content" 
+				    android:layout_marginLeft="3dp" 
+				    android:text="White P" 
+				    android:textSize="10dp"/>
 			</LinearLayout>
 			
 			<TextView 
@@ -121,7 +126,10 @@
                   android:id="@+id/nbr_pawn_white" 
                   android:layout_width="wrap_content" 
                   android:layout_height="wrap_content" 
-                  android:layout_gravity="bottom" android:layout_marginRight="2dp" android:text="x8" android:textSize="9dp"/>
+                  android:layout_gravity="bottom" 
+                  android:layout_marginRight="2dp" 
+                  android:text="x8" 
+                  android:textSize="9dp"/>
               <ImageView 
                   android:id="@+id/img_white_piece_1" 
                   android:layout_width="15dp" 
@@ -196,7 +204,7 @@
 					    android:id="@+id/imgAvatarBlack" 
 					    android:layout_width="39dp" 
 					    android:layout_height="39dp" 
-					    android:src="@drawable/avatar_stina"
+					    android:src="@drawable/avatar_chessdroid"
 					    android:contentDescription="@string/dscr_avatar_black" />
 				</FrameLayout>
 				<ImageView 
