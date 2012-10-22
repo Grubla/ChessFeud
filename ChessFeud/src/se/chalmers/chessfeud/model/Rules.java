@@ -22,10 +22,10 @@ import se.chalmers.chessfeud.model.utils.Position;
  *         Copyright (c) 2012 Henrik Alburg, Arvid Karlsson
  * 
  */
-public class Rules {
+public final class Rules {
 
-	private static final int[] HORSE_X = { -2, -1, 1, 2, 2, 1, -1, -2 };
-	private static final int[] HORSE_Y = { 1, 2, 2, 1, -1, -2, -2, -1 };
+	private static final int[] HORSE_X = C.KNIGHT_X;
+	private static final int[] HORSE_Y = C.KNIGHT_Y;
 
 	/* The start board for a regular chess game */
 	private static final Piece[][] START_BOARD = {
