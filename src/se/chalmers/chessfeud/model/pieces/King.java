@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
+import se.chalmers.chessfeud.utils.C;
 
 /**
  * The Piece King. Reprecents the King on the chessborad. Handles the logic for
@@ -13,7 +13,7 @@ import se.chalmers.chessfeud.model.utils.Position;
  * 
  * @author Arvid modifiedby Henrik Alburg
  * 
- *         Copyright © 2012 Arvid Karlsson, Henrik Alburg
+ *         Copyright ï¿½ 2012 Arvid Karlsson, Henrik Alburg
  */
 
 public class King extends Piece {

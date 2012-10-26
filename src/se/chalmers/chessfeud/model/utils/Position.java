@@ -1,6 +1,6 @@
 package se.chalmers.chessfeud.model.utils;
 
-import se.chalmers.chessfeud.constants.C;
+import se.chalmers.chessfeud.utils.C;
 
 /**
  * A class representing 2D positions.

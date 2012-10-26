@@ -3,8 +3,8 @@ package se.chalmers.chessfeud.model.pieces;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
+import se.chalmers.chessfeud.utils.C;
 
 /**
  * The piece Rook. Reprecents the rook on the board. Contains the movement
@@ -12,7 +12,7 @@ import se.chalmers.chessfeud.model.utils.Position;
  * 
  * @author Arvid
  * 
- *         Copyright © 2012 Arvid Karlsson
+ *         Copyright ï¿½ 2012 Arvid Karlsson
  */
 
 public class Rook extends Piece {

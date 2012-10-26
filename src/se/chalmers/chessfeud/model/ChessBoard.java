@@ -1,9 +1,9 @@
 package se.chalmers.chessfeud.model;
 
-import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
+import se.chalmers.chessfeud.utils.C;
 
 /**
  * A class for representing a chessboard.

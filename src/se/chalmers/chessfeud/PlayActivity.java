@@ -3,11 +3,11 @@ package se.chalmers.chessfeud;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import se.chalmers.chessfeud.constants.C;
-import se.chalmers.chessfeud.constants.DbHandler;
-import se.chalmers.chessfeud.constants.Game;
-import se.chalmers.chessfeud.constants.TimeStamp;
 import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.utils.C;
+import se.chalmers.chessfeud.utils.DbHandler;
+import se.chalmers.chessfeud.utils.Game;
+import se.chalmers.chessfeud.utils.TimeStamp;
 import se.chalmers.chessfeud.view.GameView;
 import android.app.Activity;
 import android.os.Bundle;

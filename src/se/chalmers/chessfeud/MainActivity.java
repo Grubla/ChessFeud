@@ -3,9 +3,9 @@ package se.chalmers.chessfeud;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.chalmers.chessfeud.constants.DbHandler;
-import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.utils.DbHandler;
+import se.chalmers.chessfeud.utils.Game;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -71,6 +71,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		new Thread() {
 			public void run() {
 				final List<String> games = dbh.getGames();
+				
 				MainActivity.this.runOnUiThread(new Runnable() {
 					public void run() {
 						startedGames.setAdapter(new GameListAdapter(
@@ -151,9 +152,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			this.context = context;
 			gamesList = new ArrayList<Game>();
 			stringList = new ArrayList<String>();
-			for (int i = 0; i < l.size(); i++) {
-				gamesList.add(new Game(l.get(i), i));
-				stringList.add(l.get(i));
+			if(l != null){
+				for (int i = 0; i < l.size(); i++) {
+					gamesList.add(new Game(l.get(i), i));
+					stringList.add(l.get(i));
+				}
 			}
 		}
 

@@ -68,6 +68,7 @@
     <string name="settings_dscr_helptip">The positions a selected piece can move to will be highligthed.</string>
     <string name="settings_dscr_sound">Turn on or off the sound in game.</string>
     <string name="about">About</string>
+    <string name ="logout">Log out</string>
     
     <style name="Icon_Piece_ListItem">
         <item name="android:layout_width">19dp</item>

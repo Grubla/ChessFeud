@@ -3,8 +3,8 @@ package se.chalmers.chessfeud.model.pieces;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
+import se.chalmers.chessfeud.utils.C;
 
 /**
  * A class that marks that there's no piece at the current square. This "piece"

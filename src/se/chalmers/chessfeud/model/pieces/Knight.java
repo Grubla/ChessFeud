@@ -3,8 +3,8 @@ package se.chalmers.chessfeud.model.pieces;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.utils.Position;
+import se.chalmers.chessfeud.utils.C;
 
 /**
  * The piece Knight. Represents the Knight on the chessborad. Handles the logic
@@ -12,7 +12,7 @@ import se.chalmers.chessfeud.model.utils.Position;
  * 
  * @author Arvid
  * 
- *         Copyright © 2012 Arvid Karlsson
+ *         Copyright ï¿½ 2012 Arvid Karlsson
  * 
  */
 

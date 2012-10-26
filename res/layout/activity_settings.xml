@@ -150,6 +150,21 @@
 		        android:textSize="10dp"
 		        android:text="@string/about" 
 		        android:background="@drawable/btn_orange"/>
+
+	        <Button
+	            android:id="@+id/settingsLogoutButton"
+	            style="@style/ButtonText"
+	            android:layout_width="65dp"
+	            android:layout_height="30dp"
+	            android:layout_marginBottom="10dp"
+	            android:layout_marginLeft="5dp"
+	            android:layout_marginRight="5dp"
+	            android:layout_marginTop="10dp"
+	            android:layout_gravity="bottom|left"
+	            android:background="@drawable/btn_orange"
+	            android:text="@string/logout"
+	            android:textSize="10dp" />
+
     </FrameLayout>
     
 

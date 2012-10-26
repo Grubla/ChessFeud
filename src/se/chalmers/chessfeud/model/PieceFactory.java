@@ -1,7 +1,7 @@
 package se.chalmers.chessfeud.model;
 
-import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.*;
+import se.chalmers.chessfeud.utils.C;
 
 /**
  * A class to create pieces. The factory pattern is adapted to make an effetive

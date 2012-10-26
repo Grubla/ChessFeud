@@ -1,8 +1,8 @@
 package se.chalmers.chessfeud;
 
-import se.chalmers.chessfeud.constants.C;
-import se.chalmers.chessfeud.constants.DbHandler;
-import se.chalmers.chessfeud.constants.PlayerInfo;
+import se.chalmers.chessfeud.utils.C;
+import se.chalmers.chessfeud.utils.DbHandler;
+import se.chalmers.chessfeud.utils.PlayerInfo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

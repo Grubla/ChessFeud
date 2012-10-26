@@ -3,7 +3,6 @@ package se.chalmers.chessfeud.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.chalmers.chessfeud.constants.C;
 import se.chalmers.chessfeud.model.pieces.Bishop;
 import se.chalmers.chessfeud.model.pieces.King;
 import se.chalmers.chessfeud.model.pieces.Knight;
@@ -13,6 +12,7 @@ import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.pieces.Queen;
 import se.chalmers.chessfeud.model.pieces.Rook;
 import se.chalmers.chessfeud.model.utils.Position;
+import se.chalmers.chessfeud.utils.C;
 
 /**
  * A class for managing the Rules in a chessgame.

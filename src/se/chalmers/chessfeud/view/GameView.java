@@ -2,12 +2,12 @@ package se.chalmers.chessfeud.view;
 
 import java.util.List;
 
-import se.chalmers.chessfeud.constants.C;
-import se.chalmers.chessfeud.constants.PlayerInfo;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.model.pieces.NoPiece;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
+import se.chalmers.chessfeud.utils.C;
+import se.chalmers.chessfeud.utils.PlayerInfo;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

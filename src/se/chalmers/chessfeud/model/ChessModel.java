@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.chalmers.chessfeud.constants.C;
-import se.chalmers.chessfeud.constants.Game;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
+import se.chalmers.chessfeud.utils.C;
+import se.chalmers.chessfeud.utils.Game;
 
 /**
  * A class that implements the model of a chessgame. Basically it is run by the

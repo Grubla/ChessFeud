@@ -1,12 +1,13 @@
 package se.chalmers.chessfeud;
 
-import se.chalmers.chessfeud.constants.C;
-import se.chalmers.chessfeud.constants.PlayerInfo;
+import se.chalmers.chessfeud.utils.C;
+import se.chalmers.chessfeud.utils.PlayerInfo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,7 +26,8 @@ public class SettingsActivity extends Activity implements OnClickListener{
 	private CheckBox soundSwitch;
 	private PlayerInfo pi;
 	private Button bAbout;
-
+	private Button bLogout;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,6 +37,7 @@ public class SettingsActivity extends Activity implements OnClickListener{
 		pi = PlayerInfo.getInstance();
 		setLayout();
 		bAbout.setOnClickListener(this);
+		bLogout.setOnClickListener(this);
 		helptipSwitch.setChecked(pi.getHelpTip());
 		audioManager.setStreamMute(AudioManager.STREAM_MUSIC,
 				!pi.getSoundEnabled());
@@ -69,6 +72,11 @@ public class SettingsActivity extends Activity implements OnClickListener{
 				setSound(true);
 			}
 			break;
+		case R.id.settingsLogoutButton:
+			pi.logout(getApplicationContext());
+			startActivity(new Intent(this, LoginActivity.class));
+		default:
+			Log.e("Button clicked", "No such button");
 		}
 	}
 
@@ -127,5 +135,6 @@ public class SettingsActivity extends Activity implements OnClickListener{
 		bAbout = (Button) findViewById(R.id.settingsAboutButton);
 		helptipSwitch = (CheckBox) findViewById(R.id.settingsHelptipCheckBox);
 		soundSwitch = (CheckBox) findViewById(R.id.settingsSoundCheckBox);
+		bLogout = (Button) findViewById(R.id.settingsLogoutButton);
 	}
 }
