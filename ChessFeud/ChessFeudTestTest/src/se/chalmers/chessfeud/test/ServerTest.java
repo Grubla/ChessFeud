@@ -53,7 +53,7 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.addUser("asd", "newgametest", "pass");
 		dbh.addUser("asd", "newgametest2", "pass");
 		PlayerInfo player = PlayerInfo.getInstance();
-		player.tryLogin(getInstrumentation().getContext());
+		player.loadInfoFromFile(getInstrumentation().getContext());
 		player.login("newgametest", "pass", getInstrumentation().getContext());
 		assertTrue(dbh.newGame("newgametest2", new ChessModel(0).exportModel()));
 		dbh.setGameFinished("newgametest2");
@@ -67,7 +67,7 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.addUser("asd", "newmovetest", "pass");
 		dbh.addUser("asd", "newmovetest2", "pass");
 		PlayerInfo player = PlayerInfo.getInstance();
-		player.tryLogin(getInstrumentation().getContext());
+		player.loadInfoFromFile(getInstrumentation().getContext());
 		player.login("newmovetest", "pass", getInstrumentation().getContext());
 		dbh.newGame("newmovetest2", new ChessModel(0).exportModel());
 		ChessModel c = new ChessModel(0);
@@ -85,7 +85,7 @@ public class ServerTest extends InstrumentationTestCase {
 	public void testGetStats() {
 		dbh.addUser("asd", "getstatstest", "pass");
 		PlayerInfo player = PlayerInfo.getInstance();
-		player.tryLogin(getInstrumentation().getContext());
+		player.loadInfoFromFile(getInstrumentation().getContext());
 		player.login("getstatstest", "pass", getInstrumentation().getContext());
 		boolean b = (dbh.getStats().equals("0/0/0/0"));
 		dbh.incDraws();
@@ -107,7 +107,7 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.addUser("asd", "ggtest3", "pass");
 		ChessModel cm = new ChessModel(0);
 		PlayerInfo player = PlayerInfo.getInstance();
-		player.tryLogin(getInstrumentation().getContext());
+		player.loadInfoFromFile(getInstrumentation().getContext());
 		player.login("ggtest", "pass", getInstrumentation().getContext());
 		dbh.newGame("ggtest2", cm.exportModel());
 		dbh.newGame("ggtest3", cm.exportModel());
@@ -126,7 +126,7 @@ public class ServerTest extends InstrumentationTestCase {
 		dbh.addUser("asd", "gfgtest2", "pass");
 		dbh.addUser("asd", "gfgtest3", "pass");
 		PlayerInfo player = PlayerInfo.getInstance();
-		player.tryLogin(getInstrumentation().getContext());
+		player.loadInfoFromFile(getInstrumentation().getContext());
 		player.login("gfgtest", "pass", getInstrumentation().getContext());
 		dbh.newGame("gfgtest2", new ChessModel(0).exportModel());
 		dbh.newGame("gfgtest3", new ChessModel(0).exportModel());
@@ -143,7 +143,7 @@ public class ServerTest extends InstrumentationTestCase {
 	public void testIncMethods() {
 		dbh.addUser("asd", "inctest", "pass");
 		PlayerInfo player = PlayerInfo.getInstance();
-		player.tryLogin(getInstrumentation().getContext());
+		player.loadInfoFromFile(getInstrumentation().getContext());
 		player.login("inctest", "pass", getInstrumentation().getContext());
 		dbh.incDraws();
 		dbh.incDraws();

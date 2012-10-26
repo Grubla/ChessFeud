@@ -29,7 +29,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		player = PlayerInfo.getInstance();
-		player.tryLogin(getApplicationContext());
+		player.loadInfoFromFile(getApplicationContext());
 		new Thread() {
 			public void run() {
 				final boolean loggedIn = DbHandler.getInstance().login(

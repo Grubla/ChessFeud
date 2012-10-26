@@ -1,12 +1,8 @@
 package se.chalmers.chessfeud.constants;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import android.content.Context;
@@ -72,33 +68,25 @@ public class PlayerInfo {
 	 * Loads the username and the password from a textfile, if there isnt any,
 	 * sets loggedIn to false.
 	 */
-	private void loadInfoFromFile(Context c) {
-		try {
-			FileInputStream fis = c.openFileInput("stuff.db");
-			Scanner sc = new Scanner(fis);
-			this.userName = sc.nextLine();
-			this.password = sc.nextLine();
-
-		} catch (FileNotFoundException e) {
+	public void loadInfoFromFile(Context c) {
+		String[] stuffLines = getLinesFromFile("stuff.db", c);
+		if(stuffLines != null){
+			userName = stuffLines[0];
+			password = stuffLines[1];
+		}else{
 			userName = "";
 			password = "";
-		} catch (NoSuchElementException e) {
-			Log.e("PlayerInfo", "File empty");
 		}
 		/* Try to read the settings, if no file: Create one. */
-		BufferedReader inputReader;
-		try {
-			inputReader = new BufferedReader(new InputStreamReader(
-					c.openFileInput(C.FILENAME_SETTINGS)));
-			Scanner sc = new Scanner(inputReader);
-			String[] help = sc.nextLine().split("\t");
+		String[] settingsLines = getLinesFromFile(C.FILENAME_SETTINGS, c);
+		if(settingsLines != null){
+			String[] help = settingsLines[0].split("\t");
 			helpTip = !(Integer.parseInt(help[1]) == 0);
-			String[] sound = sc.nextLine().split("\t");
+			String[] sound = settingsLines[1].split("\t");
 			soundSettings = !(Integer.parseInt(sound[1]) == 0);
-		} catch (FileNotFoundException e) {
+		}else{
 			createSettingsFile(c);
 		}
-
 	}
 
 	/* Create the file containing the settings. */
@@ -106,23 +94,7 @@ public class PlayerInfo {
 		String fileContent = "Helptip:\t1\nSound:\t1";
 		helpTip = true;
 		soundSettings = true;
-		saveSettingsFile(c, fileContent);
-	}
-
-	/* Saves the given string to the settingsfile */
-	private void saveSettingsFile(Context c, String text) {
-		FileOutputStream fos;
-		try {
-			fos = c.openFileOutput(C.FILENAME_SETTINGS, Context.MODE_PRIVATE);
-			fos.write(text.getBytes());
-			fos.close();
-		} catch (FileNotFoundException e) {
-			Log.e(C.EXCEPTION_LOCATION_SETTINGS,
-					"Could not find the file when trying to save new text file");
-		} catch (IOException e) {
-			Log.e(C.EXCEPTION_LOCATION_SETTINGS,
-					"Error when using IO when trying to save new text file.");
-		}
+		writeStringToFile(fileContent, "chessfeud_settings", c);
 	}
 
 	/**
@@ -154,37 +126,21 @@ public class PlayerInfo {
 	 *            The context allowing files to be written to.
 	 */
 	public void setString(int settingsId, int newValue, Context c) {
-		String newString = "";
-		for (int rowNbr = 0; rowNbr < C.SETTINGS_NAME_LIST.length; rowNbr++) {
-			newString += C.SETTINGS_NAME_LIST[rowNbr] + ":\t";
-			if (rowNbr == settingsId) {
-				newString += newValue + "\n";
-			} else {
-				try {
-					BufferedReader inputReader = new BufferedReader(
-							new InputStreamReader(
-									c.openFileInput("chessfeud_settings")));
-					Scanner sc = new Scanner(inputReader);
-
-					for (int j = 0; j < rowNbr; j++) {
-						sc.nextInt();
-					}
-					newString += sc.nextInt() + "\n";
-					saveSettingsFile(c, newString);
-				} catch (IOException e) {
-					Log.e(C.EXCEPTION_LOCATION_SETTINGS,
-							"Error when trying to read from text file.");
+		StringBuilder newString = new StringBuilder("");
+		String[] lines = getLinesFromFile(C.FILENAME_SETTINGS, c);
+		if (lines != null) {
+			for (int rowNbr = 0; rowNbr < lines.length; rowNbr++){
+				if(rowNbr == settingsId){
+					newString.append(newValue+"\n");
+				}else{
+					newString.append(lines[rowNbr]+"\n");
 				}
-
 			}
+		writeStringToFile(newString.toString(), C.FILENAME_SETTINGS, c);	
+		} else {
+			Log.e(C.EXCEPTION_LOCATION_SETTINGS,
+					"Error when trying to read from text file.");
 		}
-	}
-
-	/**
-	 * Tries to load the login from a file.
-	 */
-	public void tryLogin(Context c) {
-		loadInfoFromFile(c);
 	}
 
 	/**
@@ -212,16 +168,38 @@ public class PlayerInfo {
 		if (suc) {
 			this.userName = username;
 			this.password = password;
-			try {
-				FileOutputStream out = c.openFileOutput("stuff.db",
-						Context.MODE_PRIVATE);
-				out.write((username + "\n").getBytes());
-				out.write(password.getBytes());
-				out.close();
-			} catch (IOException e) {
-				return true;
-			}
+			String s = username + "\n" + password;
+			writeStringToFile(s, "stuff.db", c);
 		}
 		return suc;
+	}
+
+	/* Writes the given string to the given file */
+	private boolean writeStringToFile(String text, String fileName, Context c) {
+		try {
+			FileOutputStream out = c.openFileOutput(fileName,
+					Context.MODE_PRIVATE);
+			out.write(text.getBytes());
+			out.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+
+	/* Returns the String in the given file */
+	private String[] getLinesFromFile(String fileName, Context c) {
+		StringBuilder fileContent = new StringBuilder("");
+		try {
+			FileInputStream fis = c.openFileInput(fileName);
+			Scanner sc = new Scanner(fis);
+			while (sc.hasNext()) {
+				fileContent.append(sc.nextLine() + "\n");
+			}
+			fileContent.delete(fileContent.length() - 1, fileContent.length());
+		} catch (IOException e) {
+			return null;
+		}
+		return fileContent.toString().split("\n");
 	}
 }
