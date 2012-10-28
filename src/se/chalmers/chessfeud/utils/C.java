@@ -67,6 +67,8 @@ public final class C {
 	public static final int DAYS_PER_LEAPYEAR = 366;
 	public static final int STARTING_YEAR = 1970;
 	public static final int YEARS_BETWEEN_LEAPYEAR = 4;
+	
+	public static final String SERVER_ERROR = "Couldn't connect to server right now..";
 
 	// An empty private constructor to hide utility class constructor
 	private C() {

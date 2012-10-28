@@ -1,5 +1,6 @@
 package se.chalmers.chessfeud;
 
+import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.DbHandler;
 import se.chalmers.chessfeud.utils.PlayerInfo;
 import android.app.Activity;
@@ -84,13 +85,20 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if (id == R.id.login) {
 			new Thread() {
 				public void run() {
-					boolean hej = player.login(eUsername.getText().toString(),
+					boolean success = player.login(eUsername.getText().toString(),
 							ePassword.getText().toString(),
 							getApplicationContext());
-					if (hej || eUsername.getText().toString().equals("TestAccount1337")) {
+					if (success || eUsername.getText().toString().equals("TestAccount1337")) {
 						startMain();
 					} else {
-						showToaster();
+						//TODO: Create a method for checking if server is online
+						boolean serverOnline = DbHandler.getInstance().userExists("Grubla");
+						if(serverOnline){
+							makeToast("Wrong password");
+						}else{
+							makeToast(C.SERVER_ERROR);
+						}
+						
 					}
 
 				}
@@ -113,10 +121,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 	/*
 	 * Shows a toaster with the given message. This is done in the UI-thread.
 	 */
-	private void showToaster() {
+	private void makeToast(final String msg) {
 		LoginActivity.this.runOnUiThread(new Runnable() {
 			public void run() {
-				String msg = "Wrong password";
 				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
 						.show();
 			}

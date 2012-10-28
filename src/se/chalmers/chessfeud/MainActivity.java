@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.DbHandler;
 import se.chalmers.chessfeud.utils.Game;
 import android.app.Activity;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This is the activity that handles the overview of games. It binds the
@@ -123,14 +125,28 @@ public class MainActivity extends Activity implements OnClickListener {
 			public void onClick(DialogInterface dialog, int which) {
 				new Thread() {
 					public void run() {
-						DbHandler.getInstance().newGame(
+						final boolean success = DbHandler.getInstance().newGame(
 								input.getText().toString(),
 								new ChessModel(0).exportModel());
+						if(!success){
+							makeToast(C.SERVER_ERROR);
+						}
 					}
 				}.start();
 			}
 		});
 		prompt.show();
+	}
+	
+	/* Creates a toast and displays is for the user */
+	private void makeToast(final String msg) {
+		MainActivity.this.runOnUiThread(new Runnable() {
+			public void run() {
+				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
+						.show();
+			}
+		});
+
 	}
 
 	/*
