@@ -42,8 +42,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				LoginActivity.this.runOnUiThread(new Runnable() {
 					public void run() {
 						if (loggedIn) {
-							startActivity(new Intent(LoginActivity.this,
-									MainActivity.class));
+							startMain();
 						} else {
 							setLoginLayout();
 						}
@@ -51,6 +50,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 				});
 			}
 		}.start();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		finish();
 	}
 	
 	/* Sets the login layout and binds all its elements. */
@@ -63,6 +67,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		bLogin.setOnClickListener(this);
 		bRegister.setOnClickListener(this);
+		
+		if(!player.getUserName().equals("")){
+			eUsername.setText(player.getUserName());
+			ePassword.setText(player.getPassword());
+		}
 	}
 
 	/*
@@ -96,7 +105,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private void startMain() {
 		LoginActivity.this.runOnUiThread(new Runnable() {
 			public void run() {
-				startActivity(new Intent(LoginActivity.this, MainActivity.class));
+				startActivityForResult(new Intent(LoginActivity.this, MainActivity.class), 0);
 			}
 		});
 	}

@@ -84,6 +84,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		}.start();
 	}
 
+	@Override
+	public void onBackPressed() {
+		setResult(1);
+		finish();
+	}
+	
 	/* Will launch a new activity based on what is clicked. */
 	public void onClick(View v) {
 		int id = v.getId();
