@@ -69,6 +69,13 @@ public class PlayerInfo {
 	 * sets loggedIn to false.
 	 */
 	public void loadInfoFromFile(Context c) {
+		loadUserinfo(c);
+		loadSettings(c);
+	}
+	
+	/* Loads the user info from the user-file.  
+	 * If a file cannot be found, the variable are left empty*/
+	private void loadUserinfo(Context c) {
 		String[] stuffLines = getLinesFromFile(C.FILENAME_USERFILE, c);
 		if (stuffLines != null && stuffLines.length > 1) {
 			userName = stuffLines[0];
@@ -77,16 +84,22 @@ public class PlayerInfo {
 			userName = "";
 			password = "";
 		}
-		/* Try to read the settings, if no file: Create one. */
+	}
+
+	/* Loads the settings from the settings-file 
+	 * If there is no settings-file , one will be created 
+	 */
+	private void loadSettings(Context c){
 		String[] settingsLines = getLinesFromFile(C.FILENAME_SETTINGS, c);
 		if (settingsLines != null) {
 			String[] help = settingsLines[0].split("\t");
-			helpTip = !(Integer.parseInt(help[1]) == 0);
+			helpTip = ((int)Integer.parseInt(help[1])) == 1;
 			String[] sound = settingsLines[1].split("\t");
-			soundSettings = !(Integer.parseInt(sound[1]) == 0);
+			soundSettings = ((int)Integer.parseInt(sound[1])) == 1;
 		} else {
 			createSettingsFile(c);
 		}
+		Log.d("help+sound", helpTip+" "+soundSettings);
 	}
 
 	/* Create the file containing the settings. */
@@ -131,7 +144,8 @@ public class PlayerInfo {
 		if (lines != null) {
 			for (int rowNbr = 0; rowNbr < lines.length; rowNbr++) {
 				if (rowNbr == settingsId) {
-					newString.append(newValue + "\n");
+					String[] split = lines[rowNbr].split("\t");
+					newString.append(split[0]+"\t"+newValue + "\n");
 				} else {
 					newString.append(lines[rowNbr] + "\n");
 				}
@@ -141,6 +155,7 @@ public class PlayerInfo {
 			Log.e(C.EXCEPTION_LOCATION_SETTINGS,
 					"Error when trying to read from text file.");
 		}
+		loadSettings(c);
 	}
 
 	/**

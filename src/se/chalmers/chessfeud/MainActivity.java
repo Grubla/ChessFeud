@@ -102,7 +102,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			showPrompt();
 			break;
 		default:
-			Log.e("Button not binded", "Should not get here!");
+			Log.e("Mainactivity", "Button not binded");
 		}
 	}
 

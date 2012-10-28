@@ -27,17 +27,22 @@ public class SettingsActivity extends Activity implements OnClickListener{
 	private PlayerInfo pi;
 	private Button bAbout;
 	private Button bLogout;
+	private AudioManager audioManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(
+		audioManager = (AudioManager) getApplicationContext().getSystemService(
 				Context.AUDIO_SERVICE);
 		pi = PlayerInfo.getInstance();
 		setLayout();
-		bAbout.setOnClickListener(this);
-		bLogout.setOnClickListener(this);
+		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		helptipSwitch.setChecked(pi.getHelpTip());
 		audioManager.setStreamMute(AudioManager.STREAM_MUSIC,
 				!pi.getSoundEnabled());
@@ -60,23 +65,24 @@ public class SettingsActivity extends Activity implements OnClickListener{
 			break;
 		case R.id.settingsHelptipCheckBox:
 			if (helptipSwitch.isChecked()) {
-				setHelptip(false);
+				setHelptip(1);
 			} else {
-				setHelptip(true);
+				setHelptip(0);
 			}
 			break;
 		case R.id.settingsSoundCheckBox:
 			if (soundSwitch.isChecked()) {
-				setSound(false);
+				setSound(1);
 			} else {
-				setSound(true);
+				setSound(0);
 			}
 			break;
 		case R.id.settingsLogoutButton:
 			pi.logout(getApplicationContext());
 			startActivity(new Intent(this, LoginActivity.class));
+			break;
 		default:
-			Log.e("Button clicked", "No such button");
+			Log.e("Settings", "Button not binded");
 		}
 	}
 
@@ -88,12 +94,8 @@ public class SettingsActivity extends Activity implements OnClickListener{
 	 * @param check
 	 *            is the boolean expression you want to set Helptip to be.
 	 */
-	private void setHelptip(boolean check) {
-		if (check) {
-			changeString(C.SETTINGS_HELPTIP, 1);
-		} else {
-			changeString(C.SETTINGS_HELPTIP, 0);
-		}
+	private void setHelptip(int state) {
+			changeString(C.SETTINGS_HELPTIP, state);
 	}
 
 	/**
@@ -104,13 +106,8 @@ public class SettingsActivity extends Activity implements OnClickListener{
 	 * @param check
 	 *            is the boolean expression you want to set Helptip to be.
 	 */
-	private void setSound(boolean check) {
-		// Mute if checked/UnMute if unchecked
-		if (check) {
-			changeString(C.SETTINGS_SOUND, 1);
-		} else {
-			changeString(C.SETTINGS_SOUND, 0);
-		}
+	private void setSound(int state) {
+			changeString(C.SETTINGS_SOUND, state);
 	}
 
 	/**
@@ -131,10 +128,15 @@ public class SettingsActivity extends Activity implements OnClickListener{
 		pi.setString(settingsId, newValue, getApplicationContext());
 	}
 
+	/* Binds all the elements and sets the listeners etc */
 	private void setLayout() {
 		bAbout = (Button) findViewById(R.id.settingsAboutButton);
 		helptipSwitch = (CheckBox) findViewById(R.id.settingsHelptipCheckBox);
 		soundSwitch = (CheckBox) findViewById(R.id.settingsSoundCheckBox);
 		bLogout = (Button) findViewById(R.id.settingsLogoutButton);
+		bAbout.setOnClickListener(this);
+		bLogout.setOnClickListener(this);
+		soundSwitch.setOnClickListener(this);
+		helptipSwitch.setOnClickListener(this);
 	}
 }
