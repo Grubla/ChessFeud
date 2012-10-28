@@ -45,11 +45,19 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			cm = new ChessModel(g, this);
 			gv.setGameModel(cm);
 			ts = new TimeStamp(g.getTimestamp());
+		}else{
+			//This is a dummygame
+			g = new Game("NA/NA/NA/0/NA", 0);
+			cm = new ChessModel(0);
+			gv.setGameModel(cm);
+			ts = new TimeStamp();
 		}
-
+		
 		nbrOfTurns.setText("" + g.getTurns());
 		playerNameWhite.setText("" + g.getWhitePlayer());
 		playerNameBlack.setText("" + g.getBlackPlayer());
+
+
 		
 	}
 

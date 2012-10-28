@@ -55,6 +55,13 @@ public class TimeStamp {
 		}
 
 	}
+	
+	/**
+	 * Creates a timestamp with the current time.
+	 */
+	public TimeStamp(){
+		timeSeconds = System.currentTimeMillis()/1000;
+	}
 
 	/**
 	 * Returns the amount of seconds since the start of 1970.

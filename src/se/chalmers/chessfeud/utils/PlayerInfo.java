@@ -99,7 +99,6 @@ public class PlayerInfo {
 		} else {
 			createSettingsFile(c);
 		}
-		Log.d("help+sound", helpTip+" "+soundSettings);
 	}
 
 	/* Create the file containing the settings. */
