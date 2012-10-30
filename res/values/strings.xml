@@ -58,6 +58,7 @@
     <string name="dscr_avatar_black">Black players avatar</string>
     <string name="dscr_icon_team_white">White player</string>
     <string name="dscr_icon_team_black">Black player</string>
+    <string name="choose_piece">Choose a piece..</string>
     
     <string name="settings_h1_settings">Settings</string>
     <string name="settings_cdscr_avatar">Your current avatar.</string>

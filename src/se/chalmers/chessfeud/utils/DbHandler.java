@@ -19,6 +19,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.util.Log;
+
 /**
  * A class to handle the communication between the phone and the server. Handles
  * all the logic like login, register new user and the status of the games.
@@ -70,7 +72,7 @@ public class DbHandler {
 	private void init() {
 		client = new DefaultHttpClient();
 		httpPost = new HttpPost(
-				"http://46.239.101.108:8080/ChessFeudServer/DbHandler/*");
+				"http://90.227.18.175:8080/ChessFeudServer/DbHandler/*");
 		is = null;
 		pairs = new ArrayList<BasicNameValuePair>();
 		player = PlayerInfo.getInstance();
@@ -260,7 +262,7 @@ public class DbHandler {
 		String s = getFromDatabase();
 		if (s == null) {
 			return new ArrayList<String>();
-		} else if (s.equals("")) { // If something went wrong when contacting
+		} else if (s.equals("") || s.equals("true") || s.equals("false")) { // If something went wrong when contacting
 									// the database.
 			return new ArrayList<String>();
 		}
@@ -353,6 +355,7 @@ public class DbHandler {
 			Scanner sc = new Scanner(iStream);
 			if (sc.hasNext()) {
 				String s = sc.next();
+				Log.d("", s);
 				if (s.equals("true")) {
 					return true;
 				}
@@ -382,7 +385,8 @@ public class DbHandler {
 			Scanner sc = new Scanner(iStream);
 			if (sc.hasNext()) {
 				String s = sc.next();
-				if (s.equals("true")) {
+				Log.d("UD", "l "+s);
+					if (s.equals("true")) {
 					return true;
 				}
 			}

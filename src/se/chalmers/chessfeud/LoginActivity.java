@@ -52,12 +52,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 			}
 		}.start();
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		finish();
 	}
-	
+
 	/* Sets the login layout and binds all its elements. */
 	private void setLoginLayout() {
 		setContentView(R.layout.activity_login);
@@ -68,8 +68,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		bLogin.setOnClickListener(this);
 		bRegister.setOnClickListener(this);
-		
-		if(!player.getUserName().equals("")){
+
+		if (!player.getUserName().equals("")) {
 			eUsername.setText(player.getUserName());
 			ePassword.setText(player.getPassword());
 		}
@@ -85,20 +85,24 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if (id == R.id.login) {
 			new Thread() {
 				public void run() {
-					boolean success = player.login(eUsername.getText().toString(),
-							ePassword.getText().toString(),
-							getApplicationContext());
-					if (success || eUsername.getText().toString().equals("TestAccount1337")) {
+					boolean success = eUsername.getText().toString()
+							.equals("TestAccount1337")
+							|| player.login(eUsername.getText().toString(),
+									ePassword.getText().toString(),
+									getApplicationContext());
+					if (success) {
 						startMain();
 					} else {
-						//TODO: Create a method for checking if server is online
-						boolean serverOnline = DbHandler.getInstance().userExists("Grubla");
-						if(serverOnline){
+						// TODO: Create a method for checking if server is
+						// online
+						boolean serverOnline = DbHandler.getInstance()
+								.userExists("Grubla");
+						if (serverOnline) {
 							makeToast("Wrong password");
-						}else{
+						} else {
 							makeToast(C.SERVER_ERROR);
 						}
-						
+
 					}
 
 				}
@@ -113,7 +117,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private void startMain() {
 		LoginActivity.this.runOnUiThread(new Runnable() {
 			public void run() {
-				startActivityForResult(new Intent(LoginActivity.this, MainActivity.class), 0);
+				startActivityForResult(new Intent(LoginActivity.this,
+						MainActivity.class), 0);
 			}
 		});
 	}

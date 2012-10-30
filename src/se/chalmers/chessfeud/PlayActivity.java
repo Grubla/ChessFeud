@@ -4,12 +4,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.model.utils.Position;
 import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.DbHandler;
 import se.chalmers.chessfeud.utils.Game;
 import se.chalmers.chessfeud.utils.TimeStamp;
 import se.chalmers.chessfeud.view.GameView;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,13 +36,14 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 	private TextView playerNameBlack;
 	private TextView statusTxt;
 	private TextView whoseTurnNTime;
+	private GameView gv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play);
 		setLayout();
-		GameView gv = (GameView) findViewById(R.id.chessBoard);
+		gv = (GameView) findViewById(R.id.chessBoard);
 		String gameInfo = getIntent().getStringExtra("GameString");
 		int position = getIntent().getIntExtra("Position", -1);
 		if (gameInfo != null) {
@@ -45,20 +51,18 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			cm = new ChessModel(g, this);
 			gv.setGameModel(cm);
 			ts = new TimeStamp(g.getTimestamp());
-		}else{
-			//This is a dummygame
+		} else {
+			// This is a dummygame
 			g = new Game("NA/NA/NA/0/NA", 0);
-			cm = new ChessModel(0);
+			cm = new ChessModel(this);
 			gv.setGameModel(cm);
 			ts = new TimeStamp();
 		}
-		
+
 		nbrOfTurns.setText("" + g.getTurns());
 		playerNameWhite.setText("" + g.getWhitePlayer());
 		playerNameBlack.setText("" + g.getBlackPlayer());
 
-
-		
 	}
 
 	@Override
@@ -144,7 +148,8 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		if (ts.getMinutesSinceStamp() < C.MINUTES_PER_HOUR) {
 			s += "" + ts.getMinutesSinceStamp() + "m";
 		} else {
-			s += "" + (int) ts.getMinutesSinceStamp() / C.MINUTES_PER_HOUR + "h";
+			s += "" + (int) ts.getMinutesSinceStamp() / C.MINUTES_PER_HOUR
+					+ "h";
 		}
 		s += ")";
 		whoseTurnNTime.setText(s);
@@ -166,6 +171,53 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 							gameBoard);
 				}
 			}.start();
+		} else if (event.getPropertyName().equals("Pawn")) {
+			Position p = (Position) event.getOldValue();
+			promptNewPiece(p);
+
 		}
+	}
+
+	/* Creates a popup list which has the different pieces as alternatives */
+	private void promptNewPiece(final Position p) {
+		final String[] pieces = { "Queen", "Rook", "Bishop", "Knight" };
+		PlayActivity.this.runOnUiThread(new Runnable() {
+			public void run() {
+				Builder builder = new Builder(PlayActivity.this);
+				builder.setTitle(R.string.choose_piece);
+				builder.setItems(pieces, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int position) {
+						switch (position) {
+						case 0:
+							setNewPiece(p, C.PIECE_QUEEN);
+							break;
+						case 1:
+							setNewPiece(p, C.PIECE_ROOK);
+							break;
+						case 2:
+							setNewPiece(p, C.PIECE_BISHOP);
+							break;
+						case 3:
+							setNewPiece(p, C.PIECE_KNIGHT);
+							break;
+						default:
+							setNewPiece(p, C.PIECE_QUEEN);
+						}
+					}
+				});
+				builder.setOnCancelListener(new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						setNewPiece(p, C.PIECE_QUEEN);
+					}
+				});
+				builder.show();
+			}
+		});
+	}
+
+	private void setNewPiece(Position p, int id) {
+		cm.changePawnTo(p, id);
+		gv.invalidate();
 	}
 }

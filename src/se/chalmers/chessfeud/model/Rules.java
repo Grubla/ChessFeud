@@ -261,16 +261,18 @@ public final class Rules {
 				: 1;
 
 		Position tryPos = new Position(selected.getX(), selected.getY() + dy);
-		ChessBoard tmpBoard = new ChessBoard(cb, selected, tryPos);
-		if (inBounds(tryPos) && cb.isEmpty(tryPos)
-				&& !isCheck(tmpBoard, piece.getTeam())) {
-			moveList.add(tryPos);
-			tryPos = new Position(selected.getX(), selected.getY() + 2 * dy);
-			tmpBoard = new ChessBoard(cb, selected, tryPos);
-			if (inBounds(tryPos) && cb.isEmpty(tryPos)
-					&& selected.getY() == startY
-					&& !isCheck(tmpBoard, piece.getTeam())) {
+		if (inBounds(tryPos) && cb.isEmpty(tryPos)){
+			ChessBoard tmpBoard = new ChessBoard(cb, selected, tryPos);
+			if( !isCheck(tmpBoard, piece.getTeam())) {
 				moveList.add(tryPos);
+		}
+			tryPos = new Position(selected.getX(), selected.getY() + 2 * dy);
+			if (inBounds(tryPos) && cb.isEmpty(tryPos)
+					&& selected.getY() == startY) {
+				tmpBoard = new ChessBoard(cb, selected, tryPos);
+				if(!isCheck(tmpBoard, piece.getTeam())){
+					moveList.add(tryPos);
+				}
 			}
 		}
 		return moveList;

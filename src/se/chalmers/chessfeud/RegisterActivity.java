@@ -53,13 +53,13 @@ public class RegisterActivity extends Activity {
 							if (addUser()) {
 								if (login()) {
 									startMain();
+								}else {
+									makeToast("Failed to log in after registration");
 								}
 							} else {
 								makeToast("Failed to register");
 							}
-						} else {
-							makeToast("Failed to log in after registration");
-						}
+						} 
 					}
 				}.start();
 			}

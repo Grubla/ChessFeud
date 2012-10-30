@@ -150,7 +150,8 @@ public class ChessBoard {
 	 */
 	public Piece movePiece(Position oldPos, Position newPos) {
 		Piece oldPiece = PieceFactory.createNewPiece(getPieceAt(newPos));
-		board[newPos.getX()][newPos.getY()] = PieceFactory.createNewPiece(getPieceAt(oldPos));
+		board[newPos.getX()][newPos.getY()] = PieceFactory
+				.createNewPiece(getPieceAt(oldPos));
 		board[oldPos.getX()][oldPos.getY()] = new NoPiece();
 		return oldPiece;
 	}
@@ -159,11 +160,24 @@ public class ChessBoard {
 	 * Check whether a position is empty or not.
 	 * 
 	 * @param pos
-	 *            , the pos to be checked.
+	 *            The pos to be checked.
 	 * @return true if their is no piece at the given pos.
 	 */
 	public boolean isEmpty(Position pos) {
 		return getPieceAt(pos) instanceof NoPiece;
+	}
+
+	/**
+	 * Sets the Piece with the given id at the given Position.
+	 * 
+	 * @param p
+	 *            The position of the new Piece.
+	 * @param id
+	 *            The id of the new piece.
+	 */
+	public void setPiece(Position p, int id, int team) {
+		PieceFactory pf = new PieceFactory(team);
+		board[p.getX()][p.getY()] = pf.createPiece(id);
 	}
 
 }

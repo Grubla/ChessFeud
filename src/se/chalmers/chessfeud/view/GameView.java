@@ -31,7 +31,7 @@ public class GameView extends View implements OnTouchListener {
 	private PlayerInfo pi = PlayerInfo.getInstance();
 	private int chessSquareHeight;
 	private int chessSquareWidth;
-	private ChessModel gm = new ChessModel(0);
+	private ChessModel gm;
 	private Paint wMain = new Paint();
 	private Paint wSelected = new Paint();
 	private Paint wAvailable = new Paint();

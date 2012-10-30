@@ -127,7 +127,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					public void run() {
 						final boolean success = DbHandler.getInstance().newGame(
 								input.getText().toString(),
-								new ChessModel(0).exportModel());
+								new ChessModel(null).exportModel());
 						if(!success){
 							makeToast(C.SERVER_ERROR);
 						}

@@ -10,6 +10,7 @@ import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.Game;
+import android.util.Log;
 
 /**
  * A class that implements the model of a chessgame. Basically it is run by the
@@ -41,12 +42,13 @@ public class ChessModel {
 	 *            , this is the player who is on the current client.
 	 *            C.TEAM_WHITE or C.TEAM_BLACK
 	 */
-	public ChessModel(int thisPlayer) {
+	public ChessModel(PropertyChangeListener pcl) {
 		gameInfo = null;
+		thisPlayer = 0;
+		listener = pcl;
 		chessBoard = new ChessBoard();
 		numberOfMoves = 0;
 		selected = null;
-		this.thisPlayer = thisPlayer;
 		possibleMoves = new LinkedList<Position>();
 		takenPieces = new ArrayList<Piece>();
 		state = C.STATE_NORMAL;
@@ -106,10 +108,19 @@ public class ChessModel {
 		}
 	}
 
+	//TODO: When pawn transforms wait to send model..
 	/* Makes a click when a position already is selected */
 	private void clickSelected(Position p) {
 		if (possibleMoves.contains(p)) { // A valid move has been clicked
-			movePiece(p);
+			//Check if a pawn has reached the other side
+			int pawnY = chessBoard.getPieceAt(selected).getTeam() == C.TEAM_WHITE ? 0 : 7;
+			if(chessBoard.getPieceAt(selected).getId() == C.PIECE_PAWN && p.getY() == pawnY){
+				listener.propertyChange(new PropertyChangeEvent(this, "Pawn", p, null));
+				movePiece(p);
+			}else{
+				movePiece(p);
+				sendModel();
+			}
 		} else { // Clicked on a place the piece cannot go
 			selectNewPiece(p);
 		}
@@ -134,12 +145,11 @@ public class ChessModel {
 	 */
 	private void movePiece(Position p) {
 		Piece pi = chessBoard.movePiece(selected, p);
-		if(pi.getId() != C.PIECE_NOPIECE){
+		if (pi.getId() != C.PIECE_NOPIECE) {
 			takenPieces.add(pi);
 		}
 		deselectPiece();
 		changeTurn();
-		sendModel();
 		checkState();
 	}
 
@@ -178,7 +188,7 @@ public class ChessModel {
 	 * @return All the taken Pieces in a list.
 	 */
 	public List<Piece> getTakenPieces() {
-		//Continue this
+		// Continue this
 		return takenPieces;
 	}
 
@@ -257,14 +267,29 @@ public class ChessModel {
 		return numberOfMoves % 2;
 	}
 
+	/**
+	 * Changes the pawn at the given position to a new Piece. This is happening
+	 * when a pawn walks across the board to become a Queen, Rook, Bishop or
+	 * Knight.
+	 * 
+	 * @param p
+	 *            The position of the pawn.
+	 * @param id
+	 *            The id of the new Piece.
+	 */
+	public void changePawnTo(Position p, int id) {
+		chessBoard.setPiece(p, id, chessBoard.getPieceAt(p).getTeam());
+		sendModel();
+	}
+
 	/*
 	 * Returns true if the piece at the given position is the same team as the
 	 * player trying to move it and it is his or hers turn.
 	 */
 	private boolean isMoveable(Position p) {
-	if(gameInfo == null){
-		return true;
-	}
+		if (gameInfo == null) {
+			return true;
+		}
 		int activePlayer = numberOfMoves % 2;
 		if (activePlayer == this.thisPlayer) {
 			return chessBoard.getPieceAt(p).getTeam() == activePlayer;
@@ -282,10 +307,11 @@ public class ChessModel {
 		}
 	}
 
-	/* Sends the model to the given PropertyChangeListener  */
-	private void sendModel(){
-		if(listener != null){
-			PropertyChangeEvent event = new PropertyChangeEvent(this, "Model", gameInfo, this.exportModel());
+	/* Sends the model to the given PropertyChangeListener */
+	private void sendModel() {
+		if (gameInfo != null) {
+			PropertyChangeEvent event = new PropertyChangeEvent(this, "Model",
+					gameInfo, this.exportModel());
 			this.listener.propertyChange(event);
 		}
 	}
