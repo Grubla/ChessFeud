@@ -40,4 +40,31 @@ public abstract class Piece {
 	public int getId() {
 		return this.id;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + team;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Piece other = (Piece) obj;
+		if (id != other.id)
+			return false;
+		if (team != other.team)
+			return false;
+		return true;
+	}
+	
+	
 }

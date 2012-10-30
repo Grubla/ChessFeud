@@ -2,8 +2,10 @@ package se.chalmers.chessfeud;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.DbHandler;
@@ -15,6 +17,8 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +26,7 @@ import android.widget.Toast;
  * Is a class that will update all data that is shown in Activity Play.
  * 
  * @author Sean Pavlov
- * 
- *         Copyright (c) Sean Pavlov 2012
+ * @modifiedby Henrik Alburg Copyright (c) Sean Pavlov and Henrik Alburg 2012
  * 
  */
 public class PlayActivity extends Activity implements PropertyChangeListener {
@@ -36,6 +39,11 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 	private TextView statusTxt;
 	private TextView whoseTurnNTime;
 	private GameView gv;
+	private ImageView blackRook1, blackRook2, blackBishop1,
+			blackBishop2, blackKnight1, blackKnight2, blackQueen, blackKing;
+	private ImageView whiteRook1, whiteRook2, whiteBishop1,
+			whiteBishop2, whiteKnight1, whiteKnight2, whiteQueen, whiteKing;
+	private TextView blackPawn, whitePawn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +77,7 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		nbrOfTurns.setText("" + g.getTurns());
 		setTurnNTime();
 		setState();
+		setPiecesLeft();
 	}
 
 	/**
@@ -80,6 +89,27 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		playerNameBlack = (TextView) findViewById(R.id.playerNameBlack);
 		statusTxt = (TextView) findViewById(R.id.statusTxt);
 		whoseTurnNTime = (TextView) findViewById(R.id.whoseTurnAndTime);
+
+		whitePawn = (TextView) findViewById(R.id.nbr_pawn_white);
+		whiteRook1 = (ImageView) findViewById(R.id.img_white_rook_1);
+		whiteRook2 = (ImageView) findViewById(R.id.img_white_rook_2);
+		whiteBishop1 = (ImageView) findViewById(R.id.img_white_bishop_1);
+		whiteBishop2 = (ImageView) findViewById(R.id.img_white_bishop_2);
+		whiteKnight1 = (ImageView) findViewById(R.id.img_white_knight_1);
+		whiteKnight2 = (ImageView) findViewById(R.id.img_white_knight_2);
+		whiteQueen = (ImageView) findViewById(R.id.img_white_queen);
+		whiteKing = (ImageView) findViewById(R.id.img_white_king);
+
+		blackPawn = (TextView) findViewById(R.id.nbr_pawn_black);
+		blackRook1 = (ImageView) findViewById(R.id.img_black_rook_1);
+		blackRook2 = (ImageView) findViewById(R.id.img_black_rook_2);
+		blackBishop1 = (ImageView) findViewById(R.id.img_black_bishop_1);
+		blackBishop2 = (ImageView) findViewById(R.id.img_black_bishop_2);
+		blackKnight1 = (ImageView) findViewById(R.id.img_black_knight_1);
+		blackKnight2 = (ImageView) findViewById(R.id.img_black_knight_2);
+		blackQueen = (ImageView) findViewById(R.id.img_black_queen);
+		blackKing = (ImageView) findViewById(R.id.img_black_king);
+
 	}
 
 	/**
@@ -153,6 +183,8 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		whoseTurnNTime.setText(s);
 	}
 
+	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -179,8 +211,10 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		if (cm.getState() == C.STATE_DRAW
 				|| cm.getState() == C.STATE_VICTORY_BLACK
 				|| cm.getState() == C.STATE_VICTORY_WHITE) {
-			DbHandler.getInstance().setGameFinished(g.getWhitePlayer(), g.getBlackPlayer());
+			DbHandler.getInstance().setGameFinished(g.getWhitePlayer(),
+					g.getBlackPlayer());
 		}
+		gv.invalidate();
 	}
 
 	/* Creates a popup list which has the different pieces as alternatives */
@@ -224,5 +258,106 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 	private void setNewPiece(Position p, int id) {
 		cm.changePawnTo(p, id);
 		gv.invalidate();
+	}
+	
+	/* Calculates and displays the pieces left from the list och pieces left */
+	private void setPiecesLeft() {
+		setAllVisible();
+		
+		List<Piece> left = cm.getPiecesLeft(); // Calculate only once
+		int whitePawns = 8;
+		int blackPawns = 8;
+		for (int i = 0; i < left.size(); i++) {
+			switch (left.get(i).getId()) {
+			case C.PIECE_PAWN:
+				if (left.get(i).getTeam() == C.TEAM_WHITE) {
+					whitePawns--;
+				} else {
+					blackPawns--;
+				}
+				break;
+			case C.PIECE_ROOK:
+				if (left.get(i).getTeam() == C.TEAM_WHITE) {
+					if (left.indexOf(left.get(i)) == i) {
+						whiteRook1.setVisibility(View.INVISIBLE);
+					}else{
+						whiteRook2.setVisibility(View.INVISIBLE);
+					}
+				} else {
+					if (left.indexOf(left.get(i)) == i) {
+						blackRook1.setVisibility(View.INVISIBLE);
+					}else{
+						blackRook2.setVisibility(View.INVISIBLE);
+					}
+				}
+				break;
+			case C.PIECE_BISHOP:
+				if (left.get(i).getTeam() == C.TEAM_WHITE) {
+					if (left.indexOf(left.get(i)) == i) {
+						whiteBishop1.setVisibility(View.INVISIBLE);
+					}else{
+						whiteBishop2.setVisibility(View.INVISIBLE);
+					}
+				} else {
+					if (left.indexOf(left.get(i)) == i) {
+						blackBishop1.setVisibility(View.INVISIBLE);
+					}else{
+						blackBishop2.setVisibility(View.INVISIBLE);
+					}
+				}
+				break;
+			case C.PIECE_KNIGHT:
+				if (left.get(i).getTeam() == C.TEAM_WHITE) {
+					if (left.indexOf(left.get(i)) == i) {
+						whiteKnight1.setVisibility(View.INVISIBLE);
+					}else{
+						whiteKnight2.setVisibility(View.INVISIBLE);
+					}
+				} else {
+					if (left.indexOf(left.get(i)) == i) {
+						blackKnight1.setVisibility(View.INVISIBLE);
+					}else{
+						blackKnight2.setVisibility(View.INVISIBLE);
+					}
+				}
+				break;
+			case C.PIECE_QUEEN:
+				if(left.get(i).getTeam() == C.TEAM_WHITE){
+					whiteQueen.setVisibility(View.INVISIBLE);
+				}else{
+					blackQueen.setVisibility(View.INVISIBLE);
+				}
+				break;
+			case C.PIECE_KING:
+				if(left.get(i).getTeam() == C.TEAM_WHITE){
+					whiteKing.setVisibility(View.INVISIBLE);
+				}else{
+					blackKing.setVisibility(View.INVISIBLE);
+				}
+				break;
+			}
+			whitePawn.setText(""+whitePawns);
+			blackPawn.setText(""+blackPawns);
+		}
+
+	}
+
+	private void setAllVisible() {
+		whiteRook1.setVisibility(View.VISIBLE);
+		whiteRook2.setVisibility(View.VISIBLE);
+		blackRook1.setVisibility(View.VISIBLE);
+		blackRook2.setVisibility(View.VISIBLE);
+		whiteBishop1.setVisibility(View.VISIBLE);
+		whiteBishop2.setVisibility(View.VISIBLE);
+		blackBishop1.setVisibility(View.VISIBLE);
+		blackBishop2.setVisibility(View.VISIBLE);
+		whiteKnight1.setVisibility(View.VISIBLE);
+		whiteKnight2.setVisibility(View.VISIBLE);
+		blackKnight1.setVisibility(View.VISIBLE);
+		blackKnight2.setVisibility(View.VISIBLE);
+		whiteQueen.setVisibility(View.VISIBLE);
+		blackQueen.setVisibility(View.VISIBLE);
+		whiteKing.setVisibility(View.VISIBLE);
+		blackKing.setVisibility(View.VISIBLE);
 	}
 }

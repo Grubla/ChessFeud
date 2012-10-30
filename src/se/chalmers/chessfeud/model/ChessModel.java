@@ -28,7 +28,6 @@ public class ChessModel {
 	private int numberOfMoves;
 	private Position selected;
 	private List<Position> possibleMoves;
-	private List<Piece> takenPieces;
 	private int state;
 	private final int thisPlayer;
 	private Game gameInfo;
@@ -49,7 +48,6 @@ public class ChessModel {
 		numberOfMoves = 0;
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
-		takenPieces = new ArrayList<Piece>();
 		state = C.STATE_NORMAL;
 	}
 
@@ -70,7 +68,6 @@ public class ChessModel {
 		this.thisPlayer = gameInfo.thisPlayersTeam();
 		selected = null;
 		possibleMoves = new LinkedList<Position>();
-		takenPieces = new ArrayList<Piece>();
 		this.listener = pcl;
 		checkState();
 	}
@@ -107,7 +104,6 @@ public class ChessModel {
 		}
 	}
 
-	//TODO: When pawn transforms wait to send model..
 	/* Makes a click when a position already is selected */
 	private void clickSelected(Position p) {
 		if (possibleMoves.contains(p)) { // A valid move has been clicked
@@ -143,10 +139,7 @@ public class ChessModel {
 	 * and tries to send the model.
 	 */
 	private void movePiece(Position p) {
-		Piece pi = chessBoard.movePiece(selected, p);
-		if (pi.getId() != C.PIECE_NOPIECE) {
-			takenPieces.add(pi);
-		}
+		chessBoard.movePiece(selected, p);
 		deselectPiece();
 		changeTurn();
 		checkState();
@@ -186,9 +179,16 @@ public class ChessModel {
 	 * 
 	 * @return All the taken Pieces in a list.
 	 */
-	public List<Piece> getTakenPieces() {
-		// Continue this
-		return takenPieces;
+	public List<Piece> getPiecesLeft() {
+		List<Piece> piecesLeft = new ArrayList<Piece>();
+		for(int x = 0; x < chessBoard.getWidth(); x++){
+			for(int y = 0; y < chessBoard.getHeight(); y++){
+				if(chessBoard.getPieceAt(x, y).getId() != C.PIECE_NOPIECE){
+					piecesLeft.add(chessBoard.getPieceAt(x, y));
+				}
+			}
+		}
+		return piecesLeft;
 	}
 
 	/* Sets the current position as the selected one */
