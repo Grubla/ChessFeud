@@ -132,7 +132,7 @@ public class MainActivity extends Activity implements OnClickListener {
 								input.getText().toString(),
 								new ChessModel(null).exportModel());
 						if(!success){
-							makeToast(C.SERVER_ERROR);
+							makeToast(C.SERVER_ERROR + "Or you already have a game");
 						}
 					}
 				}.start();
