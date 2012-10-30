@@ -39,6 +39,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener {
 	private ImageView iLogo;
 	private ListView startedGames;
+	private ListView finishedGames;
 	private DbHandler dbh;
 
 	@Override
@@ -58,13 +59,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		iLogo.setOnClickListener(this);
 
 		startedGames = (ListView) findViewById(R.id.list_ongoingGames);
+		finishedGames = (ListView) findViewById(R.id.list_finishedGames);
 
 		bStats.setOnClickListener(this);
 		bSettings.setOnClickListener(this);
 		bNewGame.setOnClickListener(this);
-
-		startedGames = (ListView) findViewById(R.id.list_ongoingGames);
-
 	}
 
 	@Override
@@ -73,12 +72,16 @@ public class MainActivity extends Activity implements OnClickListener {
 		new Thread() {
 			public void run() {
 				final List<String> games = dbh.getGames();
+				final List<String> finished = dbh.getFinishedGames();
 				
 				MainActivity.this.runOnUiThread(new Runnable() {
 					public void run() {
 						startedGames.setAdapter(new GameListAdapter(
 								MainActivity.this, R.id.list_ongoingGames,
 								games));
+						finishedGames.setAdapter(new GameListAdapter(
+								MainActivity.this, R.id.list_ongoingGames,
+								finished));
 					}
 				});
 
@@ -176,8 +179,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			stringList = new ArrayList<String>();
 			if(l != null){
 				for (int i = 0; i < l.size(); i++) {
-					gamesList.add(new Game(l.get(i), i));
-					stringList.add(l.get(i));
+					gamesList.add(new Game(l.get(i)+"/"+i));
+					stringList.add(l.get(i)+"/"+i);
 				}
 			}
 		}
@@ -210,7 +213,6 @@ public class MainActivity extends Activity implements OnClickListener {
 				public void onClick(View v) {
 					Intent i = new Intent(context, PlayActivity.class);
 					i.putExtra("GameString", gameString);
-					i.putExtra("Position", position);
 					startActivity(i);
 				}
 			});

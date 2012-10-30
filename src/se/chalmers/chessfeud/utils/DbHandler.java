@@ -167,11 +167,11 @@ public class DbHandler {
 	 *            The one you lost or won against.
 	 * @return if everyhting went as expected.
 	 */
-	public boolean setGameFinished(String target) {
+	public boolean setGameFinished(String whiteplayer, String blackplayer) {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair(TAG, "setGameFinished"));
-		pairs.add(new BasicNameValuePair("user1", player.getUserName()));
-		pairs.add(new BasicNameValuePair("user2", target));
+		pairs.add(new BasicNameValuePair("user1", whiteplayer));
+		pairs.add(new BasicNameValuePair("user2", blackplayer));
 		return updateDatabase();
 	}
 
@@ -206,11 +206,11 @@ public class DbHandler {
 	 *            The new chess board
 	 * @return true if the server operation was successful
 	 */
-	public boolean newMove(String target, String newModel) {
+	public boolean newMove(String whiteplayer, String blackplayer, String newModel) {
 		List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
 		list.add(new BasicNameValuePair(TAG, "newMove"));
-		list.add(new BasicNameValuePair("user1", player.getUserName()));
-		list.add(new BasicNameValuePair("user2", target));
+		list.add(new BasicNameValuePair("user1", whiteplayer));
+		list.add(new BasicNameValuePair("user2", blackplayer));
 		list.add(new BasicNameValuePair("board", newModel));
 		return updateDatabase(list);
 	}
@@ -260,8 +260,7 @@ public class DbHandler {
 		String s = getFromDatabase();
 		if (s == null) {
 			return new ArrayList<String>();
-		} else if (s.equals("") || s.equals("true") || s.equals("false")) { // If something went wrong when contacting
-									// the database.
+		} else if (s.equals("") || s.equals("true") || s.equals("false")) { 
 			return new ArrayList<String>();
 		}
 		List<String> games = new ArrayList<String>();
@@ -284,9 +283,8 @@ public class DbHandler {
 		pairs.add(new BasicNameValuePair(USERNAME, player.getUserName()));
 		String s = getFromDatabase();
 		if (s == null) {
-			return null;
-		} else if (s.equals("")) { // If something went wrong when contacting
-									// the database.
+			return new ArrayList<String>();
+		} else if (s.equals("") || s.equals("true") || s.equals("false")) { 
 			return new ArrayList<String>();
 		}
 		List<String> finishedgames = new ArrayList<String>();

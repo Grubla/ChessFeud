@@ -32,14 +32,14 @@ public class Game {
 	 * @param position
 	 *            The position in the gameslist.
 	 */
-	public Game(String info, int position) {
+	public Game(String info) {
 		String[] s = info.split("/");
 		whitePlayer = s[0];
 		blackPlayer = s[1];
 		gameBoard = s[2];
 		turns = Integer.parseInt(s[3]);
 		timestamp = s[4];
-		this.position = position;
+		position = Integer.parseInt(s[5]);
 	}
 
 	/**
@@ -156,4 +156,8 @@ public class Game {
 		return this.position;
 	}
 
+	@Override
+	public String toString(){
+		return whitePlayer+"/"+blackPlayer+"/"+gameBoard+"/"+turns+"/"+timestamp+"/"+position;
+	}
 }

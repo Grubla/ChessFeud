@@ -44,15 +44,14 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		setLayout();
 		gv = (GameView) findViewById(R.id.chessBoard);
 		String gameInfo = getIntent().getStringExtra("GameString");
-		int position = getIntent().getIntExtra("Position", -1);
 		if (gameInfo != null) {
-			g = new Game(gameInfo, position);
+			g = new Game(gameInfo);
 			cm = new ChessModel(g, this);
 			gv.setGameModel(cm);
 			ts = new TimeStamp(g.getTimestamp());
 		} else {
 			// This is a dummygame
-			g = new Game("NA/NA/NA/0/NA", 0);
+			g = new Game("NA/NA/NA/0/NA/0");
 			cm = new ChessModel(this);
 			gv.setGameModel(cm);
 			ts = new TimeStamp();
@@ -166,8 +165,8 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			final String gameBoard = (String) event.getNewValue();
 			new Thread() {
 				public void run() {
-					DbHandler.getInstance().newMove(gameInfo.getOpponent(),
-							gameBoard);
+					DbHandler.getInstance().newMove(gameInfo.getWhitePlayer(),
+							gameInfo.getBlackPlayer(), gameBoard);
 				}
 			}.start();
 		} else if (event.getPropertyName().equals("Pawn")) {
@@ -177,6 +176,11 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		}
 		setState();
 		setTurnNTime();
+		if (cm.getState() == C.STATE_DRAW
+				|| cm.getState() == C.STATE_VICTORY_BLACK
+				|| cm.getState() == C.STATE_VICTORY_WHITE) {
+			DbHandler.getInstance().setGameFinished(g.getWhitePlayer(), g.getBlackPlayer());
+		}
 	}
 
 	/* Creates a popup list which has the different pieces as alternatives */
