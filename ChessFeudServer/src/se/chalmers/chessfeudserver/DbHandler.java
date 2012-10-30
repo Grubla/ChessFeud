@@ -246,6 +246,20 @@ public class DbHandler extends HttpServlet {
 		}
 		return false;
 	}
+	
+	private boolean gameExists(String user1, String user2) throws SQLException {
+		rs = s.executeQuery("select count(*) from game where user1='"+user1+"' and user2='"+user2+"'");
+		rs.first();
+		if (rs.getInt(1) > 0) {
+			return true;
+		}
+		rs = s.executeQuery("select count(*) from game where user1='"+user2+"' and user2='"+user1+"'");
+		rs.first();
+		if(rs.getInt(1) > 0) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Deletes a user from the database, returns false if it didnt work.
@@ -431,7 +445,7 @@ public class DbHandler extends HttpServlet {
 	 */
 	private boolean newGame(String user1, String user2, String gameBoard)
 			throws SQLException {
-		if (userExists(user2)) {
+		if (userExists(user2) && !gameExists(user1, user2)) {
 			s.executeUpdate("insert into game(user1, user2, board, turns) values('"
 					+ user1
 					+ "','"
@@ -464,13 +478,13 @@ public class DbHandler extends HttpServlet {
 		s.executeUpdate("update statistics set moves='" + (moves + 1)
 				+ "' where username='" + user1 + "'");
 		s.executeUpdate("update game set board='" + newBoard
-				+ "' where user1='" + user1 + "' and user2='" + user2 + "'");
+				+ "' where user1='" + user1 + "' and (user2='" + user2 + "')");
 		s.executeUpdate("update game set board='" + newBoard
-				+ "' where user1='" + user2 + "' and user2='" + user1 + "'");
+				+ "' where user1='" + user2 + "' and (user2='" + user1 + "')");
 		s.executeUpdate("update game set turns='" + turns + "' where user1='"
-				+ user1 + "' and user2='" + user2 + "'");
+				+ user1 + "' and (user2='" + user2 + "')");
 		s.executeUpdate("update game set turns='" + turns + "' where user2='"
-				+ user1 + "' and user2='" + user1 + "'");
+				+ user1 + "' and (user2='" + user1 + "')");
 	}
 
 	/**
