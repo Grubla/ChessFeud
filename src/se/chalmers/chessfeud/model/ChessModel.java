@@ -10,7 +10,6 @@ import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.Game;
-import android.util.Log;
 
 /**
  * A class that implements the model of a chessgame. Basically it is run by the

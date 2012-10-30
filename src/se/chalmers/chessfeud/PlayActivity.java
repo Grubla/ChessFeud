@@ -11,7 +11,6 @@ import se.chalmers.chessfeud.utils.Game;
 import se.chalmers.chessfeud.utils.TimeStamp;
 import se.chalmers.chessfeud.view.GameView;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -176,6 +175,8 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			promptNewPiece(p);
 
 		}
+		setState();
+		setTurnNTime();
 	}
 
 	/* Creates a popup list which has the different pieces as alternatives */

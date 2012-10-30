@@ -103,7 +103,9 @@ public final class Rules {
 		for (int dx = -1; dx <= 1; dx++) {
 			for (int dy = -1; dy <= 1; dy++) {
 				if (inBounds(kingX + dx, kingY + dy) && !(dx == 0 && dy == 0)) {
-					checkDirection(cb, team, kingX, kingY, dx, dy);
+					if(checkDirection(cb, team, kingX, kingY, dx, dy)){
+						return true;
+					}
 				}
 			}
 		}

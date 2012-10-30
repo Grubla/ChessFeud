@@ -19,8 +19,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.util.Log;
-
 /**
  * A class to handle the communication between the phone and the server. Handles
  * all the logic like login, register new user and the status of the games.
@@ -355,7 +353,6 @@ public class DbHandler {
 			Scanner sc = new Scanner(iStream);
 			if (sc.hasNext()) {
 				String s = sc.next();
-				Log.d("", s);
 				if (s.equals("true")) {
 					return true;
 				}
@@ -385,7 +382,6 @@ public class DbHandler {
 			Scanner sc = new Scanner(iStream);
 			if (sc.hasNext()) {
 				String s = sc.next();
-				Log.d("UD", "l "+s);
 					if (s.equals("true")) {
 					return true;
 				}
