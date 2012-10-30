@@ -483,8 +483,8 @@ public class DbHandler extends HttpServlet {
 				+ "' where user1='" + user2 + "' and (user2='" + user1 + "')");
 		s.executeUpdate("update game set turns='" + turns + "' where user1='"
 				+ user1 + "' and (user2='" + user2 + "')");
-		s.executeUpdate("update game set turns='" + turns + "' where user2='"
-				+ user1 + "' and (user2='" + user1 + "')");
+		s.executeUpdate("update game set turns='" + turns + "' where user1='"
+				+ user2 + "' and (user2='" + user1 + "')");
 	}
 
 	/**
