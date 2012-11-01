@@ -206,11 +206,11 @@ public class DbHandler {
 	 *            The new chess board
 	 * @return true if the server operation was successful
 	 */
-	public boolean newMove(String whiteplayer, String blackplayer, String newModel) {
+	public boolean newMove(String target, String newModel) {
 		List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
 		list.add(new BasicNameValuePair(TAG, "newMove"));
-		list.add(new BasicNameValuePair("user1", whiteplayer));
-		list.add(new BasicNameValuePair("user2", blackplayer));
+		list.add(new BasicNameValuePair("user1", player.getUserName()));
+		list.add(new BasicNameValuePair("user2", target));
 		list.add(new BasicNameValuePair("board", newModel));
 		return updateDatabase(list);
 	}

@@ -219,17 +219,17 @@ public class ChessModel {
 	 */
 	private void checkState() {
 		if (Rules.isCheck(chessBoard, activePlayer())) {
-			if (Rules.isCheckMate(chessBoard, nextTurn())) {
+			if (Rules.isCheckMate(chessBoard, activePlayer())) {
 				if (activePlayer() == C.TEAM_WHITE) {
-					setState(C.STATE_VICTORY_WHITE);
-				} else {
 					setState(C.STATE_VICTORY_BLACK);
+				} else {
+					setState(C.STATE_VICTORY_WHITE);
 				}
 			} else {
 				setState(C.STATE_CHECK);
 			}
 		} else {
-			if (Rules.isDraw(chessBoard, nextTurn())) {
+			if (Rules.isDraw(chessBoard, activePlayer())) {
 				setState(C.STATE_DRAW);
 			} else {
 				setState(C.STATE_NORMAL);
@@ -294,16 +294,6 @@ public class ChessModel {
 			return chessBoard.getPieceAt(p).getTeam() == activePlayer;
 		}
 		return false;
-	}
-
-	/* Returns whom's turn it is next (opposite of activePlayer) */
-	private int nextTurn() {
-		int next = numberOfMoves % 2;
-		if (next == 1) {
-			return 0;
-		} else {
-			return 1;
-		}
 	}
 
 	/* Sends the model to the given PropertyChangeListener */

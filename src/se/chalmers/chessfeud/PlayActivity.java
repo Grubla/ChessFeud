@@ -39,10 +39,10 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 	private TextView statusTxt;
 	private TextView whoseTurnNTime;
 	private GameView gv;
-	private ImageView blackRook1, blackRook2, blackBishop1,
-			blackBishop2, blackKnight1, blackKnight2, blackQueen, blackKing;
-	private ImageView whiteRook1, whiteRook2, whiteBishop1,
-			whiteBishop2, whiteKnight1, whiteKnight2, whiteQueen, whiteKing;
+	private ImageView blackRook1, blackRook2, blackBishop1, blackBishop2,
+			blackKnight1, blackKnight2, blackQueen, blackKing;
+	private ImageView whiteRook1, whiteRook2, whiteBishop1, whiteBishop2,
+			whiteKnight1, whiteKnight2, whiteQueen, whiteKing;
 	private TextView blackPawn, whitePawn;
 
 	@Override
@@ -183,8 +183,6 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		whoseTurnNTime.setText(s);
 	}
 
-	
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -197,8 +195,8 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 			final String gameBoard = (String) event.getNewValue();
 			new Thread() {
 				public void run() {
-					DbHandler.getInstance().newMove(gameInfo.getWhitePlayer(),
-							gameInfo.getBlackPlayer(), gameBoard);
+					DbHandler.getInstance().newMove(gameInfo.getOpponent(),
+							gameBoard);
 				}
 			}.start();
 		} else if (event.getPropertyName().equals("Pawn")) {
@@ -211,8 +209,14 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		if (cm.getState() == C.STATE_DRAW
 				|| cm.getState() == C.STATE_VICTORY_BLACK
 				|| cm.getState() == C.STATE_VICTORY_WHITE) {
-			DbHandler.getInstance().setGameFinished(g.getWhitePlayer(),
-					g.getBlackPlayer());
+			new Thread() {
+				public void run() {
+					//TODO: Send the state of the game.. 
+					DbHandler.getInstance().setGameFinished(g.getWhitePlayer(),
+							g.getBlackPlayer());
+				}
+			}.start();
+
 		}
 		gv.invalidate();
 	}
@@ -259,11 +263,11 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		cm.changePawnTo(p, id);
 		gv.invalidate();
 	}
-	
+
 	/* Calculates and displays the pieces left from the list och pieces left */
 	private void setPiecesLeft() {
 		setAllVisible();
-		
+
 		List<Piece> left = cm.getPiecesLeft(); // Calculate only once
 		int whitePawns = 8;
 		int blackPawns = 8;
@@ -280,13 +284,13 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 				if (left.get(i).getTeam() == C.TEAM_WHITE) {
 					if (left.indexOf(left.get(i)) == i) {
 						whiteRook1.setVisibility(View.INVISIBLE);
-					}else{
+					} else {
 						whiteRook2.setVisibility(View.INVISIBLE);
 					}
 				} else {
 					if (left.indexOf(left.get(i)) == i) {
 						blackRook1.setVisibility(View.INVISIBLE);
-					}else{
+					} else {
 						blackRook2.setVisibility(View.INVISIBLE);
 					}
 				}
@@ -295,13 +299,13 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 				if (left.get(i).getTeam() == C.TEAM_WHITE) {
 					if (left.indexOf(left.get(i)) == i) {
 						whiteBishop1.setVisibility(View.INVISIBLE);
-					}else{
+					} else {
 						whiteBishop2.setVisibility(View.INVISIBLE);
 					}
 				} else {
 					if (left.indexOf(left.get(i)) == i) {
 						blackBishop1.setVisibility(View.INVISIBLE);
-					}else{
+					} else {
 						blackBishop2.setVisibility(View.INVISIBLE);
 					}
 				}
@@ -310,34 +314,34 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 				if (left.get(i).getTeam() == C.TEAM_WHITE) {
 					if (left.indexOf(left.get(i)) == i) {
 						whiteKnight1.setVisibility(View.INVISIBLE);
-					}else{
+					} else {
 						whiteKnight2.setVisibility(View.INVISIBLE);
 					}
 				} else {
 					if (left.indexOf(left.get(i)) == i) {
 						blackKnight1.setVisibility(View.INVISIBLE);
-					}else{
+					} else {
 						blackKnight2.setVisibility(View.INVISIBLE);
 					}
 				}
 				break;
 			case C.PIECE_QUEEN:
-				if(left.get(i).getTeam() == C.TEAM_WHITE){
+				if (left.get(i).getTeam() == C.TEAM_WHITE) {
 					whiteQueen.setVisibility(View.INVISIBLE);
-				}else{
+				} else {
 					blackQueen.setVisibility(View.INVISIBLE);
 				}
 				break;
 			case C.PIECE_KING:
-				if(left.get(i).getTeam() == C.TEAM_WHITE){
+				if (left.get(i).getTeam() == C.TEAM_WHITE) {
 					whiteKing.setVisibility(View.INVISIBLE);
-				}else{
+				} else {
 					blackKing.setVisibility(View.INVISIBLE);
 				}
 				break;
 			}
-			whitePawn.setText(""+whitePawns);
-			blackPawn.setText(""+blackPawns);
+			whitePawn.setText("" + whitePawns);
+			blackPawn.setText("" + blackPawns);
 		}
 
 	}
