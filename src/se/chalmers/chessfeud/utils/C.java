@@ -39,6 +39,10 @@ public final class C {
 	public static final int STATE_TEXT_COLOR_GREEN = 0xFF00DD00;
 	public static final int STATE_TEXT_COLOR_RED = 0xFFDD0000;
 	public static final int STATE_TEXT_COLOR_GREY = 0xFF666666;
+	
+	public static final int COLOR_BACKGROUND_WITEM = 0xFFCECECE;
+	public static final int COLOR_BACKGROUND_BITEM = 0xFFC2C2C2;
+	
 
 	public static final int BOARD_LENGTH = 8;
 	public static final int STARTING_POSITION_BLACK_PAWN = 6;
@@ -69,7 +73,8 @@ public final class C {
 	public static final int YEARS_BETWEEN_LEAPYEAR = 4;
 	
 	public static final String SERVER_ERROR = "Couldn't connect to server right now..";
-	public static final String ONGOING_GAMES = "Ongoing games";
+	public static final String YOUR_TURN = "Your turn:";
+	public static final String OPPONENTS_TURN = "Opponents turn:";
 	public static final String FINISHED_GAMES = "Finished games";
 
 	// An empty private constructor to hide utility class constructor

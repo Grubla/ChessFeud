@@ -98,7 +98,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private List<String> orderLists(List<String> ongoing, List<String> finished) {
 		List<String> orderedList = new ArrayList<String>();
 		List<String> tmpList = new ArrayList<String>();
-		orderedList.add(C.ONGOING_GAMES);
+		orderedList.add(C.YOUR_TURN);
 
 		for (String s : ongoing) {
 			Game g = new Game(s);
@@ -108,6 +108,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				tmpList.add(s);
 			}
 		}
+		orderedList.add(C.OPPONENTS_TURN);
 		orderedList.addAll(tmpList);
 		orderedList.add(C.FINISHED_GAMES);
 		orderedList.addAll(finished);
@@ -186,6 +187,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private class GameListAdapter extends ArrayAdapter<String> {
 		private Context context;
 		private List<String> stringList;
+		private int offset;
 
 		/**
 		 * Creates an adapter between the Strings (GameInfos) object and list
@@ -207,6 +209,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					stringList.add(s);
 				}
 			}
+			this.offset = 0;
 		}
 
 		@Override
@@ -215,21 +218,32 @@ public class MainActivity extends Activity implements OnClickListener {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			if (stringList.get(position).equals(C.ONGOING_GAMES)) {
+			if (stringList.get(position).equals(C.YOUR_TURN)) {
 				TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
-				vRow.setText("Ongoing games");
+				vRow.setText(C.YOUR_TURN);
+				offset++;
 				return vRow;
-			} else if (stringList.get(position).equals(C.FINISHED_GAMES)) {
+			} else if(stringList.get(position).equals(C.OPPONENTS_TURN)){
 				TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
-				vRow.setText("Finished games");
+				vRow.setText(C.OPPONENTS_TURN);
+				offset++;
+				return vRow;
+			}else if (stringList.get(position).equals(C.FINISHED_GAMES)) {
+				TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
+				vRow.setText(C.FINISHED_GAMES);
+				offset++;
 				return vRow;
 			} else {
-				Log.d("", stringList.get(position));
 				final String gameString = stringList.get(position);
 				final Game game = new Game(gameString);
 
 				View vRow = inflater.inflate(R.layout.menu_listitem, parent,
 						false);
+				if((position + offset) % 2 == 1){					
+					vRow.setBackgroundColor(C.COLOR_BACKGROUND_WITEM);
+				}else{
+					vRow.setBackgroundColor(C.COLOR_BACKGROUND_BITEM);
+				}
 
 				/* Bind all the views */
 				TextView tTurn = (TextView) vRow.findViewById(R.id.player_turn);
