@@ -6,7 +6,7 @@ import java.util.List;
 import se.chalmers.chessfeud.model.ChessModel;
 import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.DbHandler;
-import se.chalmers.chessfeud.utils.Game;
+import se.chalmers.chessfeud.utils.GameInfo;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -101,7 +101,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		orderedList.add(C.YOUR_TURN);
 
 		for (String s : ongoing) {
-			Game g = new Game(s);
+			GameInfo g = new GameInfo(s);
 			if (g.isMyTurn()) {
 				orderedList.add(s);
 			} else {
@@ -235,7 +235,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				return vRow;
 			} else {
 				final String gameString = stringList.get(position);
-				final Game game = new Game(gameString);
+				final GameInfo game = new GameInfo(gameString);
 
 				View vRow = inflater.inflate(R.layout.menu_listitem, parent,
 						false);

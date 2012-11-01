@@ -9,7 +9,7 @@ import java.util.List;
 import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 import se.chalmers.chessfeud.utils.C;
-import se.chalmers.chessfeud.utils.Game;
+import se.chalmers.chessfeud.utils.GameInfo;
 
 /**
  * A class that implements the model of a chessgame. Basically it is run by the
@@ -30,7 +30,7 @@ public class ChessModel {
 	private List<Position> possibleMoves;
 	private int state;
 	private final int thisPlayer;
-	private Game gameInfo;
+	private GameInfo gameInfo;
 	private PropertyChangeListener listener;
 
 	/**
@@ -61,7 +61,7 @@ public class ChessModel {
 	 *            , the proportychangelistener to whom a changed model shall be
 	 *            sent.
 	 */
-	public ChessModel(Game gameInfo, PropertyChangeListener pcl) {
+	public ChessModel(GameInfo gameInfo, PropertyChangeListener pcl) {
 		this.gameInfo = gameInfo;
 		chessBoard = new ChessBoard(gameInfo.getGameBoard());
 		this.numberOfMoves = gameInfo.getTurns();

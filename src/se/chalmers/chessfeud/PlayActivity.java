@@ -9,7 +9,7 @@ import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.model.utils.Position;
 import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.DbHandler;
-import se.chalmers.chessfeud.utils.Game;
+import se.chalmers.chessfeud.utils.GameInfo;
 import se.chalmers.chessfeud.utils.TimeStamp;
 import se.chalmers.chessfeud.view.GameView;
 import android.app.Activity;
@@ -30,7 +30,7 @@ import android.widget.Toast;
  * 
  */
 public class PlayActivity extends Activity implements PropertyChangeListener {
-	private Game g;
+	private GameInfo g;
 	private ChessModel cm;
 	private TimeStamp ts;
 	private TextView nbrOfTurns;
@@ -53,13 +53,13 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		gv = (GameView) findViewById(R.id.chessBoard);
 		String gameInfo = getIntent().getStringExtra("GameString");
 		if (gameInfo != null) {
-			g = new Game(gameInfo);
+			g = new GameInfo(gameInfo);
 			cm = new ChessModel(g, this);
 			gv.setGameModel(cm);
 			ts = new TimeStamp(g.getTimestamp());
 		} else {
 			// This is a dummygame
-			g = new Game("NA/NA/NA/0/NA/0");
+			g = new GameInfo("NA/NA/NA/0/NA/0");
 			cm = new ChessModel(this);
 			gv.setGameModel(cm);
 			ts = new TimeStamp();
@@ -191,7 +191,7 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 	 */
 	public void propertyChange(PropertyChangeEvent event) {
 		if (event.getPropertyName().equals("Model")) {
-			final Game gameInfo = (Game) event.getOldValue();
+			final GameInfo gameInfo = (GameInfo) event.getOldValue();
 			final String gameBoard = (String) event.getNewValue();
 			new Thread() {
 				public void run() {
