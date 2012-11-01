@@ -59,41 +59,9 @@
         android:layout_width="match_parent" 
         android:layout_height="wrap_content" 
         android:orientation="vertical">
-        
-        <!-- Title for Started Games -->
-        <TextView 
-            android:id="@+id/text_ongoingGames" 
-            android:layout_width="fill_parent" 
-            android:layout_height="wrap_content" 
-            android:background="#CCCCCC" 
-            android:paddingBottom="3dp" 
-            android:paddingLeft="5dp" 
-            android:paddingTop="3dp" 
-            android:text="@string/list_started" 
-            android:textSize="30dp"/>
         <!-- List for Started Games -->
         <ListView 
             android:id="@+id/list_ongoingGames" 
-            android:layout_width="match_parent" 
-            android:layout_height="wrap_content" 
-            android:layout_marginLeft="5dp">
-        </ListView>
-        
-        <!-- Title for Finished Games -->
-        <TextView 
-            android:id="@+id/text_finishedGames" 
-            android:layout_width="fill_parent" 
-            android:layout_height="wrap_content" 
-            android:layout_marginTop="20dp" 
-            android:background="#CCCCCC" 
-            android:paddingBottom="3dp" 
-            android:paddingLeft="5dp" 
-            android:paddingTop="3dp" 
-            android:text="@string/list_finished" 
-            android:textSize="30dp"/>
-        <!-- List for Finished Games -->
-        <ListView 
-            android:id="@+id/list_finishedGames" 
             android:layout_width="match_parent" 
             android:layout_height="wrap_content" 
             android:layout_marginLeft="5dp">

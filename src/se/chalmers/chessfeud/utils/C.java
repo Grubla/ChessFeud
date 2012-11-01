@@ -69,6 +69,8 @@ public final class C {
 	public static final int YEARS_BETWEEN_LEAPYEAR = 4;
 	
 	public static final String SERVER_ERROR = "Couldn't connect to server right now..";
+	public static final String ONGOING_GAMES = "Ongoing games";
+	public static final String FINISHED_GAMES = "Finished games";
 
 	// An empty private constructor to hide utility class constructor
 	private C() {

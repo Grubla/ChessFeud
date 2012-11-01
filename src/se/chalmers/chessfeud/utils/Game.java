@@ -17,8 +17,7 @@ public class Game {
 	private String gameBoard;
 
 	private int turns;
-	private int position;
-
+	
 	private static PlayerInfo player = PlayerInfo.getInstance();
 
 	private String timestamp;
@@ -39,7 +38,6 @@ public class Game {
 		gameBoard = s[2];
 		turns = Integer.parseInt(s[3]);
 		timestamp = s[4];
-		position = Integer.parseInt(s[5]);
 	}
 
 	/**
@@ -106,6 +104,14 @@ public class Game {
 		}
 		return whitePlayer;
 	}
+	
+	/**
+	 * Returns true if it is this clients turn to move.
+	 * @return true if my turn
+	 */
+	public boolean isMyTurn(){
+		return thisPlayersTeam() == getCurrentColor();
+	}
 
 	/**
 	 * Returns the total number of turns taken this game.
@@ -147,17 +153,8 @@ public class Game {
 		}
 	}
 
-	/**
-	 * Returns the position (or id) for this game in the list.
-	 * 
-	 * @return the position in the list of this game.
-	 */
-	public int getPosition() {
-		return this.position;
-	}
-
 	@Override
 	public String toString(){
-		return whitePlayer+"/"+blackPlayer+"/"+gameBoard+"/"+turns+"/"+timestamp+"/"+position;
+		return whitePlayer+"/"+blackPlayer+"/"+gameBoard+"/"+turns+"/"+timestamp;
 	}
 }

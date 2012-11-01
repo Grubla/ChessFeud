@@ -39,7 +39,6 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener {
 	private ImageView iLogo;
 	private ListView startedGames;
-	private ListView finishedGames;
 	private DbHandler dbh;
 
 	@Override
@@ -48,7 +47,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.menu_main);
 
 		Button bStats, bSettings, bNewGame;
-		
+
 		dbh = DbHandler.getInstance();
 
 		bStats = (Button) findViewById(R.id.button_stats);
@@ -59,7 +58,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		iLogo.setOnClickListener(this);
 
 		startedGames = (ListView) findViewById(R.id.list_ongoingGames);
-		finishedGames = (ListView) findViewById(R.id.list_finishedGames);
 
 		bStats.setOnClickListener(this);
 		bSettings.setOnClickListener(this);
@@ -69,19 +67,23 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		updateGameList();
+	}
+
+	/* Updates the game list with what is given from the server */
+	private void updateGameList() {
 		new Thread() {
 			public void run() {
-				final List<String> games = dbh.getGames();
-				final List<String> finished = dbh.getFinishedGames();
-				
+				List<String> games = dbh.getGames();
+				List<String> finished = dbh.getFinishedGames();
+
+				final List<String> gamesList = orderLists(games, finished);
+
 				MainActivity.this.runOnUiThread(new Runnable() {
 					public void run() {
 						startedGames.setAdapter(new GameListAdapter(
 								MainActivity.this, R.id.list_ongoingGames,
-								games));
-						finishedGames.setAdapter(new GameListAdapter(
-								MainActivity.this, R.id.list_ongoingGames,
-								finished));
+								gamesList));
 					}
 				});
 
@@ -89,12 +91,36 @@ public class MainActivity extends Activity implements OnClickListener {
 		}.start();
 	}
 
+	/*
+	 * Takes the list och ongoing and finished games and merges them to one with
+	 * the right priorities
+	 */
+	private List<String> orderLists(List<String> ongoing, List<String> finished) {
+		List<String> orderedList = new ArrayList<String>();
+		List<String> tmpList = new ArrayList<String>();
+		orderedList.add(C.ONGOING_GAMES);
+
+		for (String s : ongoing) {
+			Game g = new Game(s);
+			if (g.isMyTurn()) {
+				orderedList.add(s);
+			} else {
+				tmpList.add(s);
+			}
+		}
+		orderedList.addAll(tmpList);
+		orderedList.add(C.FINISHED_GAMES);
+		orderedList.addAll(finished);
+
+		return orderedList;
+	}
+
 	@Override
 	public void onBackPressed() {
 		setResult(1);
 		finish();
 	}
-	
+
 	/* Will launch a new activity based on what is clicked. */
 	public void onClick(View v) {
 		int id = v.getId();
@@ -128,11 +154,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			public void onClick(DialogInterface dialog, int which) {
 				new Thread() {
 					public void run() {
-						final boolean success = DbHandler.getInstance().newGame(
-								input.getText().toString(),
-								new ChessModel(null).exportModel());
-						if(!success){
-							makeToast(C.SERVER_ERROR + "Or you already have a game");
+						final boolean success = DbHandler.getInstance()
+								.newGame(input.getText().toString(),
+										new ChessModel(null).exportModel());
+						if (!success) {
+							makeToast(C.SERVER_ERROR
+									+ "Or you already have a game");
 						}
 					}
 				}.start();
@@ -140,7 +167,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		});
 		prompt.show();
 	}
-	
+
 	/* Creates a toast and displays is for the user */
 	private void makeToast(final String msg) {
 		MainActivity.this.runOnUiThread(new Runnable() {
@@ -158,7 +185,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	private class GameListAdapter extends ArrayAdapter<String> {
 		private Context context;
-		private List<Game> gamesList;
 		private List<String> stringList;
 
 		/**
@@ -175,12 +201,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		public GameListAdapter(Context context, int resId, List<String> l) {
 			super(context, resId, l);
 			this.context = context;
-			gamesList = new ArrayList<Game>();
 			stringList = new ArrayList<String>();
-			if(l != null){
-				for (int i = 0; i < l.size(); i++) {
-					gamesList.add(new Game(l.get(i)+"/"+i));
-					stringList.add(l.get(i)+"/"+i);
+			if (l != null) {
+				for (String s : l) {
+					stringList.add(s);
 				}
 			}
 		}
@@ -188,35 +212,50 @@ public class MainActivity extends Activity implements OnClickListener {
 		@Override
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
-			final Game game = gamesList.get(position);
-			final String gameString = stringList.get(position);
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View vRow = inflater.inflate(R.layout.menu_listitem, parent, false);
 
-			/* Bind all the views */
-			TextView tTurn = (TextView) vRow.findViewById(R.id.player_turn);
-			TextView blackName = (TextView) vRow
-					.findViewById(R.id.player_black);
-			TextView whiteName = (TextView) vRow
-					.findViewById(R.id.player_white);
-			TextView tNbrOfTurns = (TextView) vRow.findViewById(R.id.nbr_turns);
+			if (stringList.get(position).equals(C.ONGOING_GAMES)) {
+				TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
+				vRow.setText("Ongoing games");
+				return vRow;
+			} else if (stringList.get(position).equals(C.FINISHED_GAMES)) {
+				TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
+				vRow.setText("Finished games");
+				return vRow;
+			} else {
+				Log.d("", stringList.get(position));
+				final String gameString = stringList.get(position);
+				final Game game = new Game(gameString);
 
-			/* Set the binded views */
-			tTurn.setText(game.getCurrentPlayer() + "'s turn");
-			blackName.setText(game.getBlackPlayer());
-			whiteName.setText(game.getWhitePlayer());
-			tNbrOfTurns.setText("" + game.getTurns());
+				View vRow = inflater.inflate(R.layout.menu_listitem, parent,
+						false);
 
-			/* Start a PlayActivity with the right GameInfo */
-			vRow.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					Intent i = new Intent(context, PlayActivity.class);
-					i.putExtra("GameString", gameString);
-					startActivity(i);
-				}
-			});
-			return vRow;
+				/* Bind all the views */
+				TextView tTurn = (TextView) vRow.findViewById(R.id.player_turn);
+				TextView blackName = (TextView) vRow
+						.findViewById(R.id.player_black);
+				TextView whiteName = (TextView) vRow
+						.findViewById(R.id.player_white);
+				TextView tNbrOfTurns = (TextView) vRow
+						.findViewById(R.id.nbr_turns);
+
+				/* Set the binded views */
+				tTurn.setText(game.getCurrentPlayer() + "'s turn");
+				blackName.setText(game.getBlackPlayer());
+				whiteName.setText(game.getWhitePlayer());
+				tNbrOfTurns.setText("" + game.getTurns());
+
+				/* Start a PlayActivity with the right GameInfo */
+				vRow.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						Intent i = new Intent(context, PlayActivity.class);
+						i.putExtra("GameString", gameString);
+						startActivity(i);
+					}
+				});
+				return vRow;
+			}
 		}
 
 	}
