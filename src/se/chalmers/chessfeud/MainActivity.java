@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.chessfeud.model.ChessModel;
+import se.chalmers.chessfeud.model.pieces.Piece;
 import se.chalmers.chessfeud.utils.C;
 import se.chalmers.chessfeud.utils.DbHandler;
 import se.chalmers.chessfeud.utils.GameInfo;
@@ -219,20 +220,11 @@ public class MainActivity extends Activity implements OnClickListener {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			if (stringList.get(position).equals(C.YOUR_TURN)) {
-				TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
-				vRow.setText(C.YOUR_TURN);
-				offset++;
-				return vRow;
+				return setTextView(inflater, parent, C.YOUR_TURN);
 			} else if(stringList.get(position).equals(C.OPPONENTS_TURN)){
-				TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
-				vRow.setText(C.OPPONENTS_TURN);
-				offset++;
-				return vRow;
+				return setTextView(inflater, parent, C.OPPONENTS_TURN);
 			}else if (stringList.get(position).equals(C.FINISHED_GAMES)) {
-				TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
-				vRow.setText(C.FINISHED_GAMES);
-				offset++;
-				return vRow;
+				return setTextView(inflater, parent, C.FINISHED_GAMES);
 			} else {
 				final String gameString = stringList.get(position);
 				final GameInfo game = new GameInfo(gameString);
@@ -245,31 +237,166 @@ public class MainActivity extends Activity implements OnClickListener {
 					vRow.setBackgroundColor(C.COLOR_BACKGROUND_BITEM);
 				}
 
-				/* Bind all the views */
-				TextView tTurn = (TextView) vRow.findViewById(R.id.player_turn);
-				TextView blackName = (TextView) vRow
-						.findViewById(R.id.player_black);
-				TextView whiteName = (TextView) vRow
-						.findViewById(R.id.player_white);
-				TextView tNbrOfTurns = (TextView) vRow
-						.findViewById(R.id.nbr_turns);
-
-				/* Set the binded views */
-				tTurn.setText(game.getCurrentPlayer() + "'s turn");
-				blackName.setText(game.getBlackPlayer());
-				whiteName.setText(game.getWhitePlayer());
-				tNbrOfTurns.setText("" + game.getTurns());
+				bindAndSetViews(vRow, game);
 
 				/* Start a PlayActivity with the right GameInfo */
 				vRow.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						Intent i = new Intent(context, PlayActivity.class);
-						i.putExtra("GameString", gameString);
-						startActivity(i);
+						startPlayActivity(gameString);
 					}
 				});
 				return vRow;
 			}
+		}
+		
+		private void startPlayActivity(String gameString){
+			Intent i = new Intent(context, PlayActivity.class);
+			i.putExtra("GameString", gameString);
+			startActivity(i);
+		}
+		
+		/* Binds and sets all the views of the regular game in the list. */
+		private void bindAndSetViews(View vRow, GameInfo game) {
+			/* Bind all the views */
+			TextView tTurn = (TextView) vRow.findViewById(R.id.player_turn);
+			TextView blackName = (TextView) vRow
+					.findViewById(R.id.player_black);
+			TextView whiteName = (TextView) vRow
+					.findViewById(R.id.player_white);
+			TextView tNbrOfTurns = (TextView) vRow
+					.findViewById(R.id.nbr_turns);
+
+			/* Set the binded views */
+			tTurn.setText(game.getCurrentPlayer() + "'s turn");
+			blackName.setText(game.getBlackPlayer());
+			whiteName.setText(game.getWhitePlayer());
+			tNbrOfTurns.setText("" + game.getTurns());
+			
+			setPiecesLeft(vRow, game);
+		}
+
+		private void setPiecesLeft(View vRow, GameInfo gameInfo) {
+			TextView blackPawn = (TextView) vRow.findViewById(R.id.nbr_pawn_black);
+			ImageView blackRook1 = (ImageView) vRow.findViewById(R.id.img_black_piece_1);
+			ImageView blackRook2 = (ImageView) vRow.findViewById(R.id.img_black_piece_2);
+			ImageView blackBishop1 = (ImageView) vRow.findViewById(R.id.img_black_piece_3);
+			ImageView blackBishop2 = (ImageView) vRow.findViewById(R.id.img_black_piece_4);
+			ImageView blackKnight1 = (ImageView) vRow.findViewById(R.id.img_black_piece_5);
+			ImageView blackKnight2 = (ImageView) vRow.findViewById(R.id.img_black_piece_6);
+			ImageView blackQueen = (ImageView) vRow.findViewById(R.id.img_black_piece_7);
+			ImageView blackKing = (ImageView) vRow.findViewById(R.id.img_black_piece_8);
+			
+			TextView whitePawn = (TextView) vRow.findViewById(R.id.nbr_pawn_white);
+			ImageView whiteRook1 = (ImageView) vRow.findViewById(R.id.img_white_piece_1);
+			ImageView whiteRook2 = (ImageView) vRow.findViewById(R.id.img_white_piece_2);
+			ImageView whiteBishop1 = (ImageView) vRow.findViewById(R.id.img_white_piece_3);
+			ImageView whiteBishop2 = (ImageView) vRow.findViewById(R.id.img_white_piece_4);
+			ImageView whiteKnight1 = (ImageView) vRow.findViewById(R.id.img_white_piece_5);
+			ImageView whiteKnight2 = (ImageView) vRow.findViewById(R.id.img_white_piece_6);
+			ImageView whiteQueen = (ImageView) vRow.findViewById(R.id.img_white_piece_7);
+			ImageView whiteKing = (ImageView) vRow.findViewById(R.id.img_white_piece_8);
+			
+			blackRook1.setVisibility(View.INVISIBLE);
+			blackRook2.setVisibility(View.INVISIBLE);
+			blackBishop1.setVisibility(View.INVISIBLE);
+			blackBishop2.setVisibility(View.INVISIBLE);
+			blackKnight1.setVisibility(View.INVISIBLE);
+			blackKnight2.setVisibility(View.INVISIBLE);
+			blackQueen.setVisibility(View.INVISIBLE);
+			blackKing.setVisibility(View.INVISIBLE);
+			whiteRook1.setVisibility(View.INVISIBLE);
+			whiteRook2.setVisibility(View.INVISIBLE);
+			whiteBishop1.setVisibility(View.INVISIBLE);
+			whiteBishop2.setVisibility(View.INVISIBLE);
+			whiteKnight1.setVisibility(View.INVISIBLE);
+			whiteKnight2.setVisibility(View.INVISIBLE);
+			whiteQueen.setVisibility(View.INVISIBLE);
+			whiteKing.setVisibility(View.INVISIBLE);
+			
+			ChessModel cm = new ChessModel(gameInfo, null);
+			List<Piece> left = cm.getPiecesLeft(); // Calculate only once
+			int whitePawns = 0;
+			int blackPawns = 0;
+			for (int i = 0; i < left.size(); i++) {
+				switch (left.get(i).getId()) {
+				case C.PIECE_PAWN:
+					if (left.get(i).getTeam() == C.TEAM_WHITE) {
+						whitePawns++;
+					} else {
+						blackPawns++;
+					}
+					break;
+				case C.PIECE_ROOK:
+					if (left.get(i).getTeam() == C.TEAM_WHITE) {
+						if (left.indexOf(left.get(i)) == i) {
+							whiteRook1.setVisibility(View.VISIBLE);
+						} else {
+							whiteRook2.setVisibility(View.VISIBLE);
+						}
+					} else {
+						if (left.indexOf(left.get(i)) == i) {
+							blackRook1.setVisibility(View.VISIBLE);
+						} else {
+							blackRook2.setVisibility(View.VISIBLE);
+						}
+					}
+					break;
+				case C.PIECE_BISHOP:
+					if (left.get(i).getTeam() == C.TEAM_WHITE) {
+						if (left.indexOf(left.get(i)) == i) {
+							whiteBishop1.setVisibility(View.VISIBLE);
+						} else {
+							whiteBishop2.setVisibility(View.VISIBLE);
+						}
+					} else {
+						if (left.indexOf(left.get(i)) == i) {
+							blackBishop1.setVisibility(View.VISIBLE);
+						} else {
+							blackBishop2.setVisibility(View.VISIBLE);
+						}
+					}
+					break;
+				case C.PIECE_KNIGHT:
+					if (left.get(i).getTeam() == C.TEAM_WHITE) {
+						if (left.indexOf(left.get(i)) == i) {
+							whiteKnight1.setVisibility(View.VISIBLE);
+						} else {
+							whiteKnight2.setVisibility(View.VISIBLE);
+						}
+					} else {
+						if (left.indexOf(left.get(i)) == i) {
+							blackKnight1.setVisibility(View.VISIBLE);
+						} else {
+							blackKnight2.setVisibility(View.VISIBLE);
+						}
+					}
+					break;
+				case C.PIECE_QUEEN:
+					if (left.get(i).getTeam() == C.TEAM_WHITE) {
+						whiteQueen.setVisibility(View.VISIBLE);
+					} else {
+						blackQueen.setVisibility(View.VISIBLE);
+					}
+					break;
+				case C.PIECE_KING:
+					if (left.get(i).getTeam() == C.TEAM_WHITE) {
+						whiteKing.setVisibility(View.VISIBLE);
+					} else {
+						blackKing.setVisibility(View.VISIBLE);
+					}
+					break;
+				}
+				whitePawn.setText("" + whitePawns);
+				blackPawn.setText("" + blackPawns);
+			}
+		}
+
+		/* Sets the given text to the created TextView-listobject, also returns it. */
+		private TextView setTextView(LayoutInflater inflater, ViewGroup parent, String s){
+			TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
+			vRow.setText(s);
+			offset++;
+			return vRow;
 		}
 
 	}

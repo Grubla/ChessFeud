@@ -70,7 +70,7 @@ public class DbHandler {
 	private void init() {
 		client = new DefaultHttpClient();
 		httpPost = new HttpPost(
-				"http://90.227.18.175:8080/ChessFeudServer/DbHandler/*");
+				"http://46.239.99.71:8080/ChessFeudServer/DbHandler/*");
 		is = null;
 		pairs = new ArrayList<BasicNameValuePair>();
 		player = PlayerInfo.getInstance();
@@ -167,11 +167,12 @@ public class DbHandler {
 	 *            The one you lost or won against.
 	 * @return if everyhting went as expected.
 	 */
-	public boolean setGameFinished(String whiteplayer, String blackplayer) {
+	public boolean setGameFinished(String whiteplayer, String blackplayer, String result) {
 		pairs.clear();
 		pairs.add(new BasicNameValuePair(TAG, "setGameFinished"));
 		pairs.add(new BasicNameValuePair("user1", whiteplayer));
 		pairs.add(new BasicNameValuePair("user2", blackplayer));
+		pairs.add(new BasicNameValuePair("result", result));
 		return updateDatabase();
 	}
 

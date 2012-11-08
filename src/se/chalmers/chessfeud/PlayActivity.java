@@ -206,14 +206,20 @@ public class PlayActivity extends Activity implements PropertyChangeListener {
 		}
 		setState();
 		setTurnNTime();
-		if (cm.getState() == C.STATE_DRAW
-				|| cm.getState() == C.STATE_VICTORY_BLACK
-				|| cm.getState() == C.STATE_VICTORY_WHITE) {
+		if (cm.getState() != C.STATE_NORMAL) {
+			final String s;
+			if(cm.getState() == C.STATE_VICTORY_WHITE){
+				s = "win";
+			}else if(cm.getState() == C.STATE_VICTORY_BLACK){
+				s = "loss";
+			}else{
+				s = "draw";
+			}
 			new Thread() {
 				public void run() {
 					//TODO: Send the state of the game.. 
 					DbHandler.getInstance().setGameFinished(g.getWhitePlayer(),
-							g.getBlackPlayer());
+							g.getBlackPlayer(), s);
 				}
 			}.start();
 
