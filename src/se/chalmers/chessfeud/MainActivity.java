@@ -393,7 +393,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		/* Sets the given text to the created TextView-listobject, also returns it. */
 		private TextView setTextView(LayoutInflater inflater, ViewGroup parent, String s){
-			TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false);
+			TextView vRow = (TextView) inflater.inflate(R.layout.menu_listhead, parent, false); 
 			vRow.setText(s);
 			offset++;
 			return vRow;
